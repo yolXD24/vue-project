@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Define collection and schema for Post
-let Post = new Schema({
+let Admin = new Schema({
   title: {
     type: String
   },
@@ -13,4 +13,4 @@ let Post = new Schema({
     collection: 'admin'
 });
 
-module.exports = mongoose.model('Admin', Post);
+module.exports = mongoose.model('Admin', Admin);
