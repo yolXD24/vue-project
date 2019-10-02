@@ -2,9 +2,13 @@
 
 ## Project setup
 ```
-npm install
+npm install --save
 ```
-
+### Installing dependencies at backend side
+```
+cd api
+npm install --save
+```
 ### Compiles and hot-reloads for development
 ```
 npm run serve
