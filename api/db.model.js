@@ -12,7 +12,7 @@ let Admin = new Schema({
 }, {
         collection: 'admin'
     });
-
+//THIS SCHEMA IS MADE ONLY FOR TESTING PURPOSES, IT IS NOT YET FINAL
 let User = new Schema({
     username: {
         type: String
