@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import MainScreen from "../admin/menu/MainScreen.vue";
+import MainScreen from "@/components/admin/menu/MainScreen.vue";
 
 export default {
 components:{

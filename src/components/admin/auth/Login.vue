@@ -31,7 +31,22 @@
         </v-card>
       </v-flex>
     </v-layout>
+ <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
+      {{text}}
+      <v-btn
+        color="blue"
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-container>
+  
 </template>
 <script>
 import { axios } from "@/plugins/axios";
@@ -40,7 +55,10 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
+      snackbar: false,
+      text: "Invalid Credentials!!",
+      timeout: 2000
     };
   },
   methods: {
@@ -57,9 +75,9 @@ export default {
             }
           }
         )
-        .then((res) => {
-          var username = res.data.user
-          var password = res.data.password
+        .then(res => {
+          var username = res.data.user;
+          var password = res.data.password;
           if (this.username != "" && this.password != "") {
             if (this.username == username && this.password == password) {
               this.$emit("authenticated", true);
@@ -67,10 +85,14 @@ export default {
                 console.log(err);
               });
             } else {
-              alert("The username and / or password is incorrect");
+              this.text = "Invalid Credentials";
+              this.password = "";
+              this.username = "";
+              this.snackbar = true;
             }
           } else {
-            alert("A username and password must be present");
+            this.text = "Fields cannot be empty";
+            this.snackbar = true;
           }
         });
     }

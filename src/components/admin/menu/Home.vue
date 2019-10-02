@@ -2,10 +2,8 @@
   <v-app>
     <v-content style="padding:0 ;height : 100%">
        <div id="app">
-        
            <NavBar/>
         </div>
-
     </v-content>
 
   </v-app>
