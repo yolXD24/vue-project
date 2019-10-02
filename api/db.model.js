@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema for Post
 let Admin = new Schema({
-  title: {
+  username: {
     type: String
   },
-  body: {
+  password: {
     type: String
   }
 },{

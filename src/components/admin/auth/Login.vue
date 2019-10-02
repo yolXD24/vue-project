@@ -6,7 +6,7 @@
           <v-card-text>
             <h6 class="display-1 text-center font-weight-regular">Login</h6>
             <v-form>
-              <br />
+              <br>
               <v-text-field
                 clearable
                 v-model="username"
@@ -34,6 +34,7 @@
   </v-container>
 </template>
 <script>
+import { axios } from "@/plugins/axios";
 export default {
   name: "Login",
   data() {
@@ -44,25 +45,37 @@ export default {
   },
   methods: {
     login() {
-    //   console.warn("username : ", this.username);
-    //   console.warn("password : ", this.username);
-      console.warn("username : ", this.$parent.mockAccount.username);
-      console.warn("password : ", this.$parent.mockAccount.password);
-      if (this.username != "" && this.password != "") {
-        if (
-          this.username == this.$parent.username &&
-          this.password == this.$parent.password
-        ) {
-          this.$emit("authenticated", true);
-          this.$router.replace({ name: "home" }).catch(err => {
-            console.log(err)
-          });
-        } else {
-          console.log("The username and / or password is incorrect");
-        }
-      } else {
-        console.log("A username and password must be present");
-      }
+      console.warn("username : ", this.username);
+      console.warn("password : ", this.password);
+      //ACCESSING THE ADMIN DOCUMENT IF INPUT IS CORRECT
+      axios
+        .post(
+          "http://localhost:4000/admin/login",
+          this.username,
+          this.password, // the data to post
+          {
+            headers: {
+              "Content-type": "application/x-www-form-urlencoded"
+            }
+          }
+        )
+        .then(res => {
+          var data = res.data.split(" ");
+          // console.log(data[0]);
+          if (this.username != "" && this.password != "") {
+            if (this.username == data[0] && this.password == data[1]) {
+              this.$emit("authenticated", true);
+              alert("Welcome "+ data[0]);
+              this.$router.replace({ name: "home" }).catch(err => {
+                console.log(err);
+              });
+            } else {
+              alert("The username and / or password is incorrect");
+            }
+          } else {
+            alert("A username and password must be present");
+          }
+        });
     }
   }
 };
