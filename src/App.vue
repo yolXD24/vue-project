@@ -16,7 +16,7 @@
         name: 'App',
         data() {
             return {
-                authenticated: false,
+                    authenticated: false,
                     username: "yol",
                     password: "Torres"
             }

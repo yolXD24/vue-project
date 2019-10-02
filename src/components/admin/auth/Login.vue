@@ -44,22 +44,9 @@ export default {
   },
   methods: {
     login() {
-    //   console.warn("username : ", this.username);
-    //   console.warn("password : ", this.username);
-      console.warn("username : ", this.$parent.mockAccount.username);
-      console.warn("password : ", this.$parent.mockAccount.password);
       if (this.username != "" && this.password != "") {
-        if (
-          this.username == this.$parent.username &&
-          this.password == this.$parent.password
-        ) {
-          this.$emit("authenticated", true);
-          this.$router.replace({ name: "home" }).catch(err => {
-            console.log(err)
-          });
-        } else {
-          console.log("The username and / or password is incorrect");
-        }
+          console.warn("username : ", this.username);
+          console.warn("password : ", this.username);
       } else {
         console.log("A username and password must be present");
       }

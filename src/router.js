@@ -10,7 +10,7 @@ export default new Router({
     routes: [{
             path: "/",
             redirect: {
-                name: "login"
+                name: "login1"
             }
         },
         {
@@ -19,7 +19,7 @@ export default new Router({
             component: Login
         }, {
             path: "/register",
-            name: "login",
+            name: "register",
             component: Register
         },
         {
