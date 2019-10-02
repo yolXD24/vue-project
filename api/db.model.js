@@ -3,14 +3,28 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema for Post
 let Admin = new Schema({
-  username: {
-    type: String
-  },
-  password: {
-    type: String
-  }
-},{
-    collection: 'admin'
-});
+    username: {
+        type: String
+    },
+    password: {
+        type: String
+    }
+}, {
+        collection: 'admin'
+    });
 
-module.exports = mongoose.model('Admin', Admin);
+let User = new Schema({
+    username: {
+        type: String
+    },
+    password: {
+        type: String
+    }
+}, {
+        collection: 'user'
+    })
+
+
+const Admins = mongoose.model('Admin', Admin);
+const Users = mongoose.model('User', User);
+module.exports = { Admins, Users };

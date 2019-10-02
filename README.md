@@ -9,11 +9,15 @@ npm install --save
 cd api
 npm install --save
 ```
-### Compiles and hot-reloads for development
+### Compile front-end for hot reloading
 ```
 npm run serve
 ```
-
+### Running the back-end server
+```
+cd api
+node server.js
+```
 ### Compiles and minifies for production
 ```
 npm run build
