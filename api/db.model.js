@@ -10,8 +10,8 @@ let Admin = new Schema({
         type: String
     }
 }, {
-        collection: 'admin'
-    });
+    collection: 'Admins'
+});
 //THIS SCHEMA IS MADE ONLY FOR TESTING PURPOSES, IT IS NOT YET FINAL
 let User = new Schema({
     username: {
@@ -21,8 +21,8 @@ let User = new Schema({
         type: String
     }
 }, {
-        collection: 'user'
-    })
+    collection: 'user'
+})
 
 
 const Admins = mongoose.model('Admin', Admin);

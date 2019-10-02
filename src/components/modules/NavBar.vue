@@ -13,7 +13,7 @@
     </v-app-bar>
     <v-navigation-drawer
       v-model="drawer"
-      app
+        app
     >
       <v-list-item>
         <v-list-item-content>
@@ -22,7 +22,7 @@
       </v-list-item>
       <v-list nav dense>
       <v-divider></v-divider>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in items" :key="item.title" :to="item.title" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -61,7 +61,7 @@ components:{
   }),
   watch: {
     group() {
-      this.drawer = false;
+      // this.drawer = false;
     }
   }
 };

@@ -11,9 +11,10 @@ routes.route('/admin/login').post(function(req, res) {
         var pass = admin[0].password
 
         if (err) {
+            console.log(err)
             res.json(err);
         } else {
-            res.json(user + " " + pass);
+            res.json({ user: user, password: pass });
         }
     });
 });

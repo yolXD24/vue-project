@@ -25,7 +25,7 @@
               ></v-text-field>
             </v-form>
             <center>
-              <v-btn color="primary" width="200px" rounded big  to="/home">Login</v-btn>
+              <v-btn color="primary" width="200px" rounded big @click="login()">Login</v-btn>
             </center>
           </v-card-text>
         </v-card>
@@ -45,9 +45,6 @@ export default {
   },
   methods: {
     login() {
-      console.warn("username : ", this.username);
-      console.warn("password : ", this.password);
-      //ACCESSING THE ADMIN DOCUMENT IF INPUT IS CORRECT
       axios
         .post(
           "http://localhost:4000/admin/login",
@@ -55,17 +52,17 @@ export default {
           this.password, // the data to post
           {
             headers: {
-              "Content-type": "application/x-www-form-urlencoded"
+              "Content-Type": "application/x-www-form-urlencoded",
+              Accept: "application/json"
             }
           }
         )
-        .then(res => {
-          var data = res.data.split(" ");
-          // console.log(data[0]);
+        .then((res) => {
+          var username = res.data.user
+          var password = res.data.password
           if (this.username != "" && this.password != "") {
-            if (this.username == data[0] && this.password == data[1]) {
+            if (this.username == username && this.password == password) {
               this.$emit("authenticated", true);
-              alert("Welcome "+ data[0]);
               this.$router.replace({ name: "home" }).catch(err => {
                 console.log(err);
               });

@@ -4,20 +4,18 @@ import Login from "./components/admin/auth/Login.vue";
 import Homepage from "./components/admin/menu/Home.vue";
 import Register from "./components/admin/auth/Register.vue";
 
-
 Vue.use(Router);
 
 export default new Router({
     routes: [{
             path: "/",
             redirect: {
-                name: "login"
+                name: "signin"
             }
         },
         {
-            path: "/login",
-            name: "login",
-<<<<<<< HEAD
+            path: "/signin",
+            name: "signin",
             component: Login,
             meta: { hideNavigation: true }
         },
@@ -28,15 +26,10 @@ export default new Router({
             meta: { hideNavigation: false }
 
         },
-=======
-            component: Login
-        }, 
->>>>>>> origin/chervin-master
         {
             path: "/home",
             name: "home",
-            component: Homepage,
-            meta: { hideNavigation: false }
+            component: Homepage
         }
 
     ]
