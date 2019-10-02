@@ -25,7 +25,7 @@
               ></v-text-field>
             </v-form>
             <center>
-              <v-btn color="success" width="200px" rounded big @click="login()">Login</v-btn>
+              <v-btn color="primary" width="200px" rounded big  to="/home">Login</v-btn>
             </center>
           </v-card-text>
         </v-card>
