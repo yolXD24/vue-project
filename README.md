@@ -2,14 +2,22 @@
 
 ## Project setup
 ```
-npm install
+npm install --save
 ```
-
-### Compiles and hot-reloads for development
+### Installing dependencies at backend side
+```
+cd api
+npm install --save
+```
+### Compile front-end for hot reloading
 ```
 npm run serve
 ```
-
+### Running the back-end server
+```
+cd api
+node server.js
+```
 ### Compiles and minifies for production
 ```
 npm run build

@@ -17,6 +17,7 @@ export default new Router({
         {
             path: "/login",
             name: "login",
+<<<<<<< HEAD
             component: Login,
             meta: { hideNavigation: true }
         },
@@ -27,6 +28,10 @@ export default new Router({
             meta: { hideNavigation: false }
 
         },
+=======
+            component: Login
+        }, 
+>>>>>>> origin/chervin-master
         {
             path: "/home",
             name: "home",
