@@ -75,7 +75,10 @@ export default {
           this.text = "Fields cannot be empty";
           this.snackbar = true;
         }
-      }); 
+      });
+      console.info(localStorage.getItem("username"));
+      console.info(localStorage.getItem("password"));
+      console.log(localStorage.getItem("login"));
     }
   }
 };
