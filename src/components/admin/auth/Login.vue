@@ -6,7 +6,7 @@
           <v-card-text>
             <h6 class="display-1 text-center font-weight-regular">Login</h6>
             <v-form>
-              <br>
+              <br />
               <v-text-field
                 clearable
                 v-model="username"
@@ -31,22 +31,11 @@
         </v-card>
       </v-flex>
     </v-layout>
- <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      absolute
-    >
+    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
       {{text}}
-      <v-btn
-        color="blue"
-        text
-        @click="snackbar = false"
-      >
-        Close
-      </v-btn>
+      <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
   </v-container>
-  
 </template>
 <script>
 import { axios } from "@/plugins/axios";
@@ -63,38 +52,30 @@ export default {
   },
   methods: {
     login() {
-      axios
-        .post(
-          "http://localhost:4000/admin/login",
-          this.username,
-          this.password, // the data to post
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/json"
-            }
-          }
-        )
-        .then(res => {
-          var username = res.data.user;
-          var password = res.data.password;
-          if (this.username != "" && this.password != "") {
-            if (this.username == username && this.password == password) {
-              this.$emit("authenticated", true);
-              this.$router.replace({ name: "home" }).catch(err => {
-                console.log(err);
-              });
-            } else {
-              this.text = "Invalid Credentials";
-              this.password = "";
-              this.username = "";
-              this.snackbar = true;
-            }
+      var credentials = {
+        username: this.username,
+        password: this.password
+      };
+      const url = "http://localhost:4000/admin/login";
+      axios.post(url, credentials).then(res => {
+        if (this.username != "" && this.password != "") {
+          if (res.data.response.login) {
+            this.$emit("authenticated", true);
+            localStorage.setItem("username", res.data.response.users.username);
+            localStorage.setItem("password", res.data.response.users.password);
+            localStorage.setItem("login", res.data.response.login);
           } else {
-            this.text = "Fields cannot be empty";
+            localStorage.setItem("credentials", { login: false });
+            this.password = "";
+            this.username = "";
+            this.text = "Invalid Credentials";
             this.snackbar = true;
           }
-        });
+        } else {
+          this.text = "Fields cannot be empty";
+          this.snackbar = true;
+        }
+      }); 
     }
   }
 };

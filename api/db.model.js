@@ -10,7 +10,7 @@ let Admin = new Schema({
         type: String
     }
 }, {
-    collection: 'Admins'
+    collection: 'staff'
 });
 //THIS SCHEMA IS MADE ONLY FOR TESTING PURPOSES, IT IS NOT YET FINAL
 let User = new Schema({

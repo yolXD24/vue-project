@@ -4,17 +4,19 @@ const routes = express.Router();
 // Require Post model in our routes module
 let models = require('./db.model');
 
-// Defined get data(index or listing) route
-routes.route('/admin/login').post(function(req, res) {
-    models.Admins.find(function(err, admin) {
-        var user = admin[0].username
-        var pass = admin[0].password
-
+routes.route('/admin/login').post(function (req, res) {
+    models.Admins.find(req.body, function (err, admin) {
         if (err) {
             console.log(err)
             res.json(err);
         } else {
-            res.json({ user: user, password: pass });
+            if (admin.length >= 1) {
+                res.status(200).send({ response: { users: admin[0], login: true } });
+            } else {
+                console.log("error!")
+                res.status(200).send({ response: { login: false } });
+            }
+
         }
     });
 });
