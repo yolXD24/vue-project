@@ -6,7 +6,7 @@
           <v-card-text>
             <h6 class="display-1 text-center font-weight-regular">Login</h6>
             <v-form>
-              <br />
+              <br>
               <v-text-field
                 clearable
                 v-model="username"
@@ -60,7 +60,11 @@ export default {
       axios.post(url, credentials).then(res => {
         if (this.username != "" && this.password != "") {
           if (res.data.response.login) {
-            this.$emit("authenticated", true);
+            this.text = "Welcome " + this.username + " !";
+            this.snackbar = true;
+            setTimeout(() => {
+              this.$emit("authenticated", true);
+            }, 1500);
             localStorage.setItem("username", res.data.response.users.username);
             localStorage.setItem("password", res.data.response.users.password);
             localStorage.setItem("login", res.data.response.login);
@@ -76,9 +80,6 @@ export default {
           this.snackbar = true;
         }
       });
-      console.info(localStorage.getItem("username"));
-      console.info(localStorage.getItem("password"));
-      console.log(localStorage.getItem("login"));
     }
   }
 };

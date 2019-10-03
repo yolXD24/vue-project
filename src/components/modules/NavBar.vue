@@ -15,7 +15,12 @@
       </v-list-item>
       <v-list nav dense>
         <v-divider></v-divider>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.link" @click="swapComponent(item.link)">
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :to="item.link"
+        >
+        
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -26,36 +31,29 @@
       </v-list>
     </v-navigation-drawer>
     <v-content>
-      <v-container>
+      <v-container id="app">
         <router-view/>
       </v-container>
+
     </v-content>
   </v-app>
 </template>
 
 <script>
-import MainScreen from "@/components/admin/menu/MainScreen.vue";
-import Register from "@/components/admin/auth/Register.vue";
+
 
 export default {
-  components: {
-    MainScreen,
-    Register
-  },
   data: () => ({
     items: [
-      { title: "Home", icon: "mdi-home", link: "main" },
+      { title: "Home", icon: "mdi-home", link: "/home" },
       { title: "Transaction History", icon: "mdi-history", link: "/history" },
       { title: "Account Settings", icon: "mdi-settings", link: "/settings" },
-      { title: "Add Staff", icon: "mdi-plus", link: "register" },
+      { title: "Add Staff", icon: "mdi-plus", link: "/register" },
       { title: "Logout", icon: "mdi-logout", link: "/login" }
     ],
     drawer: false,
     group: null
   }),
-  swapComponent: function(component) {
-    this.currentComponent = component;
-  },
   watch: {
     group() {
       // this.drawer = false;
