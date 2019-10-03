@@ -13,7 +13,7 @@
                 label="Username"
                 prepend-icon="mdi-account"
                 type="text"
-                color="secondary"
+                color="primary"
               ></v-text-field>
               <v-text-field
                 clearable
@@ -21,7 +21,7 @@
                 label="Password"
                 prepend-icon="mdi-lock"
                 type="password"
-                color="secondary"
+                color="primary"
               ></v-text-field>
             </v-form>
             <center>
