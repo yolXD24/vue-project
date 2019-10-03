@@ -20,7 +20,6 @@
           :key="item.title"
           :to="item.link"
         >
-        
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -32,7 +31,7 @@
     </v-navigation-drawer>
     <v-content>
       <v-container id="app">
-        <router-view/>
+        <router-view></router-view>
       </v-container>
 
     </v-content>
@@ -45,11 +44,11 @@
 export default {
   data: () => ({
     items: [
-      { title: "Home", icon: "mdi-home", link: "/home" },
-      { title: "Transaction History", icon: "mdi-history", link: "/history" },
-      { title: "Account Settings", icon: "mdi-settings", link: "/settings" },
-      { title: "Add Staff", icon: "mdi-plus", link: "/register" },
-      { title: "Logout", icon: "mdi-logout", link: "/login" }
+      { title: "Home", icon: "mdi-home", link: "home/main" },
+      { title: "Transaction History", icon: "mdi-history", link: "/home/history" },
+      { title: "Account Settings", icon: "mdi-settings", link: "/home/settings" },
+      { title: "Add Staff", icon: "mdi-plus", link: "/home/register" },
+      { title: "Logout", icon: "mdi-logout", link: "/signin" }
     ],
     drawer: false,
     group: null

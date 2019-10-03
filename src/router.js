@@ -10,6 +10,7 @@ import TransactionHistory from "@/components/admin/menu/TransactionHistoy.vue";
 Vue.use(Router);
 
 export default new Router({
+    mode: "history",
     routes: [{
             path: "/",
             redirect: {
@@ -22,22 +23,15 @@ export default new Router({
             component: Login
         },
         {
-            path: "/register",
-            name: "register",
-            component: Register
-
-        },
-        {
-            path: "/home",
+            path: "/home/",
             name: "home",
             component: Homepage,
             children: [
-                { path: '', component: MainScreen },
-                { path: 'settings', component: AccountSettings },
-                { path: 'hisory', component: TransactionHistory },
-                { path: 'register', component: Register },
-              ]
+                { path: "", component: MainScreen },
+                { path: "settings", component: AccountSettings },
+                { path: "history", component: TransactionHistory },
+                { path: "register", component: Register }
+            ]
         }
-
     ]
 });
