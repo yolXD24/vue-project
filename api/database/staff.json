@@ -1,0 +1,22 @@
+{
+    "_id": {
+        "$oid":"5d944a81a1b01908b8c8a84e"
+    },
+    "account": {
+        "username":"admin",
+        "password":"admin"
+    },
+    "name": {
+        "firstName":"",
+        "lastName":"",
+        "middleName":"",
+        "suffix":""
+    },
+    "position":"",
+    "barangay":"",
+    "changedDate":{
+        "month":"",
+        "day":"",
+        "year":""
+    }
+}
