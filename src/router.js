@@ -25,9 +25,10 @@ export default new Router({
         {
             path: "/home/",
             name: "home",
+            redirect: "home/main",
             component: Homepage,
             children: [
-                { path: "", component: MainScreen },
+                { path: "main", component: MainScreen },
                 { path: "settings", component: AccountSettings },
                 { path: "history", component: TransactionHistory },
                 { path: "register", component: Register }

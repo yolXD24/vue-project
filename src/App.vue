@@ -29,7 +29,7 @@ export default {
   methods: {
     setAuthenticated(status) {
       this.authenticated = status;
-      this.$router.replace({ name: "home" }).catch((err)=>{
+      this.$router.replace({ name: "home"  }).catch((err)=>{
       });
     },
     logout() {

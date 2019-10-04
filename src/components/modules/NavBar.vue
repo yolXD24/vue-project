@@ -44,7 +44,7 @@
 export default {
   data: () => ({
     items: [
-      { title: "Home", icon: "mdi-home", link: "home/main" },
+      { title: "Home", icon: "mdi-home", link: "/home/main" },
       { title: "Transaction History", icon: "mdi-history", link: "/home/history" },
       { title: "Account Settings", icon: "mdi-settings", link: "/home/settings" },
       { title: "Add Staff", icon: "mdi-plus", link: "/home/register" },
