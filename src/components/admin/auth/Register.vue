@@ -11,7 +11,7 @@
               <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
               <v-select
-                v-model="select"
+                v-model="position"
                 :items="items"
                 :rules="[v => !!v || 'Position is required']"
                 label="Position"
@@ -35,6 +35,7 @@
   </v-container>
 </template>
 <script>
+import { axios } from "@/plugins/axios";
 export default {
   name: "Register",
   data() {
@@ -51,7 +52,7 @@ export default {
         v => !!v || "E-mail is required",
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
-      select: null,
+      position: null,
       items: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
     };
   },
@@ -59,7 +60,22 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        alert(this.name)
+        var account = {
+          username : this.name,
+          firstname: "first",
+          lastname: "last",
+          email: this.email,
+          position: this.position,
+          password: "hmp"
+          }        
+        const url = "http://localhost:4000/admin/register";
+        axios.post(url , account).then(res=>{
+          console.info("saved!")
+          console.log(res.data);
+        }).catch(err=>{
+          console.error("error!")
+
+        })
       }
     }
   }

@@ -10,21 +10,35 @@ let Admin = new Schema({
         type: String
     }
 }, {
-    collection: 'staff'
-});
-//THIS SCHEMA IS MADE ONLY FOR TESTING PURPOSES, IT IS NOT YET FINAL
-let User = new Schema({
+        collection: 'staff'
+    });
+
+let Staff = new Schema({
+    firstname: {
+        type: String
+    },
+    lastname: {
+        type: String
+    },
     username: {
+        type: String,
+        unique: true
+    },
+    email: {
+        type: String,
+        unique: true
+    },
+    position: {
         type: String
     },
     password: {
         type: String
     }
 }, {
-    collection: 'user'
-})
+    collection: 'staff'
+    })
 
 
 const Admins = mongoose.model('Admin', Admin);
-const Users = mongoose.model('User', User);
-module.exports = { Admins, Users };
+const Staffs = mongoose.model('Staff', Staff);
+module.exports = { Admins, Staffs };
