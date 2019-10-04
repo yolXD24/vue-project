@@ -65,11 +65,9 @@ export default {
             setTimeout(() => {
               this.$emit("authenticated", true);
             }, 1500);
-            localStorage.setItem("username", res.data.response.users.username);
-            localStorage.setItem("password", res.data.response.users.password);
-            localStorage.setItem("login", res.data.response.login);
+            localStorage.setItem("user", true);
           } else {
-            localStorage.setItem("credentials", { login: false });
+            localStorage.setItem("user", false);
             this.password = "";
             this.username = "";
             this.text = "Invalid Credentials";
