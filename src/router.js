@@ -26,6 +26,7 @@ export default new Router({
                 redirect: {
                     name: "home"
                 }
+            next()
             }
         }
     },
@@ -39,6 +40,7 @@ export default new Router({
                 redirect: {
                     name: "signin"
                 }
+                next()
             }
         },
         children: [
@@ -56,6 +58,7 @@ export default new Router({
             redirect:{
                 name:"signin"
             }
+            next()
         }
     }
     ]
