@@ -61,15 +61,29 @@ export default {
       const url = "http://localhost:4000/admin/login";
       axios.post(url, credentials).then(res => {
         if (this.username != "" && this.password != "") {
-          if (res.data.response.login) {
+          if (res.data.auth) {
             this.text = "Welcome " + this.username + " !";
             this.snackbar = true;
-            setTimeout(() => {
+            // setTimeout(() => {
+            //   this.$emit("authenticated", true);
+            // }, 1500);
+            // localStorage.setItem("user", true);
+
+            // for testing
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+            localStorage.setItem("jwt", res.data.token);
+
+            if (localStorage.getItem("jwt") != null) {
               this.$emit("authenticated", true);
-            }, 1500);
-            localStorage.setItem("user", true);
+              if (this.$route.params.nextUrl != null) {
+                this.$router.push(this.$route.params.nextUrl);
+              } else {
+               this.$router.push("home");
+              }
+            }
           } else {
-            localStorage.setItem("user", false);
+            localStorage.setItem("user", null);
+           localStorage.setItem("jwt", null);
             this.password = "";
             this.username = "";
             this.text = "Invalid Credentials";
