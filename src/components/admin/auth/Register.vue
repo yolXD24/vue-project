@@ -45,8 +45,8 @@ export default {
       name: "",
       nameRules: [
         v => !!v || "Name is required",
-        v => /^[A-Za-z]+$/.test(v) || "Name must be valid",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
+        v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
+        v => (v && v.length <= 20) || "Name must be less than 10 characters"
       ],
       password: "",
       passwordRules: [
