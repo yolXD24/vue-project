@@ -46,7 +46,7 @@ export default {
       valid: true,
       username: "",
       fname: "",
-      lname="",   
+      lname:"",   
       nameRules: [
         v => !!v || "Name is required",
         v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",

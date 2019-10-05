@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-content >
-       <div id="app">
+    <v-content>
+      <div id="app">
         <router-view @authenticated="setAuthenticated" />
-    </div>
+      </div>
     </v-content>
   </v-app>
 </template>
@@ -22,15 +22,13 @@ export default {
   },
   mounted() {
     if (!this.authenticated) {
-      this.$router.replace({ name: "signin" }).catch((err)=>{
-      });
+      this.$router.replace({ name: "signin" }).catch(err => {});
     }
   },
   methods: {
     setAuthenticated(status) {
       this.authenticated = status;
-      this.$router.replace({ name: "home"  }).catch((err)=>{
-      });
+      this.$router.replace({ name: "home" }).catch(err => {});
     },
     logout() {
       this.authenticated = false;

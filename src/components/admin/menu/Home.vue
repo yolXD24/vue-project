@@ -1,6 +1,11 @@
 <template>
   <v-app id="inspire" app>
-    <v-app-bar  clipped-right light  max-height="70px"  @click.stop="drawer = !drawer">
+    <v-app-bar
+      clipped-right
+      light
+      max-height="70px"
+      @click.stop="drawer = !drawer"
+    >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="headline text-uppercase">
         <span>Express</span>
@@ -19,7 +24,7 @@
           v-for="item in items"
           :key="item.title"
           :to="item.link"
-           @click.stop="drawer = !drawer"
+          @click.stop="drawer = !drawer"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -31,24 +36,29 @@
       </v-list>
     </v-navigation-drawer>
     <v-content>
-      <br><br>
-      <v-container id="app" >
+      <br /><br />
+      <v-container id="app">
         <router-view></router-view>
       </v-container>
-
     </v-content>
   </v-app>
 </template>
 
 <script>
-
-
 export default {
   data: () => ({
     items: [
       { title: "Home", icon: "mdi-home", link: "/home/main" },
-      { title: "Transaction History", icon: "mdi-history", link: "/home/history" },
-      { title: "Account Settings", icon: "mdi-settings", link: "/home/settings" },
+      {
+        title: "Transaction History",
+        icon: "mdi-history",
+        link: "/home/history"
+      },
+      {
+        title: "Account Settings",
+        icon: "mdi-settings",
+        link: "/home/settings"
+      },
       { title: "Add Staff", icon: "mdi-plus", link: "/home/register" },
       { title: "Logout", icon: "mdi-logout", link: "/signin" }
     ],

@@ -15,11 +15,7 @@
       </v-list-item>
       <v-list nav dense>
         <v-divider></v-divider>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="item.link"
-        >
+        <v-list-item v-for="item in items" :key="item.title" :to="item.link">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -33,20 +29,25 @@
       <v-container id="app">
         <router-view></router-view>
       </v-container>
-
     </v-content>
   </v-app>
 </template>
 
 <script>
-
-
 export default {
   data: () => ({
     items: [
       { title: "Home", icon: "mdi-home", link: "/home/main" },
-      { title: "Transaction History", icon: "mdi-history", link: "/home/history" },
-      { title: "Account Settings", icon: "mdi-settings", link: "/home/settings" },
+      {
+        title: "Transaction History",
+        icon: "mdi-history",
+        link: "/home/history"
+      },
+      {
+        title: "Account Settings",
+        icon: "mdi-settings",
+        link: "/home/settings"
+      },
       { title: "Add Staff", icon: "mdi-plus", link: "/home/register" },
       { title: "Logout", icon: "mdi-logout", link: "/signin" }
     ],
