@@ -12,8 +12,7 @@
               <v-text-field v-model="password" :rules="passwordRules" prepend-icon="mdi-lock" type="password" label="Password" required></v-text-field>
 
               <v-select
-              prepend-icon="mdi-account-badge"
-                v-model="select"
+                v-model="position"
                 :items="items"
                 :rules="[v => !!v || 'Position is required']"
                 label="Position"
@@ -37,6 +36,7 @@
   </v-container>
 </template>
 <script>
+import { axios } from "@/plugins/axios";
 export default {
   name: "Register",
   data() {
@@ -59,7 +59,7 @@ export default {
         v => !!v || "E-mail is required",
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
-      select: null,
+      position: null,
       items: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
     };
   },
@@ -68,15 +68,21 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         var account = {
-          username: this.name,
-          password: this.email,
-          position: this.select,
-          email: this.email
-        };
+          username : this.name,
+          firstname: "first",
+          lastname: "last",
+          email: this.email,
+          position: this.position,
+          password: "hmp"
+          }        
+        const url = "http://localhost:4000/admin/register";
+        axios.post(url , account).then(res=>{
+          console.info("saved!")
+          console.log(res.data);
+        }).catch(err=>{
+          console.error("error!")
 
-        console.info("credentials", account);
-        // const url = "http://localhost:4000/admin/register";
-        // axios.post(url, account).then(res => {});
+        })
       }
     }
   }
