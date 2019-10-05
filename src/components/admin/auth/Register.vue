@@ -6,7 +6,9 @@
           <v-card-text>
             <h6 class="display-1 text-center font-weight-regular">Register</h6>
             <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" prepend-icon="mdi-rename-box" required></v-text-field>
+              <v-text-field v-model="fname" :counter="20" :rules="nameRules" label="Firstname" prepend-icon="mdi-rename-box" required></v-text-field>
+              <v-text-field v-model="lname" :counter="20" :rules="nameRules" label="Lastname" prepend-icon="mdi-rename-box" required></v-text-field>
+              <v-text-field v-model="username" :counter="20"  label="Username" prepend-icon="mdi-rename-user" required></v-text-field>
 
               <v-text-field v-model="email" :rules="emailRules" prepend-icon="mdi-at" label="E-mail" required></v-text-field>
               <v-text-field v-model="password" :rules="passwordRules" prepend-icon="mdi-lock" type="password" label="Password" required></v-text-field>
@@ -42,7 +44,9 @@ export default {
   data() {
     return {
       valid: true,
-      name: "",
+      username: "",
+      fname: "",
+      lname="",   
       nameRules: [
         v => !!v || "Name is required",
         v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
@@ -68,9 +72,9 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         var account = {
-          username : this.name,
-          firstname: "first",
-          lastname: "last",
+          username : this.username,
+          firstname: this.fname,
+          lastname: this.lname,
           email: this.email,
           position: this.position,
           password: "hmp"
