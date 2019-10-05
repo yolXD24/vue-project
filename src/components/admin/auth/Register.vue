@@ -6,10 +6,30 @@
           <v-card-text>
             <h6 class="display-1 text-center font-weight-regular">Register</h6>
             <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" prepend-icon="mdi-rename-box" required></v-text-field>
+              <v-text-field
+                v-model="name"
+                :counter="10"
+                :rules="nameRules"
+                label="Name"
+                prepend-icon="mdi-rename-box"
+                required
+              ></v-text-field>
 
-              <v-text-field v-model="email" :rules="emailRules" prepend-icon="mdi-at" label="E-mail" required></v-text-field>
-              <v-text-field v-model="password" :rules="passwordRules" prepend-icon="mdi-lock" type="password" label="Password" required></v-text-field>
+              <v-text-field
+                v-model="email"
+                :rules="emailRules"
+                prepend-icon="mdi-at"
+                label="E-mail"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                :rules="passwordRules"
+                prepend-icon="mdi-lock"
+                type="password"
+                label="Password"
+                required
+              ></v-text-field>
 
               <v-select
                 v-model="position"
@@ -68,21 +88,29 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         var account = {
-          username : this.name,
-          firstname: "first",
-          lastname: "last",
+          account: {
+            username: this.name,
+            password: this.password
+          },
+          name: {
+            firstname: "chervz",
+            lastname: "tanilon"
+          },
           email: this.email,
-          position: this.position,
-          password: "hmp"
-          }        
-        const url = "http://localhost:4000/admin/register";
-        axios.post(url , account).then(res=>{
-          console.info("saved!")
-          console.log(res.data);
-        }).catch(err=>{
-          console.error("error!")
+          position: "President",
+          barangay: "Guizo"
+        };
 
-        })
+        const url = "http://localhost:4000/admin/register";
+        axios
+          .post(url, account)
+          .then(res => {
+            console.info("saved!");
+            console.log(res.data);
+          })
+          .catch(err => {
+            console.error("error!");
+          });
       }
     }
   }

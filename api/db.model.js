@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 // Define collection and schema for Post
@@ -10,33 +11,29 @@ let Admin = new Schema({
         type: String
     }
 }, {
-        collection: 'staff'
+        collection: 'admin'
     });
 
 let Staff = new Schema({
-    firstname: {
-        type: String
+    account: {
+        username: {
+            type: String,
+            unique: true
+        },
+        password: String
     },
-    lastname: {
-        type: String
-    },
-    username: {
-        type: String,
-        unique: true
+    name: {
+        firstname: String,
+        lastname: String
     },
     email: {
         type: String,
         unique: true
     },
-    position: {
-        type: String
-    },
-    password: {
-        type: String
-    }
-}, {
-    collection: 'staff'
-    })
+    position: String,
+    barangay: String,
+
+})
 
 
 const Admins = mongoose.model('Admin', Admin);

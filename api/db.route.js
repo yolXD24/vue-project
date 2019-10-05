@@ -22,8 +22,15 @@ routes.route('/admin/login').post((req, res)=> {
 });
 
 routes.route('/admin/register').post((req,res) =>{
-    console.log(req.body)
-    res.send(req.body.username);
+    let staff = new models.Staffs(req.body);
+    console.log(req.body);
+    staff.save().then(()=>{
+        res.status(200).json({'staff':'staff is added successfully'});
+    })
+    .catch(()=>{
+        res.status(400).send("Cannot send to database");
+    })
+    // res.send(req.body.username);
     //I STOPPED HERE
 })
 module.exports = routes;
