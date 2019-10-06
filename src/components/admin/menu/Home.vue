@@ -33,6 +33,14 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item  @click="logout()">
+          <v-list-item-action>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-content>
@@ -45,6 +53,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data: () => ({
     items: [
@@ -59,15 +69,29 @@ export default {
         icon: "mdi-settings",
         link: "/home/settings"
       },
-      { title: "Add Staff", icon: "mdi-plus", link: "/home/register" },
-      { title: "Logout", icon: "mdi-logout", link: "/signin" }
+      { title: "Add Staff", icon: "mdi-plus", link: "/home/register" }
+      // { title: "Logout", icon: "mdi-logout", link: "/signin" }
     ],
     drawer: false,
     group: null
   }),
+  beforeEnter: (to, from, next) => {
+    if (localStorage.getItem("jwt") === null) {
+      next({
+        name: "signin"
+      });
+    }
+  },
   watch: {
     group() {
       // this.drawer = false;
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.setItem("jwt", null);
+      this.$router.replace("/signin");
+      console.log(localStorage.getItem("jwt"));
     }
   }
 };

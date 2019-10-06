@@ -12,24 +12,30 @@ Vue.use(Router);
 const router = new Router({
     mode: "history",
     routes: [{
-            path: "/",
-            redirect: {
-                name: "signin"
-            }
-        },
-        {
             path: "/signin",
             name: "signin",
             component: Login,
             meta: {
-                guest: true
+                requiresAuth: false
+            },
+            beforeEnter: (to, from, next) => {
+                if (localStorage.getItem("jwt") != null) {
+                    next({
+                        name: 'home'
+                    })
+                } else {
+                    next({
+                        name: 'signin'
+                    })
+                }
             }
         },
         {
-            path: "/home/",
+            path: "/home",
             name: "home",
             redirect: "home/main",
             component: Homepage,
+
             children: [
                 { path: "main", component: MainScreen },
                 { path: "settings", component: AccountSettings },
@@ -39,33 +45,20 @@ const router = new Router({
             meta: {
                 requiresAuth: true
             }
+
         },
         {
-            path: "/logout",
-            name: "logout",
+            path: '/',
+            redirect: {
+                path: '/sigin'
+            }
+        },
+        {
+            path: '*',
+            redirect: {
+                path: 'signin'
+            }
         }
     ]
 });
-router.beforeEach((to, from, next) => {
-    if (to.matched.some(page => page.meta.requiresAuth)) {
-        if (localStorage.getItem('jwt') == null) {
-            next({
-                path: '/signin',
-                params: { nextUrl: to.fullPath }
-            })
-        } else {
-            // let user = JSON.parse(localStorage.getItem('user'))
-            next({ name: 'home' })
-        }
-    } else if (to.matched.some(page => page.meta.guest)) {
-        if (localStorage.getItem('jwt') == null) {
-            next()
-        } else {
-            next({ name: 'home' })
-        }
-    } else {
-        next()
-    }
-})
-
 export default router;

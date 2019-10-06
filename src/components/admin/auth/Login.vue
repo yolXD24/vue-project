@@ -48,7 +48,7 @@ export default {
       username: "",
       password: "",
       snackbar: false,
-      text: "Invalid Credentials!!",
+      text: "",
       timeout: 2000
     };
   },
@@ -59,41 +59,35 @@ export default {
         password: this.password
       };
       const url = "http://localhost:4000/admin/login";
-      axios.post(url, credentials).then(res => {
-        if (this.username != "" && this.password != "") {
-          if (res.data.auth) {
-            this.text = "Welcome " + this.username + " !";
-            this.snackbar = true;
-            // setTimeout(() => {
-            //   this.$emit("authenticated", true);
-            // }, 1500);
-            // localStorage.setItem("user", true);
-
-            // for testing
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-            localStorage.setItem("jwt", res.data.token);
-
-            if (localStorage.getItem("jwt") != null) {
-              this.$emit("authenticated", true);
-              if (this.$route.params.nextUrl != null) {
-                this.$router.push(this.$route.params.nextUrl);
-              } else {
-               this.$router.push("home");
-              }
+      axios
+        .post(url, credentials)
+        .then(res => {
+          if (this.username != "" && this.password != "") {
+            if (res.data.auth) {
+              this.text = "Welcome " + this.username + " !";
+              this.snackbar = true;
+              localStorage.setItem("user", JSON.stringify(res.data.user));
+              localStorage.setItem("jwt", res.data.token);
+              this.$router.push("signin");
+            } else {
+              localStorage.setItem("user", null);
+              localStorage.setItem("jwt", null);
+              this.password = "";
+              this.username = "";
+              this.text = "Invalid Credentials";
+              this.snackbar = true;
             }
           } else {
-            localStorage.setItem("user", null);
-           localStorage.setItem("jwt", null);
-            this.password = "";
-            this.username = "";
-            this.text = "Invalid Credentials";
+            this.text = "Fields cannot be empty";
             this.snackbar = true;
           }
-        } else {
-          this.text = "Fields cannot be empty";
+        })
+        .catch(err => {
+          this.password = "";
+          this.username = "";
+          this.text = "" + err;
           this.snackbar = true;
-        }
-      });
+        });
     }
   }
 };

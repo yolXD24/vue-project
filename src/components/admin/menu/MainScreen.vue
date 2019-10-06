@@ -33,6 +33,13 @@ export default {
   },
   data: () => ({
     drawer: null
-  })
+  }),
+    mounted:function () {
+    if (this.authenticated == null) {
+      this.$router.push('signin');
+    } else{
+     this.$router.push('home')
+    }
+  }
 };
 </script>
