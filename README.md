@@ -10,8 +10,7 @@ cd api
 npm install --save
 Make a document in database the same schema structure in the image below:
 
-![alt text](https://user-images.githubusercontent.com/54093089/66294174-f0ce8a80-e91a-11e9-9bca-aa0f3c28cbd6.png)
-
+![alt text](https://raw.githubusercontent.com/yolXD24/vue-project/chervin-master/src/assets/admin.PNG)
 ```
 ### Compile front-end for hot reloading
 ```
