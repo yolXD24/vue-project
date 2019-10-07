@@ -30,7 +30,7 @@ routes.route('/admin/register').post((req, res) => {
                 res.status(200).json(req.body.name.firstname + ' is added successfully' );
             })
                 .catch(() => {
-                    res.status(400).send("Cannot send to database");
+                    res.send('Name/email exists already! Try another one.');
                 })
         }
     });
