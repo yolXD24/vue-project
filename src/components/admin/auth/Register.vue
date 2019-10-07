@@ -105,7 +105,6 @@ export default {
         axios
           .post(url, account)
           .then(res => {
-            console.info("saved!");
             console.log(res.data);
           })
           .catch(err => {
