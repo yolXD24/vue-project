@@ -8,7 +8,7 @@ let Staff = new Schema({
     account: {
         username: {
             type: String,
-            unique: true, //NOTE TO THE FRONTEND: LOWECASE MUST BE REQUIRED UPON REGISTERING
+            unique: true, //NOTE TO THE FRONTEND: LOWECASE MUST BE REQUIRED UPON REGISTERING  //test
         },
         password: String
     },
