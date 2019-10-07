@@ -6,7 +6,7 @@
           <v-card-text>
             <h6 class="display-1 text-center font-weight-regular">Login</h6>
             <v-form>
-              <br />
+              <br>
               <v-text-field
                 clearable
                 v-model="username"
@@ -25,9 +25,7 @@
               ></v-text-field>
             </v-form>
             <center>
-              <v-btn color="primary" width="200px" rounded big @click="login()"
-                >Login</v-btn
-              >
+              <v-btn color="primary" width="200px" rounded big @click="login()">Login</v-btn>
             </center>
           </v-card-text>
         </v-card>
@@ -41,6 +39,7 @@
 </template>
 <script>
 import { axios } from "@/plugins/axios";
+import router from "@/router/index";
 export default {
   name: "Login",
   data() {
@@ -68,7 +67,7 @@ export default {
               this.snackbar = true;
               localStorage.setItem("user", JSON.stringify(res.data.user));
               localStorage.setItem("jwt", res.data.token);
-              this.$router.push("signin");
+              router.push("/");
             } else {
               localStorage.setItem("user", null);
               localStorage.setItem("jwt", null);

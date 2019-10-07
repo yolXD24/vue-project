@@ -18,13 +18,13 @@ export default {
   //     authenticated: localStorage.getItem("jwt")
   //   };
   // },
-  mounted() {
-    console.log(localStorage.getItem('jwt'))
-    if (localStorage.getItem('jwt') === null) {
-      this.$router.replace('/signin')
-    } else{
-     this.$router.replace('/home')
-    }
-  }
+  // mounted() {
+  //   console.log(localStorage.getItem('jwt'))
+  //   if (localStorage.getItem('jwt') === null) {
+  //     this.$router.replace('/signin')
+  //   } else{
+  //    this.$router.replace('/home')
+  //   }
+  // }
 };
 </script>
