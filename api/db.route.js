@@ -5,18 +5,17 @@ const routes = express.Router();
 let models = require('./db.model');
 
 routes.route('/admin/login').post((req, res) => {
-    models.Admins.find(req.body, (err, admin) => {
+    models.Staffs.find(req.body, (err, admin) => {
         if (err) {
             console.log(err)
             res.json(err);
         } else {
             if (admin.length >= 1) {
-                res.status(200).send({ response: { users: admin[0], login: true } });
+                res.status(200).send({ response: { user: admin[0].name.firstname, login: true } });
             } else {
                 console.log("error!")
                 res.status(200).send({ response: { login: false } });
             }
-
         }
     });
 });

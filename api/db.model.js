@@ -3,22 +3,12 @@ var bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 // Define collection and schema for Post
-let Admin = new Schema({
-    username: {
-        type: String
-    },
-    password: {
-        type: String
-    }
-}, {
-        collection: 'admin'
-    });
 
 let Staff = new Schema({
     account: {
         username: {
             type: String,
-            unique: true
+            unique: true, //NOTE TO THE FRONTEND: LOWECASE MUST BE REQUIRED UPON REGISTERING
         },
         password: String
     },
@@ -28,14 +18,13 @@ let Staff = new Schema({
     },
     email: {
         type: String,
-        unique: true
+        unique: true,
+        lowercase: true
     },
     position: String,
     barangay: String,
-
 })
 
 
-const Admins = mongoose.model('Admin', Admin);
 const Staffs = mongoose.model('Staff', Staff);
-module.exports = { Admins, Staffs };
+module.exports = { Staffs };

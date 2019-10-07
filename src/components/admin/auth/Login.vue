@@ -53,14 +53,16 @@ export default {
   methods: {
     login() {
       var credentials = {
-        username: this.username,
-        password: this.password
+        account: {
+            username: this.username,
+            password: this.password
+          },
       };
       const url = "http://localhost:4000/admin/login";
       axios.post(url, credentials).then(res => {
         if (this.username != "" && this.password != "") {
           if (res.data.response.login) {
-            this.text = "Welcome " + this.username + " !";
+            this.text = "Welcome " + res.data.response.user + " !";
             this.snackbar = true;
             setTimeout(() => {
               this.$emit("authenticated", true);
