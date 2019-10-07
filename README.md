@@ -9,7 +9,7 @@ npm install --save
 cd api
 npm install --save
 ```
-- Make a document in database the same schema structure in the image below:
+- Make a document in database the same schema structure below:
 ```
 "account": {
     "username": "admin",
