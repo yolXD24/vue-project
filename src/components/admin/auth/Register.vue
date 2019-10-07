@@ -7,11 +7,26 @@
             <h6 class="display-1 text-center font-weight-regular">Register</h6>
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field
-                v-model="name"
-                :counter="10"
+                v-model="fname"
+                :counter="20"
                 :rules="nameRules"
-                label="Name"
+                label="Firstname"
                 prepend-icon="mdi-rename-box"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="lname"
+                :counter="20"
+                :rules="nameRules"
+                label="Lastname"
+                prepend-icon="mdi-rename-box"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="username"
+                :counter="20"
+                label="Username"
+                prepend-icon="mdi-rename-user"
                 required
               ></v-text-field>
 
@@ -47,7 +62,9 @@
               ></v-checkbox>
             </v-form>
             <center>
-              <v-btn color="primary" width="200px" rounded big @click="validate">Login</v-btn>
+              <v-btn color="primary" width="200px" rounded big @click="validate"
+                >Login</v-btn
+              >
             </center>
           </v-card-text>
         </v-card>
@@ -62,7 +79,9 @@ export default {
   data() {
     return {
       valid: true,
-      name: "",
+      username: "",
+      fname: "",
+      lname: "",
       nameRules: [
         v => !!v || "Name is required",
         v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
@@ -89,24 +108,22 @@ export default {
       if (this.$refs.form.validate()) {
         var account = {
           account: {
-            username: this.name,
+            username: this.username,
             password: this.password
           },
           name: {
-            firstname: "chervz",
-            lastname: "tanilon"
+            firstname: this.fname,
+            lastname: this.lname
           },
           email: this.email,
-          position: "President",
-          barangay: "Guizo"
+          position: this.position,
         };
-
         const url = "http://localhost:4000/admin/register";
         axios
           .post(url, account)
           .then(res => {
-            console.info("saved!");
-            console.log(res.data);
+            alert(res.data);
+            
           })
           .catch(err => {
             console.error("error!");
