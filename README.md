@@ -11,6 +11,8 @@ npm install --save
 ```
 - Make a document in database the same schema structure below:
 ```
+staffs document
+
 "account": {
     "username": "admin",
     "password": "admin"
