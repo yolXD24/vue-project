@@ -118,7 +118,7 @@ export default {
           email: this.email,
           position: this.position,
         };
-        const url = "http://localhost:4000/admin/register";
+        const url = "http://localhost:4000/admin/update";
         axios
           .post(url, account)
           .then(res => {
