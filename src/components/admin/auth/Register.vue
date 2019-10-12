@@ -62,9 +62,7 @@
               ></v-checkbox>
             </v-form>
             <center>
-              <v-btn color="primary" width="200px" rounded big @click="validate"
-                >Login</v-btn
-              >
+              <v-btn color="primary" width="200px" rounded big @click="validate">Login</v-btn>
             </center>
           </v-card-text>
         </v-card>
@@ -107,23 +105,21 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         var account = {
-          account: {
-            username: this.username,
-            password: this.password
-          },
+          username: this.username,
+          password: this.password,
+
           name: {
             firstname: this.fname,
             lastname: this.lname
           },
           email: this.email,
-          position: this.position,
+          position: this.position
         };
-        const url = "http://localhost:4000/admin/update";
+        const url = "http://localhost:4000/admin/register";
         axios
           .post(url, account)
           .then(res => {
             alert(res.data);
-            
           })
           .catch(err => {
             console.error("error!");

@@ -29,6 +29,7 @@ routes.route('/register').post((req, res) => {
             let staff = new models.Staffs(req.body);
             staff.save().then(() => {
                 res.status(200).json(req.body.name.firstname + ' is added successfully');
+                console.log(staff);
             })
                 .catch(() => {
                     res.send('Name/email exists already! Try another one.');
