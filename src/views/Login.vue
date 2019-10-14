@@ -1,5 +1,5 @@
 <template>
-  <v-container id="body">
+  <v-container id="body" fluid>
     <v-row align="center" justify="center">
       <v-col cols="14" sm="10" md="6">
         <br />
@@ -46,8 +46,11 @@
 
 <style scoped>
 #body{
-  background: url("https://images.pexels.com/photos/995043/pexels-photo-995043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
-  background-size: cover;
+  height: 100%;
+  width: 100%!important;
+  background:linear-gradient(rgba(0, 0, 0, 0.400),rgba(0, 0, 0, 0.400)), url("https://images.pexels.com/photos/995043/pexels-photo-995043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+
+  background-size: 100%;
   background-position: center;
   background-attachment: fixed;
 }

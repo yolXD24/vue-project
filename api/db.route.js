@@ -117,7 +117,7 @@ routes.route("/history/transactions").post((req, res) => {
        3.this is the transaction object
               {
                 name:name of user,
-              request:type of document request by the user,
+                request:type of document request by the user,
                 officer:officer in charge,
                 date:date of transaction
               },
