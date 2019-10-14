@@ -192,9 +192,9 @@ export default {
             username: this.username,
             firstname: this.fname,
             lastname: this.lname,
-            admin: false,
             email: this.email,
             position: this.position,
+            admin: false,
             password: this.password
           };
           const url = "http://localhost:4000/admin/register";

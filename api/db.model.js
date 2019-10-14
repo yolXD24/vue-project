@@ -31,6 +31,9 @@ let Staff = new Schema({
     position: {
         type: String
     },
+    admin : {
+        type: Boolean
+    },
     password: {
         type: String
     }
