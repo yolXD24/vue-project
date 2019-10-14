@@ -1,6 +1,3 @@
 module.exports = {
-  presets: ["@vue/app"],
-  rules: {
-    "no-console": "off"
-  }
+  presets: ["@vue/app"]
 };

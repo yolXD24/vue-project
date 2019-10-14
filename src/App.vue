@@ -1,30 +1,27 @@
 <template>
-  <v-app>
-    <v-content>
-      <div id="app">
-        <router-view />
-      </div>
+  <v-app app id="body" >
+    <Header v-if="token !== null" />
+    <v-content dark>
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
+
 <script>
+import Header from "@/components/Menu";
+import Login from "@/views/Login";
 
 export default {
-
   name: "App",
-  // data() {
-  //   return {
-  //     authenticated: localStorage.getItem("jwt")
-  //   };
-  // },
-  // mounted() {
-  //   console.log(localStorage.getItem('jwt'))
-  //   if (localStorage.getItem('jwt') === null) {
-  //     this.$router.replace('/signin')
-  //   } else{
-  //    this.$router.replace('/home')
-  //   }
-  // }
+  components: {
+    Login,
+    Header
+  },
+  data() {
+    return {
+      token: localStorage.getItem("token"),
+    };
+  }
 };
 </script>

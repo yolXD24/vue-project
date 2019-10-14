@@ -1,23 +1,15 @@
-# my-new-project
+# project-error
 
 ## Project setup
 ```
-npm install --save
+npm install
 ```
-### Installing dependencies at backend side
-```
-cd api
-npm install --save
-```
-### Compile front-end for hot reloading
+
+### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
-### Running the back-end server
-```
-cd api
-node server.js
-```
+
 ### Compiles and minifies for production
 ```
 npm run build
