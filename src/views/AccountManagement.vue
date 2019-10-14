@@ -1,87 +1,110 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
+<v-container fluid grid-list-xl>
+  <v-row justify="center">
+    <v-col cols="11">
+      <v-card-text class="display-1 text-center font-weight-light">
+        Accounts Management
+      </v-card-text>
+      <v-card class="elevation-4 text-capitalize">
+        <template>
+  <v-data-table
+    :headers="headers"
+    :items="accounts"
+    class="elevation-1"
   >
-    <v-row justify="center">
-      <v-col cols="11">
-            <v-card-text class="display-1 text-center font-weight-light">
-                  Accounts Management
-            </v-card-text>
-        <v-card class="elevation-4"
-        >
-          <v-data-table
-            :headers="headers"
-            :items="items"          />
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+        <template v-slot:item.action="{ item }">
+        <v-icon small @click="deleteItem(item)">
+          mdi-delete
+        </v-icon>
+</template>
+  </v-data-table>
+</template>
+      </v-card>
+    </v-col>
+        <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+      {{ text }}
+      <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
+  </v-row>
+</v-container>
 </template>
 
+
 <script>
+import axios from "axios";
+
 export default {
-  data: () => ({
-    headers: [
-      {
-        sortable: true,
-        text: "Name",
-        value: "name"
-      },
-      {
-        sortable: true,
-        text: "Request",
-        value: "Request"
-      },
-      {
-        sortable: true,
-        text: "Officer In charge",
-        value: "oic"
-      },
-      {
-        sortable: true,
-        text: "Date",
-        value: "Date"
-      }
-    ],
-    items: [
-      {
-        name: "Dakota Rice",
-        Request: "Barangay Clearance",
-        oic: "Oud-Tunrhout",
-        Date: "10/10/19"
-      },
-      {
-        name: "Minerva Hooper",
-        Request: "Barangay Clearance",
-        oic: "Sinaai-Waas",
-        Date: "10/10/19"
-      },
-      {
-        name: "Sage Rodriguez",
-        Request: "Barangay Clearance",
-        oic: "Overland Park",
-        Date: "10/10/19"
-      },
-      {
-        name: "Philip Chanley",
-        Request: "Barangay Clearance",
-        oic: "Gloucester",
-        Date: "10/10/19"
-      },
-      {
-        name: "Doris Greene",
-        Request: "Barangay Clearance",
-        oic: "Feldkirchen in Kārnten",
-        Date: "10/10/19"
-      },
-      {
-        name: "Mason Porter",
-        Request: "Barangay Clearance",
-        oic: "Gloucester",
-        Date: "10/10/19"
-      }
-    ]
-  })
+  data() {
+    return {
+      snackbar: false,
+      text: "",
+      timeout: 2000,
+      headers: [
+        {
+          sortable: true,
+          text: "Username",
+          value: "username"
+        },
+        {
+          sortable: true,
+          text: "Firstname",
+          value: "firstname"
+        },
+        {
+          sortable: true,
+          text: "Lastname",
+          value: "lastname"
+        },
+        {
+          sortable: true,
+          text: "Position",
+          value: "position"
+        },
+        {
+          sortable: false,
+          text: "Action",
+          value: "action"
+        }
+      ],
+      accounts: [],
+      editedIndex: -1
+    };
+  },
+  mounted() {
+    this.initialize();
+  },
+
+  methods: {
+    initialize() {
+      const url = "http://localhost:4000/admin/accounts";
+      axios
+        .post(url, {})
+        .then(res => {
+          this.accounts = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    deleteItem(item) {
+      const index = this.accounts.indexOf(item);
+      this.accounts.splice(index, 1);
+      const url = "http://localhost:4000/admin/deleteAccount";
+      axios
+        .post(url, { _id: item._id })
+        .then(res => {
+          if (res.data) {
+            this.text = "Deleted successfully!";
+            this.snackbar = true;
+          } else {
+            this.text = "Deleted Failed!";
+            this.snackbar = true;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
 };
 </script>

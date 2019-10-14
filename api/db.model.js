@@ -38,7 +38,15 @@ let Staff = new Schema({
     collection: 'staff'
 })
 
-
+/**
+ * Need object model for transaction
+ *  {
+        name : name of user,
+        request : type of document request by the user,
+        officer : officer in charge(id of the officer(maybe)),
+        date:date of transaction
+    },
+ */
 const Admins = mongoose.model('Admin', Admin);
 const Staffs = mongoose.model('Staff', Staff);
 module.exports = { Admins, Staffs };

@@ -51,11 +51,17 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
+
 export default {
-  data(){
-    return{
-     credentials:JSON.parse(localStorage.getItem("user"))
-    }
+  data() {
+    return {
+      credentials: jwt_decode(localStorage.getItem("token")).id
+    };
+  },
+  mounted() {
+
+    
   }
 };
 </script>

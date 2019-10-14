@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
+
 export default {
   data: () => ({
     headers: [
@@ -33,57 +35,32 @@ export default {
       {
         sortable: true,
         text: "Request",
-        value: "Request"
+        value: "request"
       },
       {
         sortable: true,
         text: "Officer In charge",
-        value: "oic"
+        value: "officer"
       },
       {
         sortable: true,
         text: "Date",
-        value: "Date"
+        value: "date"
       }
     ],
-    items: [
-      {
-        name: "Dakota Rice",
-        Request: "Barangay Clearance",
-        oic: "Oud-Tunrhout",
-        Date: "10/10/19"
-      },
-      {
-        name: "Minerva Hooper",
-        Request: "Barangay Clearance",
-        oic: "Sinaai-Waas",
-        Date: "10/10/19"
-      },
-      {
-        name: "Sage Rodriguez",
-        Request: "Barangay Clearance",
-        oic: "Overland Park",
-        Date: "10/10/19"
-      },
-      {
-        name: "Philip Chanley",
-        Request: "Barangay Clearance",
-        oic: "Gloucester",
-        Date: "10/10/19"
-      },
-      {
-        name: "Doris Greene",
-        Request: "Barangay Clearance",
-        oic: "Feldkirchen in Kārnten",
-        Date: "10/10/19"
-      },
-      {
-        name: "Mason Porter",
-        Request: "Barangay Clearance",
-        oic: "Gloucester",
-        Date: "10/10/19"
-      }
-    ]
+    transactions: [],
+    mounted(){
+      const url = "http://localhost:4000/history/transactions";
+      const id = jwt_decode(localStorage.getItem("token")).id._id
+      axios
+        .post(url, {_id : id})
+        .then(res => {
+          this.transactions = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   })
 };
 </script>

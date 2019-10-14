@@ -47,13 +47,7 @@
 
 <script>
 import  axios  from "axios";
-import jwt_decode from 'jwt-decode';
-
-
 export default {
-  props: {
-    source: String
-  },
   data() {
     return {
       username: "",
@@ -73,17 +67,12 @@ export default {
       };
       const url = "http://localhost:4000/admin/login";
       axios.post(url, credentials).then(res => {
-        console.log(res.data)
         if (this.username != "" && this.password != "") {
           if (res.data.auth) {
             this.text = "Welcome " + this.username + " !";
             this.snackbar = true;
-            var decoded = jwt_decode(res.data.token);
-            console.log(decoded)
             localStorage.setItem("token", res.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
             location.reload(true)
-            // this.$router.push({path:'/'})
           } else {
             this.password = "";
             this.username = "";

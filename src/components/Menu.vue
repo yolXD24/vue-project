@@ -16,7 +16,7 @@
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-            <v-list-item active-class="blue darken-2 white--text text--accent-4" v-for="item in admin_items" :key="item.title" :to="item.link" @click.stop="drawer = !drawer" v-if="is_admin">
+            <v-list-item active-class="blue darken-2 white--text text--accent-4" v-for="item in admin_items" :key="item.title" :to="item.link" @click.stop="drawer = !drawer" :v-if="is_admin">
                 <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>
                 </v-list-item-icon>
@@ -37,9 +37,11 @@
 </div>
 </template>
 <script>
+import jwt_decode from "jwt-decode";
+
 export default {
     data: () => ({
-        is_admin: JSON.parse(localStorage.getItem("user")).admin,
+        is_admin: jwt_decode(localStorage.getItem("token")).id.admin,
         items: [{
                 title: "Home",
                 icon: "mdi-chart-bubble",
