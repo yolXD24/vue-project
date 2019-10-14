@@ -5,6 +5,7 @@ import Login from "./views/Login.vue";
 import About from "./views/About.vue";
 import Register from "./views/Register.vue";
 import TransactionHistory from "./views/History.vue";
+import AccountManagement from "./views/AccountManagement.vue";
 import NotFound from "./views/404.vue";
 
 Vue.use(Router);
@@ -75,6 +76,20 @@ var router = new Router({
                 }
             }
         },
+        {
+            path: "/admin/AccountManagement",
+            component: AccountManagement,
+            meta: {
+                tokenRequired: true
+            },
+            beforeEnter: (to, from, next) => {
+                if (localStorage.getItem('token') === null) {
+                    next('/login')
+                } else {
+                    next()
+                }
+            }
+        },
 
         {
             path: "/login",
@@ -118,7 +133,6 @@ var router = new Router({
         },
     ]
 });
-
 
 
 export default router;

@@ -47,6 +47,8 @@
 
 <script>
 import  axios  from "axios";
+import jwt_decode from 'jwt-decode';
+
 
 export default {
   props: {
@@ -76,6 +78,8 @@ export default {
           if (res.data.auth) {
             this.text = "Welcome " + this.username + " !";
             this.snackbar = true;
+            var decoded = jwt_decode(res.data.token);
+            console.log(decoded)
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
             location.reload(true)
