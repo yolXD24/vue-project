@@ -44,6 +44,14 @@
   </v-container>
 </template>
 
+<style scoped>
+#body{
+  background: url("https://images.pexels.com/photos/995043/pexels-photo-995043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+</style>
 
 <script>
 import  axios  from "axios";
