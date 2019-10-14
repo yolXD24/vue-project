@@ -1,55 +1,44 @@
 <template>
-  <v-container id="body" fluid>
-    <v-row align="center" justify="center">
-      <v-col cols="14" sm="10" md="6">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <v-card>
-          <v-toolbar class="elevation-1">
-            <v-toolbar-title>Login form</v-toolbar-title>
-            <div class="flex-grow-1"></div>
-          </v-toolbar>
-          <v-card-text>
-            <v-text-field
-              label="Login"
-              v-model="username"
-              name="login"
-              prepend-icon="mdi-account"
-              type="text"
-            ></v-text-field>
-            <v-text-field
-              id="password"
-              v-model="password"
-              label="Password"
-              name="password"
-              prepend-icon="mdi-lock"
-              type="password"
-            ></v-text-field>
-            <center>
-              <v-btn color="primary" width="200" @click="login()" rounded>Login</v-btn>
-            </center>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
-      {{ text }}
-      <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
-    </v-snackbar>
-  </v-container>
+<v-container id="body" fluid>
+  <v-row align="center" justify="center">
+    <v-col cols="12" sm="10" md="4">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <v-card>
+        <br>
+        <v-card-title primary-title class="justify-center">
+          <div>
+            <div class="primary--text display-1 text--accent-2">Xpress_DocX</div>
+          </div>
+        </v-card-title>
+        <br>
+        <v-card-text>
+          <v-text-field label="Login" v-model="username" name="login" prepend-icon="mdi-account" type="text"></v-text-field>
+          <v-text-field id="password" v-model="password" label="Password" name="password" prepend-icon="mdi-lock" type="password"></v-text-field>
+          <br>
+          <center>
+            <v-btn color="primary" width="200" @click="login()" rounded>Login</v-btn>
+          </center>
+        </v-card-text>
+        <br>
+      </v-card>
+    </v-col>
+  </v-row>
+  <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+    {{ text }}
+    <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+  </v-snackbar>
+</v-container>
 </template>
 
 <style scoped>
-#body{
+#body {
   height: 100%;
-  width: 100%!important;
-  background:linear-gradient(rgba(0, 0, 0, 0.400),rgba(0, 0, 0, 0.400)), url("https://images.pexels.com/photos/995043/pexels-photo-995043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
-
+  width: 100% !important;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://images.unsplash.com/photo-1441205400075-68a01d4c5108?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1366&h=768&fit=crop&ixid=eyJhcHBfaWQiOjIzODd9");
   background-size: 100%;
   background-position: center;
   background-attachment: fixed;
@@ -57,7 +46,7 @@
 </style>
 
 <script>
-import  axios  from "axios";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -83,7 +72,7 @@ export default {
             this.text = "Welcome " + this.username + " !";
             this.snackbar = true;
             localStorage.setItem("token", res.data.token);
-            location.reload(true)
+            location.reload(true);
           } else {
             this.password = "";
             this.username = "";

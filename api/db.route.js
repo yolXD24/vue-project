@@ -90,7 +90,7 @@ routes.route("/admin/register").post((req, res) => {
 // admin retrieve all accounts
 routes.route("/admin/accounts").post((req, res) => {
     // ok na ni 
-    models.Staffs.find({}, { password: 0, admin: 0 }, (err, account) => {
+    models.Staffs.find({ admin: false }, { password: 0, admin: 0 }, (err, account) => {
         res.status(200).json(account);
     });
 });
