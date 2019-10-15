@@ -1,7 +1,9 @@
 const express = require("express");
 const routes = express.Router();
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
+const simplecrypt = require("simplecrypt");
+const sc = simplecrypt();
 
 // Require Post model in our routes module
 let models = require("./db.model");
@@ -15,18 +17,26 @@ routes.route("/login").post((req, res) => {
                 res.json(err);
             } else {
                 if (admin !== null) {
-                    bcrypt.compare(
-                        req.body.account.password,
-                        admin.password,
-                        (err, resp) => {
-                            if (resp) {
-                                let token = jwt.sign({ id: admin }, "docxpress");
-                                res.status(200).send({ auth: true, token: token, user: admin });
-                            } else {
-                                return res.status(202).send({ auth: false, token: null });
-                            }
-                        }
-                    );
+                    if (sc.decrypt(digest) === req.body.account.password) {
+                        var default_pass = req.body.account.password === "docxpress.default";
+                        let token = jwt.sign({ id: admin }, "docxpress");
+                        res.status(200).send({ auth: true, token: token, default_pass: default_pass });
+                    } else {
+                        return res.status(202).send({ auth: false, token: null });
+                    }
+                    // bcrypt.compare(
+                    //     req.body.account.password,
+                    //     admin.password,
+                    //     (err, resp) => {
+                    //         if (resp) {
+                    //             var default_pass = req.body.account.password === "docxpress.default";
+                    //             let token = jwt.sign({ id: admin }, "docxpress");
+                    //             res.status(200).send({ auth: true, token: token, default_pass: default_pass });
+                    //         } else {
+                    //             return res.status(202).send({ auth: false, token: null });
+                    //         }
+                    //     }
+                    // );
                 } else {
                     return res.status(202).send({ auth: false, token: null });
                 }
@@ -34,37 +44,6 @@ routes.route("/login").post((req, res) => {
         }
     );
 });
-
-routes.route("/admin/login").post((req, res) => {
-    var default_pass = req.body.account.password === "docxpress.default";
-    models.Admins.findOne({ username: req.body.account.username },
-        (err, admin) => {
-            if (err) {
-                res.json(err);
-            } else {
-                if (admin !== null) {
-                    bcrypt.compare(
-                        req.body.account.password,
-                        admin.password,
-                        (err, resp) => {
-                            if (resp) {
-                                let token = jwt.sign({ id: admin }, "docxpress");
-                                console.log(default_pass)
-                                console.log(token)
-                                res.status(200).send({ auth: true, token: token, default_pass: default_pass });
-                            } else {
-                                return res.status(202).send({ auth: false, token: null });
-                            }
-                        }
-                    );
-                } else {
-                    return res.status(202).send({ auth: false, token: null });
-                }
-            }
-        }
-    );
-});
-
 routes.route("/admin/register").post((req, res) => {
     // ok na ni encrytion added !
     models.Staffs.find({ username: req.body.username, email: req.body.email },
@@ -72,9 +51,9 @@ routes.route("/admin/register").post((req, res) => {
             if (account.length) {
                 res.status(200).json({ exist: true });
             } else {
-                bcrypt.hash(req.body.password, 10, function(err, hash) {
-                    // Store hash in database
+                sc.encrypt(req.body.password, (err, hash) => {
                     req.body.password = req.body.password = hash;
+                    console.log(hash)
                     let staff = new models.Staffs(req.body);
                     staff
                         .save()
@@ -86,6 +65,21 @@ routes.route("/admin/register").post((req, res) => {
                             throw err;
                         });
                 });
+                console.log(digest);
+                // bcrypt.hash(req.body.password, 10, function (err, hash) {
+                //     // Store hash in database
+                //     req.body.password = req.body.password = hash;
+                //     let staff = new models.Staffs(req.body);
+                //     staff
+                //         .save()
+                //         .then(() => {
+                //             res.status(200).json({ exist: false });
+                //         })
+                //         .catch(err => {
+                //             res.status(200).json({ exist: true });
+                //             throw err;
+                //         });
+                // });
             }
         }
     );
