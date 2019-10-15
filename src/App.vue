@@ -23,7 +23,11 @@
 <script>
 import Header from "@/components/Menu";
 import Login from "@/views/Login";
-// import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs";
+import debounce from "lodash.debounce";
+const METHODS = {
+  BCRYPT: "bcrypt"
+};
 import jwt_decode from "jwt-decode";
 
 
@@ -36,13 +40,17 @@ export default {
   data() {
     return {
       token: localStorage.getItem("token"),
-      is_default_password: true
+      is_default_password: true,
     };
   },
   mounted() {
     this.is_default_password = bcrypt.compareSync('docxpress.default', jwt_decode(this.token).id.password)
     console.log(this.token)
-
+  },
+  created() {
+  },
+  methods: {
+    
   }
 };
 </script>
