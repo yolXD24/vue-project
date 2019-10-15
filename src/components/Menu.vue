@@ -76,7 +76,7 @@ export default {
     methods: {
         logout() {
             localStorage.removeItem("token");
-            localStorage.removeItem("user");
+            localStorage.removeItem("default");
             location.reload(true);
         }
     },

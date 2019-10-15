@@ -77,6 +77,7 @@ export default {
       axios.post(url, credentials).then(res => {
         if (this.username != "" && this.password != "") {
           if (res.data.auth) {
+            localStorage.setItem("default", JSON.stringify(res.data.default_pass));
             this.text = "Welcome " + this.username + " !";
             this.snackbar = true;
             localStorage.setItem("token", res.data.token);

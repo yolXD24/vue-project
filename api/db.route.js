@@ -36,6 +36,7 @@ routes.route("/login").post((req, res) => {
 });
 
 routes.route("/admin/login").post((req, res) => {
+    var default_pass = req.body.account.password === "docxpress.default";
     models.Admins.findOne({ username: req.body.account.username },
         (err, admin) => {
             if (err) {
@@ -48,7 +49,9 @@ routes.route("/admin/login").post((req, res) => {
                         (err, resp) => {
                             if (resp) {
                                 let token = jwt.sign({ id: admin }, "docxpress");
-                                res.status(200).send({ auth: true, token: token });
+                                console.log(default_pass)
+                                console.log(token)
+                                res.status(200).send({ auth: true, token: token, default_pass: default_pass });
                             } else {
                                 return res.status(202).send({ auth: false, token: null });
                             }
@@ -128,33 +131,27 @@ routes.route("/transactions").post((req, res) => {
       */
 });
 
-<<
-<< << < HEAD
-module.exports = routes; ===
-=== =
-routes.route('/code').post((req, res) => {
-    //THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
-    //IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :)
-    function makeid(length) {
-        var result = '';
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        var charactersLength = characters.length;
-        for (var i = 0; i < length; i++) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-    }
-    // console.log(makeid(8));
-    //END HERE
+// routes.route('/code').post((req, res) => {
+//     //THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
+//     //IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :)
+//     function makeid(length) {
+//         var result = '';
+//         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+//         var charactersLength = characters.length;
+//         for (var i = 0; i < length; i++) {
+//             result += characters.charAt(Math.floor(Math.random() * charactersLength));
+//         }
+//         return result;
+//     }
+//     // console.log(makeid(8));
+//     //END HERE
 
-    models.Codes.find({ code: req.body.code }, (err, doc) => {
-        console.log(doc);
-        res.json(doc);
-    }).catch(() => {
-        res.status(404).json('ID Not Found');
-    });
-});
+//     models.Codes.find({ code: req.body.code }, (err, doc) => {
+//         console.log(doc);
+//         res.json(doc);
+//     }).catch(() => {
+//         res.status(404).json('ID Not Found');
+//     });
+// });
 
->>>
->>> > d40766bf8684ebe2a8d5a777f37c3761fdbce9f5
 module.exports = routes;

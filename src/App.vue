@@ -23,11 +23,6 @@
 <script>
 import Header from "@/components/Menu";
 import Login from "@/views/Login";
-import bcrypt from "bcryptjs";
-import debounce from "lodash.debounce";
-const METHODS = {
-  BCRYPT: "bcrypt"
-};
 import jwt_decode from "jwt-decode";
 
 
@@ -44,13 +39,8 @@ export default {
     };
   },
   mounted() {
-    this.is_default_password = bcrypt.compareSync('docxpress.default', jwt_decode(this.token).id.password)
-    console.log(this.token)
-  },
-  created() {
-  },
-  methods: {
-    
+    // this.is_default_password = 
+    console.log(jwt_decode(this.token));
   }
 };
 </script>
