@@ -7,13 +7,13 @@
       <br />
       <br />
       <br />
-      <v-card>
+      <v-card class="mycard">
         <br>
         <center>
           <v-avatar size="100">
             <img position="center" src="@/assets/logo.png" alt="logo">
           </v-avatar>
-        <v-card-title primary-title class="justify-center">
+        <v-card-title primary-title class="justify-center ">
           <div>
             <div class="blue--text title  darken-1--text display-1 ">Xpress_DocX</div>
           </div>
@@ -47,9 +47,14 @@
   background-size: 100%;
   background-position: center;
   background-attachment: fixed;
+  background-repeat: no-repeat
 }
 #card-body{
   padding:0 50px;
+}
+.mycard{
+  opacity: 0.8!important;
+
 }
 </style>
 
@@ -77,10 +82,10 @@ export default {
       axios.post(url, credentials).then(res => {
         if (this.username != "" && this.password != "") {
           if (res.data.auth) {
-            localStorage.setItem("default", JSON.stringify(res.data.default_pass));
             this.text = "Welcome " + this.username + " !";
             this.snackbar = true;
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("default", res.data.default_pass);
             location.reload(true);
           } else {
             this.password = "";

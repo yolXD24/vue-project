@@ -7,7 +7,6 @@ let models = require("./db.model");
 
 routes.route("/login").post((req, res) => {
     // ok na  ni decrytion added !
-    var default_pass = req.body.account.password === "docxpress.default";
 
     models.Admins.findOne({ username: req.body.account.username },
         (err, admin) => {
@@ -18,9 +17,8 @@ routes.route("/login").post((req, res) => {
                     bcrypt.compare(req.body.account.password, admin.password)
                         .then(match => {
                             if (match) {
-                                console.log("correct")
                                 let token = jwt.sign({ id: admin }, "docxpress");
-                                res.status(200).send({ auth: true, token: token, user: admin });
+                                res.status(200).send({ auth: true, token: token, user: admin ,default_pass:req.body.account.password === "docxpress.default"});
                             } else {
                                 return res.status(202).send({ auth: false, token: null });
                             }

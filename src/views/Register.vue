@@ -1,33 +1,19 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
-
-  >
+  <v-container fluid grid-list-xl>
     <v-row justify="center">
-      <v-col
-        cols="11"
-      >
-        <v-card
-          title="Edit Profile"
-          text="Complete your profile"
-          class="elevation-4"
-        >
-       <v-toolbar class="elevation-1" color="grey lighten-3">
-            <v-toolbar-title >Add Staff</v-toolbar-title>
+      <v-col cols="11">
+        <v-card title="Edit Profile" text="Complete your profile" class="elevation-4">
+          <v-toolbar class="elevation-1" color="grey lighten-3">
+            <v-toolbar-title>Add Staff</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
-          <v-form  ref="form" v-model="valid" lazy-validation>
+          <v-form ref="form" v-model="valid" lazy-validation>
             <v-container class="py-0">
               <v-row>
-
-                <v-col
-                  cols="14"
-                  md="6"
-                >
+                <v-col cols="14" md="6">
                   <v-text-field
                     class="purple-input"
-                     v-model="username"
+                    v-model="username"
                     :counter="10"
                     :rules="usernameRules"
                     label="Username"
@@ -36,10 +22,7 @@
                   />
                 </v-col>
 
-                <v-col
-                  cols="14"
-                  md="6"
-                >
+                <v-col cols="14" md="6">
                   <v-text-field
                     label="Email Address"
                     class="purple-input"
@@ -50,10 +33,7 @@
                   />
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                >
+                <v-col cols="12" md="6">
                   <v-text-field
                     label="First Name"
                     class="purple-input"
@@ -65,81 +45,64 @@
                   />
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                >
+                <v-col cols="12" md="6">
                   <v-text-field
-                      v-model="lname"
-                      :counter="20"
-                      :rules="nameRules"
-                      label="Lastname"
-                      prepend-icon="mdi-rename-box"
-                      required
-                      class="purple-input"
+                    v-model="lname"
+                    :counter="20"
+                    :rules="nameRules"
+                    label="Lastname"
+                    prepend-icon="mdi-rename-box"
+                    required
+                    class="purple-input"
                   />
                 </v-col>
 
-                  <v-col
-                    cols="14"
-                    md="6"
-                  >
-                    <v-text-field
-                      class="purple-input"
-                      v-model="password"
-                      :rules="passwordRules"
-                      prepend-icon="mdi-lock"
-                      type="text"
-                      disabled
-                      label="Password"
-                      required
-                    />
-                  </v-col>
-
-                  <v-col
-                    cols="14"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="c_password"
-                      :rules="passwordRules"
-                      prepend-icon="mdi-lock"
-                      type="password"
-                      label=" Confirm Password"
-                      required
-                      class="purple-input"
-                    />
-                  </v-col>
-
-             
-                <v-col cols="12">
-                    <v-select
-                      v-model="position"
-                      :items="items"
-                      prepend-icon ="mdi-account-child-outline "
-                      :rules="[v => !!v || 'Position is required']"
-                      label="Position"
-                      required
-              >
-              </v-select>
+                <v-col cols="14" md="6">
+                  <v-text-field
+                    class="purple-input"
+                    v-model="password"
+                    :rules="passwordRules"
+                    prepend-icon="mdi-lock"
+                    type="text"
+                    disabled
+                    label="Password"
+                    required
+                  />
                 </v-col>
-                <v-col
-                  cols="12"
-                  class="text-center"
-                >
-                  <v-btn color="success" rounded="" @click="validate()">
-                    Add Staff Account
-                  </v-btn>
+
+                <v-col cols="14" md="6">
+                  <v-text-field
+                    v-model="c_password"
+                    :rules="passwordRules"
+                    prepend-icon="mdi-lock"
+                    type="password"
+                    label=" Confirm Password"
+                    required
+                    class="purple-input"
+                  />
+                </v-col>
+
+                <v-col cols="12">
+                  <v-select
+                    v-model="position"
+                    :items="items"
+                    prepend-icon="mdi-account-child-outline "
+                    :rules="[v => !!v || 'Position is required']"
+                    label="Position"
+                    required
+                  ></v-select>
+                </v-col>
+                <v-col cols="12" class="text-center">
+                  <v-btn color="success" rounded @click="validate()">Add Staff Account</v-btn>
                 </v-col>
               </v-row>
             </v-container>
           </v-form>
-                <br>
-
+          <br />
         </v-card>
       </v-col>
     </v-row>
-       <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
       {{ text }}
       <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
@@ -180,7 +143,6 @@ export default {
         v => !!v || "E-mail is required",
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
-
       position: null,
       items: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
     };

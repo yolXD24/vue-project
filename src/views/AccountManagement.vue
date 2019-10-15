@@ -82,7 +82,6 @@ export default {
       axios
         .post(url, {})
         .then(res => {
-          console.log(jwt_decode(res.data.accounts))
           this.accounts = jwt_decode(res.data.accounts).id;
         })
         .catch(err => {
