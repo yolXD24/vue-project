@@ -21,6 +21,8 @@ routes.route("/login").post((req, res) => {
                                 console.log("correct")
                                 let token = jwt.sign({ id: admin }, "docxpress");
                                 res.status(200).send({ auth: true, token: token, user: admin });
+                            } else {
+                                return res.status(202).send({ auth: false, token: null });
                             }
                         })
                 } else {
