@@ -9,13 +9,18 @@
       <br />
       <v-card>
         <br>
+        <center>
+          <v-avatar size="100">
+            <img position="center" src="@/assets/logo.png" alt="logo">
+          </v-avatar>
         <v-card-title primary-title class="justify-center">
           <div>
-            <div class="primary--text display-1 text--accent-2">Xpress_DocX</div>
+            <div class="blue--text title  darken-1--text display-1 ">Xpress_DocX</div>
           </div>
         </v-card-title>
-        <br>
-        <v-card-text>
+        </center>
+
+        <v-card-text id="card-body">
           <v-text-field label="Login" v-model="username" name="login" prepend-icon="mdi-account" type="text"></v-text-field>
           <v-text-field id="password" v-model="password" label="Password" name="password" prepend-icon="mdi-lock" type="password"></v-text-field>
           <br>
@@ -42,6 +47,9 @@
   background-size: 100%;
   background-position: center;
   background-attachment: fixed;
+}
+#card-body{
+  padding:0 50px;
 }
 </style>
 

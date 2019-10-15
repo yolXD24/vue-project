@@ -32,6 +32,8 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+
 
 export default {
   data() {
@@ -80,7 +82,8 @@ export default {
       axios
         .post(url, {})
         .then(res => {
-          this.accounts = res.data;
+          console.log(jwt_decode(res.data.accounts))
+          this.accounts = jwt_decode(res.data.accounts).id;
         })
         .catch(err => {
           console.log(err);

@@ -89,7 +89,8 @@
                       v-model="password"
                       :rules="passwordRules"
                       prepend-icon="mdi-lock"
-                      type="password"
+                      type="text"
+                      disabled
                       label="Password"
                       required
                     />
@@ -168,7 +169,7 @@ export default {
         v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
         v => (v && v.length <= 20) || "Name must be less than 20 characters"
       ],
-      password: "",
+      password: "docxpress.default",
       passwordRules: [
         v => !!v || "Password is required",
         v => /^[A-Z a-z0-9.]+$/.test(v) || "Password must be valid",
@@ -219,7 +220,6 @@ export default {
         } else {
           this.text = "Passwords don't match!";
           this.snackbar = true;
-          this.password = null;
           this.c_password = null;
         }
       }

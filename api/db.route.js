@@ -48,7 +48,7 @@ routes.route("/admin/login").post((req, res) => {
                         (err, resp) => {
                             if (resp) {
                                 let token = jwt.sign({ id: admin }, "docxpress");
-                                res.status(200).send({ auth: true, token: token, user: admin });
+                                res.status(200).send({ auth: true, token: token });
                             } else {
                                 return res.status(202).send({ auth: false, token: null });
                             }
@@ -90,8 +90,9 @@ routes.route("/admin/register").post((req, res) => {
 // admin retrieve all accounts
 routes.route("/admin/accounts").post((req, res) => {
     // ok na ni 
-    models.Staffs.find({ admin: false }, { password: 0, admin: 0 }, (err, account) => {
-        res.status(200).json(account);
+    models.Staffs.find({ admin: false }, { password: 0 }, (err, account) => {
+        let token = jwt.sign({ id: account }, "docxpress");
+        res.status(200).send({ accounts: token });
     });
 });
 
@@ -127,4 +128,5 @@ routes.route("/history/transactions").post((req, res) => {
       */
 });
 
+module.exports = routes;
 module.exports = routes;
