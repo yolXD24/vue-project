@@ -1,62 +1,28 @@
 const express = require("express");
 const routes = express.Router();
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-
+var simplecrypt = require("simplecrypt");
+var sc = simplecrypt();
 // Require Post model in our routes module
 let models = require("./db.model");
 
 routes.route("/login").post((req, res) => {
     // ok na  ni decrytion added !
-
-    models.Admins.findOne({ username: req.body.account.username },
-        (err, admin) => {
-            if (err) {
-                res.json(err);
-            } else {
-                if (admin !== null) {
-                    bcrypt.compare(
-                        req.body.account.password,
-                        admin.password,
-                        (err, resp) => {
-                            if (resp) {
-                                let token = jwt.sign({ id: admin }, "docxpress");
-                                res.status(200).send({ auth: true, token: token, user: admin });
-                            } else {
-                                return res.status(202).send({ auth: false, token: null });
-                            }
-                        }
-                    );
-                } else {
-                    return res.status(202).send({ auth: false, token: null });
-                }
-            }
-        }
-    );
-});
-
-routes.route("/admin/login").post((req, res) => {
     var default_pass = req.body.account.password === "docxpress.default";
+
     models.Admins.findOne({ username: req.body.account.username },
         (err, admin) => {
             if (err) {
                 res.json(err);
             } else {
                 if (admin !== null) {
-                    bcrypt.compare(
-                        req.body.account.password,
-                        admin.password,
-                        (err, resp) => {
-                            if (resp) {
-                                let token = jwt.sign({ id: admin }, "docxpress");
-                                console.log(default_pass)
-                                console.log(token)
-                                res.status(200).send({ auth: true, token: token, default_pass: default_pass });
-                            } else {
-                                return res.status(202).send({ auth: false, token: null });
-                            }
-                        }
-                    );
+                    admin.password = sc.encrypt(admin.password);
+                    var pass = sc.decrypt(admin.password);
+                    console.log(pass)
+                    if (req.body.account.password === pass) {
+                        let token = jwt.sign({ id: admin }, "docxpress");
+                        res.status(200).send({ auth: true, token: token, user: admin });
+                    }
                 } else {
                     return res.status(202).send({ auth: false, token: null });
                 }
@@ -64,6 +30,7 @@ routes.route("/admin/login").post((req, res) => {
         }
     );
 });
+
 
 routes.route("/admin/register").post((req, res) => {
     // ok na ni encrytion added !
@@ -72,7 +39,7 @@ routes.route("/admin/register").post((req, res) => {
             if (account.length) {
                 res.status(200).json({ exist: true });
             } else {
-                bcrypt.hash(req.body.password, 10, function(err, hash) {
+                bcrypt.hash(req.body.password, 10, function (err, hash) {
                     // Store hash in database
                     req.body.password = req.body.password = hash;
                     let staff = new models.Staffs(req.body);
