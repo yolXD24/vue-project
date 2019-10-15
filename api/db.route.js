@@ -1,8 +1,7 @@
 const express = require("express");
 const routes = express.Router();
 const jwt = require("jsonwebtoken");
-var simplecrypt = require("simplecrypt");
-var sc = simplecrypt();
+const bcrypt = require("bcryptjs");
 // Require Post model in our routes module
 let models = require("./db.model");
 
@@ -16,13 +15,14 @@ routes.route("/login").post((req, res) => {
                 res.json(err);
             } else {
                 if (admin !== null) {
-                    admin.password = sc.encrypt(admin.password);
-                    var pass = sc.decrypt(admin.password);
-                    console.log(pass)
-                    if (req.body.account.password === pass) {
-                        let token = jwt.sign({ id: admin }, "docxpress");
-                        res.status(200).send({ auth: true, token: token, user: admin });
-                    }
+                    bcrypt.compare(req.body.account.password, admin.password)
+                        .then(match => {
+                            if (match) {
+                                console.log("correct")
+                                let token = jwt.sign({ id: admin }, "docxpress");
+                                res.status(200).send({ auth: true, token: token, user: admin });
+                            }
+                        })
                 } else {
                     return res.status(202).send({ auth: false, token: null });
                 }
@@ -31,7 +31,22 @@ routes.route("/login").post((req, res) => {
     );
 });
 
-
+//SCHEMA STRUCTURE FOR ADMIN
+/*
+{
+    "_id": {
+      "$oid": "5da55d3f27358305fc4727fb"
+    },
+    "username": "yol",
+    "firstname": "Yol",
+    "lastname": "Torres",
+    "email": "yol@gmail.com",
+    "position": "Brgy. Captain",
+    "admin": true,
+    "password": "$2a$10$dvowwPCzCERV0le/0tPJCey/UvsRbPxn3O3L/mt9oWJkLbqJkKxn.",
+    "__v": 0
+  }
+*/
 routes.route("/register").post((req, res) => {
     // ok na ni encrytion added !
     models.Staffs.find({ username: req.body.username, email: req.body.email },
@@ -53,6 +68,9 @@ routes.route("/register").post((req, res) => {
                             throw err;
                         });
                 });
+
+                let encpass = sc.encrypt(req.body.password);
+
             }
         }
     );
