@@ -1,8 +1,7 @@
 const express = require("express");
 const routes = express.Router();
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-
+const bcrypt = require("bcryptjs");
 // Require Post model in our routes module
 let models = require("./db.model");
 
@@ -15,19 +14,15 @@ routes.route("/login").post((req, res) => {
                 res.json(err);
             } else {
                 if (admin !== null) {
-                    bcrypt.compare(
-                        req.body.account.password,
-                        admin.password,
-                        (err, resp) => {
-                            if (resp) {
-                                var default_pass = req.body.account.password === "docxpress.default";
+                    bcrypt.compare(req.body.account.password, admin.password)
+                        .then(match => {
+                            if (match) {
                                 let token = jwt.sign({ id: admin }, "docxpress");
-                                res.status(200).send({ auth: true, token: token, user: admin ,default_pass: default_pass});
+                                res.status(200).send({ auth: true, token: token, user: admin ,default_pass:req.body.account.password === "docxpress.default"});
                             } else {
                                 return res.status(202).send({ auth: false, token: null });
                             }
-                        }
-                    );
+                        })
                 } else {
                     return res.status(202).send({ auth: false, token: null });
                 }
@@ -36,27 +31,39 @@ routes.route("/login").post((req, res) => {
     );
 });
 
-routes.route("/admin/register").post((req, res) => {
+//SCHEMA STRUCTURE FOR ADMIN
+/*
+{
+    "_id": {
+      "$oid": "5da55d3f27358305fc4727fb"
+    },
+    "username": "yol",
+    "firstname": "Yol",
+    "lastname": "Torres",
+    "email": "yol@gmail.com",
+    "position": "Brgy. Captain",
+    "admin": true,
+    "password": "$2a$10$dvowwPCzCERV0le/0tPJCey/UvsRbPxn3O3L/mt9oWJkLbqJkKxn.",
+    "__v": 0
+  }
+*/
+routes.route("/register").post((req, res) => {
     // ok na ni encrytion added !
     models.Staffs.find({ username: req.body.username, email: req.body.email },
         (err, account) => {
             if (account.length) {
                 res.status(200).json({ exist: true });
             } else {
-                bcrypt.hash(req.body.password, 10, function (err, hash) {
-                    // Store hash in database
-                    req.body.password = req.body.password = hash;
-                    let staff = new models.Staffs(req.body);
-                    staff
-                        .save()
-                        .then(() => {
-                            res.status(200).json({ exist: false });
-                        })
-                        .catch(err => {
-                            res.status(200).json({ exist: true });
-                            throw err;
-                        });
-                });
+                let staff = new models.Staffs(req.body);
+                staff
+                    .save()
+                    .then(() => {
+                        res.status(200).json({ exist: false });
+                    })
+                    .catch(err => {
+                        res.status(200).json({ exist: true });
+                        throw err;
+                    });
             }
         }
     );

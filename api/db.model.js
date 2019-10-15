@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 // Define collection and schema for Post
 let Admin = new Schema({
@@ -70,13 +70,13 @@ let Staff = new Schema({
  */
 // Staff.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
 
-// Staff.pre("save", function (next) {
-//     if (!this.isModified("password")) {
-//         return next();
-//     }
-//     this.password = bcrypt.hashSync(this.password, 10);
-//     next();
-// });
+Staff.pre("save", function (next) {
+    if (!this.isModified("password")) {
+        return next();
+    }
+    this.password = bcrypt.hashSync(this.password, 10);
+    next();
+});
 
 const Admins = mongoose.model('Admin', Admin);
 const Staffs = mongoose.model('Staff', Staff);

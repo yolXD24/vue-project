@@ -1,20 +1,10 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
-  >
+  <v-container fluid grid-list-xl>
     <v-row justify="center">
       <v-col cols="11">
-            <v-card-text class="display-1 text-center font-weight-light">
-                  Transaction History
-            </v-card-text>
-        <v-card class="elevation-4"
-        >
-          <v-data-table
-            :headers="headers"
-            :items="items"
-            hide-default-footer
-          />
+        <v-card-text class="display-1 text-center font-weight-light">Transaction History</v-card-text>
+        <v-card class="elevation-4">
+          <v-data-table :headers="headers" :transactions="transactions" hide-default-footer />
         </v-card>
       </v-col>
     </v-row>
@@ -25,35 +15,39 @@
 import jwt_decode from "jwt-decode";
 
 export default {
-  data: () => ({
-    headers: [
-      {
-        sortable: true,
-        text: "Name",
-        value: "name"
-      },
-      {
-        sortable: true,
-        text: "Request",
-        value: "request"
-      },
-      {
-        sortable: true,
-        text: "Officer In charge",
-        value: "officer"
-      },
-      {
-        sortable: true,
-        text: "Date",
-        value: "date"
-      }
-    ],
-    transactions: [],
-    mounted(){
+  data () {
+    return {
+      headers:[],
+      transactions:[]
+    };
+  },
+    mounted() {
+      this.headers = [
+        {
+          sortable: true,
+          text: "Name",
+          value: "name"
+        },
+        {
+          sortable: true,
+          text: "Request",
+          value: "request"
+        },
+        {
+          sortable: true,
+          text: "Officer In charge",
+          value: "officer"
+        },
+        {
+          sortable: true,
+          text: "Date",
+          value: "date"
+        }
+      ];
       const url = "http://localhost:4000/history/transactions";
-      const id = jwt_decode(localStorage.getItem("token")).id._id
+      const id = jwt_decode(localStorage.getItem("token")).id._id;
       axios
-        .post(url, {_id : id})
+        .post(url, { _id: id })
         .then(res => {
           this.transactions = res.data;
         })
@@ -61,6 +55,5 @@ export default {
           console.log(err);
         });
     }
-  })
 };
 </script>
