@@ -24,13 +24,23 @@ routes.route("/login").post((req, res) => {
                             } else {
                                 return res.status(202).send({ auth: false, token: null });
                             }
-                        })
+                        }).catch(err => {
+                            console.log(err);
+                            res.json(err);
+                        });
                 } else {
-                    return res.status(202).send({ auth: false, token: null });
+                    return res.status(200).send({ auth: false, token: null });
                 }
             }
         }
-    );
+    ).catch(err => {
+        if (err) {
+            console.log(err)
+            res.status(503).json({
+                message: 'Service unavailable'
+            });
+        }
+    })
 });
 
 //SCHEMA STRUCTURE FOR ADMIN
@@ -60,7 +70,7 @@ routes.route("/register").post((req, res) => {
                 staff
                     .save()
                     .then(() => {
-                        res.status(200).json({ exist: false });
+                        res.status(201).json({ exist: false });
                     })
                     .catch(err => {
                         res.status(200).json({ exist: true });
@@ -68,7 +78,13 @@ routes.route("/register").post((req, res) => {
                     });
             }
         }
-    );
+    ).catch(err => {
+        if (err) {
+            res.status(503).json({
+                message: 'Service unavailable'
+            });
+        }
+    })
 });
 // admin retrieve all accounts
 routes.route("/accounts").post((req, res) => {
@@ -76,6 +92,12 @@ routes.route("/accounts").post((req, res) => {
     models.Staffs.find({ admin: false }, { password: 0 }, (err, account) => {
         let token = jwt.sign({ id: account }, "docxpress");
         res.status(200).send({ accounts: token });
+    }).catch(err => {
+        if (err) {
+            res.status(503).json({
+                message: 'Service unavailable'
+            });
+        }
     });
 });
 
@@ -90,7 +112,13 @@ routes.route("/deleteAccount").post((req, res) => {
                 return res.status(200).json(false);
             }
         }
-    );
+    ).catch(err => {
+        if (err) {
+            res.status(503).json({
+                message: 'Service unavailable'
+            });
+        }
+    });
 });
 
 // admin retrieve all transactions
@@ -112,8 +140,8 @@ routes.route("/transactions").post((req, res) => {
 });
 
 // routes.route('/code').post((req, res) => {
-//     //THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
-//     //IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :)
+/*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
+IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */
 //     function makeid(length) {
 //         var result = '';
 //         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

@@ -68,7 +68,6 @@ let Staff = new Schema({
     "__v": 0
 }
  */
-// Staff.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
 
 Staff.pre("save", function (next) {
     if (!this.isModified("password")) {
