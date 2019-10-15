@@ -56,23 +56,16 @@ routes.route("/register").post((req, res) => {
             if (account.length) {
                 res.status(200).json({ exist: true });
             } else {
-                bcrypt.hash(req.body.password, 10, function (err, hash) {
-                    // Store hash in database
-                    req.body.password = req.body.password = hash;
-                    let staff = new models.Staffs(req.body);
-                    staff
-                        .save()
-                        .then(() => {
-                            res.status(200).json({ exist: false });
-                        })
-                        .catch(err => {
-                            res.status(200).json({ exist: true });
-                            throw err;
-                        });
-                });
-
-                let encpass = sc.encrypt(req.body.password);
-
+                let staff = new models.Staffs(req.body);
+                staff
+                    .save()
+                    .then(() => {
+                        res.status(200).json({ exist: false });
+                    })
+                    .catch(err => {
+                        res.status(200).json({ exist: true });
+                        throw err;
+                    });
             }
         }
     );
