@@ -32,7 +32,7 @@ routes.route("/login").post((req, res) => {
 });
 
 
-routes.route("/admin/register").post((req, res) => {
+routes.route("/register").post((req, res) => {
     // ok na ni encrytion added !
     models.Staffs.find({ username: req.body.username, email: req.body.email },
         (err, account) => {
