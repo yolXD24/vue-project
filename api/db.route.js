@@ -41,22 +41,6 @@ routes.route("/login").post((req, res) => {
     })
 });
 
-//SCHEMA STRUCTURE FOR ADMIN
-/*
-{
-    "_id": {
-      "$oid": "5da55d3f27358305fc4727fb"
-    },
-    "username": "yol",
-    "firstname": "Yol",
-    "lastname": "Torres",
-    "email": "yol@gmail.com",
-    "position": "Brgy. Captain",
-    "admin": true,
-    "password": "$2a$10$dvowwPCzCERV0le/0tPJCey/UvsRbPxn3O3L/mt9oWJkLbqJkKxn.",
-    "__v": 0
-  }
-*/
 routes.route("/register").post((req, res) => {
     // ok na ni encrytion added !
     models.Staffs.find({ username: req.body.username, email: req.body.email },
@@ -84,6 +68,31 @@ routes.route("/register").post((req, res) => {
         }
     })
 });
+
+routes.route("/update").post((req, res) => {
+
+    models.Staffs.findById(req.body.id, (err, account) => {
+        account.username = req.body.username;
+        account.email = req.body.email;
+        account.firstname = req.body.firstname;
+        account.lastname = req.body.lastname;
+        account.password = req.body.password;
+        account.position = req.body.position;
+
+        account.save((err) => {
+            if (err) throw err;
+            console.log("Admin updated successfully");
+            res.status(200).json({ message: 'Admin is updated successfully' });
+        })
+    }).catch(err => {
+        if (err) {
+            res.status(503).json({
+                message: 'Service unavailable'
+            });
+        }
+    })
+
+})
 // admin retrieve all accounts
 routes.route("/accounts").post((req, res) => {
     // ok na ni 
