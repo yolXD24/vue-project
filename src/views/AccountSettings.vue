@@ -12,13 +12,15 @@
             <v-btn dark text @click="dialog = false">Cancel</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <AccountForm MyTitle= "Update Account" MyButton= "Update" Default_Password="" :MyUpdate="true"  :MyDisabled="false" />
+        <AccountForm MyTitle= "Update Account" MyButton= "Update" Default_Password="" :MyUpdate="true" :Info="userInfo"  :MyDisabled="false" />
       </v-card>
     </v-dialog>
   </v-row>
 </template>
 <script>
 import AccountForm from "@/components/AccountForm.vue";
+import jwt_decode from "jwt-decode";
+
 
 export default {
   components: {
@@ -29,7 +31,8 @@ export default {
       dialog: false,
       notifications: false,
       sound: true,
-      widgets: false
+      widgets: false,
+      userInfo : jwt_decode(localStorage.getItem("token")).id
     };
   }
 };

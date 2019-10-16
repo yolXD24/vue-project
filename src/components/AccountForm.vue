@@ -121,7 +121,8 @@ export default {
     MyButton: String,
     MyDisabled: Boolean,
     MyUpdate: Boolean,
-    Default_Password: String
+    Default_Password: String,
+    Info:Object
   },
   data() {
     return {
@@ -175,7 +176,7 @@ export default {
           if (!this.MyUpdate) {
             this.register(account,this.url+"register");
           } else {
-            account.id = jwt_decode(localStorage.getItem("token")).id._id;
+            account.id = this.Info._id;
             this.update(account, this.url+"update");
           }
         } else {
@@ -220,6 +221,15 @@ export default {
           this.text = "Something went wrong!";
           this.snackbar = true;
         });
+    }
+  },
+  mounted(){
+    if(this.Info !== null){
+      this. username = this.Info.username,
+      this.fname = this.Info.firstname,
+      this.lname = this.Info.lastname,
+      this.position= this.Info.position
+      this.email= this.Info.email
     }
   }
 };
