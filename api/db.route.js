@@ -57,7 +57,6 @@ routes.route("/register").post((req, res) => {
                     })
                     .catch(err => {
                         res.status(200).json({ exist: true });
-                        throw err;
                     });
             }
         }
@@ -69,7 +68,35 @@ routes.route("/register").post((req, res) => {
         }
     })
 });
+routes.route("/confirm_password").post((req, res) => {
+    console.log(req.body)
 
+    models.Staffs.findById(req.body.id, (err, account) => {
+        console.log("!account")
+
+        if (account !== null) {
+            bcrypt.compare(req.body.password, account.password)
+                .then(match => {
+                    if (match) {
+                        console.log("found")
+                        res.status(200).send({ error: false, confirm: true })
+                    } else {
+                        console.log("!found")
+
+                        res.status(200).send({ error: true, confirm: false })
+                        return
+                    }
+                }).catch(err => {
+                    console.log("!found")
+                    res.json(err);
+                });
+        } else {
+            res.status(200).send({ error: true, confirm: false })
+
+        }
+    })
+
+})
 routes.route("/update").post((req, res) => {
 
         models.Staffs.findById(req.body.id, (err, account) => {

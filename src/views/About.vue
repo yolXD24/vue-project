@@ -22,7 +22,8 @@
             position : {{credentials.position}}
           </h6>
           <center>
-         <AccountSettings @click="update" v-on:updated_info="updateInfo"/>   
+         <AccountSettings v-if ="confirmed" @click="update" v-on:updated_info="updateInfo"/>   
+         <ConfirmPassword v-if ="!confirmed" />
           </center>
         </v-card-text>
       </v-row>
@@ -34,14 +35,17 @@
 <script>
 import jwt_decode from "jwt-decode";
 import AccountSettings from "./AccountSettings.vue";
+import ConfirmPassword from "./ConfirmPassword.vue";
 export default {
   components:{
-    AccountSettings
+    AccountSettings,
+    ConfirmPassword
   },
   data() {
     return {
       loading: false,
-      credentials:""
+      credentials:"",
+      confirmed:false
     };
   },
   methods: {
