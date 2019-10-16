@@ -4,7 +4,7 @@
 
     <v-card-text class="text-center">
       <v-avatar  color="primary" size="130">
-      <span class="white--text display-3 font-weight-bold">{{credentials.firstname[0] +credentials.lastname[0]}}</span>
+      <span class="white--text display-3 font-weight-bold text-uppercase">{{credentials.firstname[0] +credentials.lastname[0]}}</span>
     </v-avatar>
       <v-row align="center" class="mx-5" >
         <v-card-text class="black--text text--accent-4">
@@ -22,7 +22,7 @@
             position : {{credentials.position}}
           </h6>
           <center>
-         <AccountSettings/>   
+         <AccountSettings @click="update" v-on:updated_info="updateInfo"/>   
           </center>
         </v-card-text>
       </v-row>
@@ -41,15 +41,21 @@ export default {
   data() {
     return {
       loading: false,
-      credentials: jwt_decode(localStorage.getItem("token")).id
+      credentials:""
     };
   },
   methods: {
     update() {
       this.loading = true;
       setTimeout(() => (this.loading = false), 2000);
+    },
+    updateInfo(new_info){
+      this.credentials = new_info
     }
+
   },
-  mounted() {}
+  created() {
+    this.credentials= jwt_decode(localStorage.getItem("token")).id
+  }
 };
 </script>

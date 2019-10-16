@@ -63,7 +63,7 @@
                     v-model="password"
                     :rules="passwordRules"
                     prepend-icon="mdi-lock"
-                    type="text"
+                    :type="password_type"
                     label="Password"
                     :disabled="MyDisabled"
                     required
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import  axios  from "axios";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 export default {
@@ -122,7 +122,7 @@ export default {
     MyDisabled: Boolean,
     MyUpdate: Boolean,
     Default_Password: String,
-    Info:Object
+    Info: Object
   },
   data() {
     return {
@@ -130,12 +130,13 @@ export default {
       isDisable: "",
       username: "",
       fname: "",
+      password_type: "text",
       text: "",
       snackbar: false,
       timeout: 2000,
       c_password: "",
       lname: "",
-      url:"http://localhost:4000/admin/",
+      url: "http://localhost:4000/admin/",
       usernameRules: [
         v => !!v || "Username is required",
         v => (v && v.length <= 10) || "Name must be less than 10 characters"
@@ -174,16 +175,22 @@ export default {
             password: this.password
           };
           if (!this.MyUpdate) {
-            this.register(account,this.url+"register");
+            this.register(account, this.url + "register");
           } else {
+            this.password_type = "password";
+            this.password = "";
+            this.c_password = "";
             account.id = this.Info._id;
-            this.update(account, this.url+"update");
+            this.update(account, this.url + "update");
           }
         } else {
           this.text = "Passwords don't match!";
           this.snackbar = true;
           this.c_password = null;
         }
+      } else {
+        this.text = "Invalid account settings!";
+        this.snackbar = true;
       }
     },
     register(account, _url) {
@@ -211,25 +218,34 @@ export default {
       axios
         .post(_url, account)
         .then(res => {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("default", res.data.default_pass);
           this.text = "Account was Updated Success fully!";
           this.snackbar = true;
           setTimeout(() => {
-            location.reload(true);
-          }, 1000);
+            this.$emit("updated_response" , jwt_decode(localStorage.getItem("token")).id);
+          }, 1200);
         })
         .catch(err => {
           this.text = "Something went wrong!";
           this.snackbar = true;
         });
+    },
+    clearFields() {
+      this.password = "";
+      this.c_password = "";
     }
   },
-  mounted(){
-    if(this.Info !== null){
-      this. username = this.Info.username,
-      this.fname = this.Info.firstname,
-      this.lname = this.Info.lastname,
-      this.position= this.Info.position
-      this.email= this.Info.email
+  mounted() {
+    if (this.MyUpdate) {
+      this.password_type = "password";
+    }
+    if (this.Info !== null) {
+      (this.username = this.Info.username),
+        (this.fname = this.Info.firstname),
+        (this.lname = this.Info.lastname),
+        (this.position = this.Info.position);
+      this.email = this.Info.email;
     }
   }
 };

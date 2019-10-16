@@ -1,6 +1,6 @@
 <template>
-  <v-row justify="center">
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+  <v-row justify="center" >
+    <v-dialog  v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
       <template v-slot:activator="{ on }">
         <v-btn color="primary" class=" white--text text--accent-5" rounded with="500" dark v-on="on">Update Account</v-btn>
       </template>
@@ -9,10 +9,10 @@
           <v-toolbar-title>Account Settings</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Cancel</v-btn>
+            <v-btn  dark text @click="closeDialog">Cancel</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <AccountForm MyTitle= "Update Account" MyButton= "Update" Default_Password="" :MyUpdate="true" :Info="userInfo"  :MyDisabled="false" />
+        <AccountForm v-on:updated_response="closeDialog" ref="form" MyTitle= "Update Account" MyButton= "Update" Default_Password="" :MyUpdate="true" :Info="userInfo"  :MyDisabled="false" />
       </v-card>
     </v-dialog>
   </v-row>
@@ -20,7 +20,6 @@
 <script>
 import AccountForm from "@/components/AccountForm.vue";
 import jwt_decode from "jwt-decode";
-
 
 export default {
   components: {
@@ -32,8 +31,17 @@ export default {
       notifications: false,
       sound: true,
       widgets: false,
-      userInfo : jwt_decode(localStorage.getItem("token")).id
+      userInfo: jwt_decode(localStorage.getItem("token")).id
     };
+  },
+  methods: {
+    closeDialog(info) {
+      this.userInfo = jwt_decode(localStorage.getItem("token")).id
+      this.$emit("updated_info" , this.userInfo)
+      this.userInfo = info
+      this.dialog = false;
+     this.$refs.form.clearFields();
+    }
   }
 };
 </script>
