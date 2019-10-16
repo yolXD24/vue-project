@@ -13,6 +13,8 @@
 
 <script>
 import jwt_decode from "jwt-decode";
+import axios from "axios";
+
 
 export default {
   data () {

@@ -7,9 +7,6 @@ import AccountForm from "@/components/AccountForm.vue";
 export default {
   components: {
     AccountForm
-  },
-  mounted() {
-    // console.log(AccountForm.titles);
   }
 };
 </script>

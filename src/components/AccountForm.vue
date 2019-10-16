@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { axios } from "@/plugins/axios";
+import  axios  from "axios";
 import jwt_decode from "jwt-decode";
 
 export default {
@@ -121,7 +121,6 @@ export default {
     MyButton: String,
     MyDisabled: Boolean,
     MyUpdate: Boolean,
-    MyOnclick: Function,
     Default_Password: String
   },
   data() {
@@ -135,6 +134,7 @@ export default {
       timeout: 2000,
       c_password: "",
       lname: "",
+      url:"http://localhost:4000/admin/",
       usernameRules: [
         v => !!v || "Username is required",
         v => (v && v.length <= 10) || "Name must be less than 10 characters"
@@ -172,14 +172,11 @@ export default {
             admin: false,
             password: this.password
           };
-          const url = "http://localhost:4000/admin/";
           if (!this.MyUpdate) {
-            url += "register";
-            this.register(account, url);
+            this.register(account,this.url+"register");
           } else {
-            url += "update";
             account.id = jwt_decode(localStorage.getItem("token")).id._id;
-            update(account, url);
+            this.update(account, this.url+"update");
           }
         } else {
           this.text = "Passwords don't match!";
@@ -188,10 +185,10 @@ export default {
         }
       }
     },
-    register(account, url) {
-      console.log(url);
+    register(account, _url) {
+      console.log(_url);
       axios
-        .post(url, account)
+        .post(_url, account)
         .then(res => {
           if (!res.data.exist) {
             this.text = "Account Saved Successfully!";
@@ -209,11 +206,20 @@ export default {
           console.error(err);
         });
     },
-    update(account, url) {
+    update(account, _url) {
       axios
-        .post(url, account)
-        .then(res => {})
-        .catch(err => {});
+        .post(_url, account)
+        .then(res => {
+          this.text = "Account was Updated Success fully!";
+          this.snackbar = true;
+          setTimeout(() => {
+            location.reload(true);
+          }, 1000);
+        })
+        .catch(err => {
+          this.text = "Something went wrong!";
+          this.snackbar = true;
+        });
     }
   }
 };

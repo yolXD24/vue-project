@@ -49,9 +49,6 @@
   background-attachment: fixed;
   background-repeat: no-repeat
 }
-#card-body{
-  /* padding:0 50px; */
-}
 .mycard{
   opacity: 0.8!important;
 

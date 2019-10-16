@@ -5,7 +5,7 @@
       <v-card-text class="display-1 text-center font-weight-light">
         Accounts Management
       </v-card-text>
-      <v-card class="elevation-4 text-capitalize">
+      <v-card class="elevation-4">
         <template>
   <v-data-table
     :headers="headers"
@@ -33,7 +33,6 @@
 <script>
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-
 
 export default {
   data() {
@@ -68,8 +67,7 @@ export default {
           value: "action"
         }
       ],
-      accounts: [],
-      editedIndex: -1
+      accounts: []
     };
   },
   mounted() {
@@ -80,7 +78,7 @@ export default {
     initialize() {
       const url = "http://localhost:4000/admin/accounts";
       axios
-        .post(url, {})
+        .post(url)
         .then(res => {
           this.accounts = jwt_decode(res.data.accounts).id;
         })
