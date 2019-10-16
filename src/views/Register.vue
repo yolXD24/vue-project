@@ -1,5 +1,5 @@
 <template>
-  <AccountForm MyTitle= "Add Staff" MyButton= "Add Staff" :MyUpdate="false"  :MyDisabled="true"/>
+  <AccountForm MyTitle= "Add Staff" MyButton= "Add Staff" :MyUpdate="false" Default_Password="docxpress.default" :MyDisabled="true"/>
 </template>
 
 <script>

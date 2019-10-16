@@ -1,0 +1,36 @@
+<template>
+  <v-row justify="center">
+    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <template v-slot:activator="{ on }">
+        <v-btn color="primary" class=" white--text text--accent-5" rounded with="500" dark v-on="on">Update Account</v-btn>
+      </template>
+      <v-card>
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>Account Settings</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark text @click="dialog = false">Cancel</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <AccountForm MyTitle= "Update Account" MyButton= "Update" Default_Password="" :MyUpdate="true"  :MyDisabled="false" />
+      </v-card>
+    </v-dialog>
+  </v-row>
+</template>
+<script>
+import AccountForm from "@/components/AccountForm.vue";
+
+export default {
+  components: {
+    AccountForm
+  },
+  data() {
+    return {
+      dialog: false,
+      notifications: false,
+      sound: true,
+      widgets: false
+    };
+  }
+};
+</script>

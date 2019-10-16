@@ -7,7 +7,7 @@
       <br />
       <br />
       <br />
-      <v-card class="mycard">
+      <v-card class="mycard mx-11" >
         <br>
         <center>
           <v-avatar size="100">
@@ -50,7 +50,7 @@
   background-repeat: no-repeat
 }
 #card-body{
-  padding:0 50px;
+  /* padding:0 50px; */
 }
 .mycard{
   opacity: 0.8!important;

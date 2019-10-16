@@ -93,7 +93,7 @@
                   ></v-select>
                 </v-col>
                 <v-col cols="12" class="text-center">
-                  <v-btn color="success" rounded @click="validate()">{{MyButton}} </v-btn>
+                  <v-btn color="primary" large width="200" class=" white--text text--accent-5"  rounded @click="validate()">{{MyButton}} </v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -104,6 +104,7 @@
     </v-row>
     <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
       {{ text }}
+      
       <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
   </v-container>
@@ -120,7 +121,8 @@ export default {
     MyButton: String,
     MyDisabled: Boolean,
     MyUpdate: Boolean,
-    MyOnclick: Function
+    MyOnclick: Function,
+    Default_Password: String
   },
   data() {
     return {
@@ -142,7 +144,7 @@ export default {
         v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
         v => (v && v.length <= 20) || "Name must be less than 20 characters"
       ],
-      password: "docxpress.default",
+      password: this.Default_Password,
       passwordRules: [
         v => !!v || "Password is required",
         v => /^[A-Z a-z0-9.]+$/.test(v) || "Password must be valid",
