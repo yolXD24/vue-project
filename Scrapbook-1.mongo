@@ -1,1 +1,0 @@
-db.staff.remove({admin:{$not:"true"}})

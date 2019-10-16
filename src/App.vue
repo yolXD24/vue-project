@@ -25,7 +25,7 @@
 import Header from "@/components/Menu";
 import Login from "@/views/Login";
 import jwt_decode from "jwt-decode";
-import { type } from 'os';
+// import { type } from 'os';
 
 export default {
   name: "App",

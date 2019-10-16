@@ -76,8 +76,7 @@ export default {
     }
   },
   mounted() {
-    (this.is_admin = jwt_decode(localStorage.getItem("token")).id.admin),
-      console.log("admin : " + this.is_admin);
+    this.is_admin = jwt_decode(localStorage.getItem("token")).id.admin
     this.items = [
       {
         title: "Home",

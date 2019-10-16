@@ -18,9 +18,9 @@ routes.route("/login").post((req, res) => {
                         .then(match => {
                             if (match) {
                                 let token = jwt.sign({ id: admin }, "docxpress");
-                                res.status(200).send({ auth: true, token: token, user: admin ,default_pass:req.body.account.password === "docxpress.default"});
+                                res.status(200).send({ error: false, auth: true, token: token, user: admin, default_pass: req.body.account.password === "docxpress.default" });
                             } else {
-                                return res.status(202).send({ auth: false, token: null });
+                                return res.status(202).send({ error: true, auth: false, token: null });
                             }
                         }).catch(err => {
                             console.log(err);
