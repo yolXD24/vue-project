@@ -23,7 +23,7 @@
           </h6>
           <center>
          <AccountSettings v-if ="confirmed" @click="update" v-on:updated_info="updateInfo"/>   
-         <ConfirmPassword v-if ="!confirmed" />
+         <ConfirmPassword v-if ="!confirmed" v-on:is_confirmed="proceed_update" />
           </center>
         </v-card-text>
       </v-row>
@@ -55,6 +55,9 @@ export default {
     },
     updateInfo(new_info){
       this.credentials = new_info
+    },
+    proceed_update(result){
+      this.confirmed = result
     }
 
   },
