@@ -98,29 +98,27 @@ routes.route("/confirm_password").post((req, res) => {
 
 })
 routes.route("/update").post((req, res) => {
-
-        models.Staffs.findById(req.body.id, (err, account) => {
-            account.username = req.body.username;
-            account.email = req.body.email;
-            account.firstname = req.body.firstname;
-            account.lastname = req.body.lastname;
-            account.password = req.body.password;
-            account.position = req.body.position;
-            account.save((err, admin) => {
-                if (err) throw err;
-                let token = jwt.sign({ id: admin }, "docxpress");
-                res.status(200).send({ error: false, auth: true, token: token, user: admin, default_pass: account.password === "docxpress.default" });
-            })
-        }).catch(err => {
-            if (err) {
-                res.status(503).json({
-                    message: 'Service unavailable'
-                });
+    models.Staffs.findOneAndUpdate(req.body.id,
+        {
+            "$set":
+            {
+                "username": req.body.username,
+                "email": req.body.email,
+                "firstname": req.body.firstname,
+                "lastname": req.body.lastname,
+                "password": req.body.password,
+                "position": req.body.position
             }
-        })
-
-    })
-    // admin retrieve all accounts
+        }).exec(function (err, book) {
+            if (err) {
+                console.log(err);
+                res.status(500).send(err);
+            } else {
+                res.status(200).send(book);
+            }
+        });
+})
+// admin retrieve all accounts
 routes.route("/accounts").post((req, res) => {
     // ok na ni 
     models.Staffs.find({ admin: false }, { password: 0 }, (err, account) => {
