@@ -24,8 +24,6 @@
 import Header from "@/components/Menu";
 import Login from "@/views/Login";
 import jwt_decode from "jwt-decode";
-// import { type } from 'os';
-
 export default {
   name: "App",
   components: {
@@ -43,7 +41,6 @@ export default {
   },
   methods:{
     app_notify(notification){
-      console.log("notified")
       this.text = notification
       this.snackbar = true
     }

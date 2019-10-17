@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" width="400" >
       <template v-slot:activator="{ on }">
-        <v-btn color="primary" dark v-on="on">Update</v-btn>
+        <v-btn color="primary" rounded dark v-on="on">Update</v-btn>
       </template>
       <v-card  >
             <v-toolbar class="elevation-1" color="grey lighten-3">

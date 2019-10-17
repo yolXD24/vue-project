@@ -9,7 +9,7 @@
           <v-toolbar-title>Account Settings</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn  dark text @click="closeDialog">Cancel</v-btn>
+            <v-btn  dark text @click="dialog= false">Cancel</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <AccountForm v-on:updated_response="closeDialog" ref="form" MyTitle= "Update Account" MyButton= "Update" Default_Password="" :MyUpdate="true" :Info="userInfo"  :MyDisabled="false" />
@@ -36,11 +36,13 @@ export default {
   },
   methods: {
     closeDialog(info) {
-      this.userInfo = jwt_decode(localStorage.getItem("token")).id
-      this.$emit("updated_info" , this.userInfo)
-      this.userInfo = info
-      this.dialog = false;
-     this.$refs.form.clearFields();
+      if (info === false || info ) {
+        this.userInfo = jwt_decode(localStorage.getItem("token")).id;
+        this.$emit("updated_info", this.userInfo);
+        this.userInfo = info;
+        this.dialog = false;
+        this.$refs.form.clearFields();
+      }
     }
   }
 };

@@ -85,7 +85,7 @@ export default {
               localStorage.setItem("default", res.data.default_pass);
               setTimeout(() => {
                 location.reload(true);
-              }, 500);
+              }, 200);
             } else {
               this.password = "";
               this.username = "";

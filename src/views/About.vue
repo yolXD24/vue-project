@@ -3,10 +3,10 @@
   <v-card :loading="loading" class="mx-auto my-12 " max-width="400">
 
     <v-card-text class="text-center">
-      <v-avatar  color="primary" size="130">
-      <span class="white--text display-3 font-weight-bold text-uppercase">{{credentials.firstname[0] +credentials.lastname[0]}}</span>
-    </v-avatar>
-      <v-row align="center" class="mx-5" >
+      <v-avatar color="primary" size="130">
+        <span class="white--text display-3 font-weight-bold text-uppercase">{{credentials.firstname[0] +credentials.lastname[0]}}</span>
+      </v-avatar>
+      <v-row align="center" class="mx-5">
         <v-card-text class="black--text text--accent-4">
           <h4 class=" title text-uppercase">
             Name : {{credentials.firstname +" " +credentials.lastname}}
@@ -22,8 +22,9 @@
             position : {{credentials.position}}
           </h6>
           <center>
-         <AccountSettings v-if ="confirmed"  @click="update" v-on:updated_info="updateInfo"/>   
-         <ConfirmPassword v-if ="!confirmed" v-on:is_confirmed="confirm_password"/>
+            <br>
+            <AccountSettings v-if="confirmed" @click="update" v-on:updated_info="updateInfo" />
+            <ConfirmPassword v-if="!confirmed" v-on:is_confirmed="confirm_password" />
           </center>
         </v-card-text>
       </v-row>
@@ -59,9 +60,8 @@ export default {
     confirm_password(resp) {
       if (!resp) {
         this.$emit("notify", "Password incorrect!");
-      }else{
+      } else {
         this.$emit("notify", "Profile update is now available!");
-
       }
       this.confirmed = resp;
     }
