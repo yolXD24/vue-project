@@ -93,7 +93,7 @@
                   ></v-select>
                 </v-col>
                 <v-col cols="12" class="text-center">
-                  <v-btn color="primary" large width="200" class=" white--text text--accent-5"  rounded @click="validate()">{{MyButton}} </v-btn>
+                  <v-btn color="primary" large width="200" class=" white--text text--accent-5" :disabled="isDisable" rounded @click="validate()">{{MyButton}} </v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -127,7 +127,7 @@ export default {
   data() {
     return {
       valid: true,
-      isDisable: "",
+      isDisable: false,
       username: "",
       fname: "",
       password_type: "text",
@@ -163,6 +163,10 @@ export default {
   },
   methods: {
     validate() {
+      this.isDisable = true;
+      setTimeout(() => {
+        this.isDisable = false;
+      }, 800);
       if (this.$refs.form.validate()) {
         if (this.password === this.c_password) {
           var account = {
@@ -223,7 +227,10 @@ export default {
           this.text = "Account was Updated Success fully!";
           this.snackbar = true;
           setTimeout(() => {
-            this.$emit("updated_response" , jwt_decode(localStorage.getItem("token")).id);
+            this.$emit(
+              "updated_response",
+              jwt_decode(localStorage.getItem("token")).id
+            );
           }, 1200);
         })
         .catch(err => {
@@ -240,11 +247,11 @@ export default {
     if (this.MyUpdate) {
       this.password_type = "password";
     }
-    if (this.Info !== null) {
-      (this.username = this.Info.username),
-        (this.fname = this.Info.firstname),
-        (this.lname = this.Info.lastname),
-        (this.position = this.Info.position);
+    if (this.Info) {
+      this.username = this.Info.username;
+      this.fname = this.Info.firstname;
+      this.lname = this.Info.lastname;
+      this.position = this.Info.position;
       this.email = this.Info.email;
     }
   }

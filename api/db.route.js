@@ -98,7 +98,6 @@ routes.route("/confirm_password").post((req, res) => {
 
 })
 routes.route("/update").post((req, res) => {
-
         models.Staffs.findById(req.body.id, (err, account) => {
             account.username = req.body.username;
             account.email = req.body.email;

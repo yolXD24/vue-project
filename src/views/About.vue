@@ -22,8 +22,8 @@
             position : {{credentials.position}}
           </h6>
           <center>
-         <AccountSettings v-if ="confirmed" @click="update" v-on:updated_info="updateInfo"/>   
-         <ConfirmPassword v-if ="!confirmed" />
+         <AccountSettings v-if ="confirmed"  @click="update" v-on:updated_info="updateInfo"/>   
+         <ConfirmPassword v-if ="!confirmed" v-on:is_confirmed="confirm_password"/>
           </center>
         </v-card-text>
       </v-row>
@@ -37,15 +37,15 @@ import jwt_decode from "jwt-decode";
 import AccountSettings from "./AccountSettings.vue";
 import ConfirmPassword from "./ConfirmPassword.vue";
 export default {
-  components:{
+  components: {
     AccountSettings,
     ConfirmPassword
   },
   data() {
     return {
       loading: false,
-      credentials:"",
-      confirmed:false
+      credentials: "",
+      confirmed: false
     };
   },
   methods: {
@@ -53,13 +53,21 @@ export default {
       this.loading = true;
       setTimeout(() => (this.loading = false), 2000);
     },
-    updateInfo(new_info){
-      this.credentials = new_info
-    }
+    updateInfo(new_info) {
+      this.credentials = new_info;
+    },
+    confirm_password(resp) {
+      if (!resp) {
+        this.$emit("notify", "Password incorrect!");
+      }else{
+        this.$emit("notify", "Profile update is now available!");
 
+      }
+      this.confirmed = resp;
+    }
   },
   created() {
-    this.credentials= jwt_decode(localStorage.getItem("token")).id
+    this.credentials = jwt_decode(localStorage.getItem("token")).id;
   }
 };
 </script>

@@ -44,8 +44,6 @@ export default {
   data() {
     return {
       dialog: false,
-      snackbar: false,
-      timeout: 2000,
       text: "",
       password: ""
     };
@@ -65,10 +63,7 @@ export default {
             console.log(res)
         if (res.data.confirm) {
           this.$emit("is_confirmed", true);
-          alert("found!")
         } else {
-          alert("not found!")
-
           this.password = "";
           this.$emit("is_confirmed", false);
         }

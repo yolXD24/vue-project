@@ -2,7 +2,18 @@ username in table should be exact.
 login form should have random bg
 padding login form 
 logo
-https://github.com/Ichag/vue-htpasswd
+modular functions
+localStorage expiration
 
-
+var hours = 24; // Reset when storage is more than 24hours
+var now = new Date().getTime();
+var setupTime = localStorage.getItem('setupTime');
+if (setupTime == null) {
+    localStorage.setItem('setupTime', now)
+} else {
+    if(now-setupTime > hours*60*60*1000) {
+        localStorage.clear()
+        localStorage.setItem('setupTime', now);
+    }
+}
 //$refs

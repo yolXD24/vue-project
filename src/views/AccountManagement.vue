@@ -21,10 +21,10 @@
 </template>
       </v-card>
     </v-col>
-        <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+        <!-- <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
       {{ text }}
       <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
-    </v-snackbar>
+    </v-snackbar> -->
   </v-row>
 </v-container>
 </template>
@@ -37,9 +37,9 @@ import jwt_decode from "jwt-decode";
 export default {
   data() {
     return {
-      snackbar: false,
-      text: "",
-      timeout: 2000,
+      // snackbar: false,
+      // text: "",
+      // timeout: 2000,
       headers: [
         {
           sortable: true,
@@ -94,11 +94,9 @@ export default {
         .post(url, { _id: item._id })
         .then(res => {
           if (res.data) {
-            this.text = "Deleted successfully!";
-            this.snackbar = true;
+            this.$emit("notify", "Deleted Successfully!");
           } else {
-            this.text = "Deleted Failed!";
-            this.snackbar = true;
+            this.$emit("notify", "Deleted Failed!");
           }
         })
         .catch(err => {
