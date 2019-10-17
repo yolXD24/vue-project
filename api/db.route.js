@@ -1,13 +1,19 @@
 const express = require("express");
 const routes = express.Router();
+<<<<<<< HEAD
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+=======
+const mongoose = require('mongoose');
+
+>>>>>>> 54a35e4704b9a7b9e2f25a166898d46d1e5bcb5c
 // Require Post model in our routes module
 let models = require("./db.model");
 
 routes.route("/login").post((req, res) => {
     // ok na  ni decrytion added !
 
+<<<<<<< HEAD
     models.Admins.findOne({ username: req.body.account.username },
         (err, admin) => {
             if (err) {
@@ -32,6 +38,10 @@ routes.route("/login").post((req, res) => {
             }
         }
     ).catch(err => {
+=======
+routes.route('/login').post((req, res) => {
+    models.Staffs.find(req.body, (err, admin) => {
+>>>>>>> 54a35e4704b9a7b9e2f25a166898d46d1e5bcb5c
         if (err) {
             console.log(err)
             res.status(503).json({
@@ -91,6 +101,7 @@ routes.route("/confirm_password").post((req, res) => {
                     res.json(err);
                 });
         } else {
+<<<<<<< HEAD
             res.status(200).send({ error: true, confirm: false })
 
         }
@@ -113,9 +124,14 @@ routes.route("/update").post((req, res) => {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);
+=======
+            if (admin.length >= 1) {
+                res.status(200).send({ response: { user: admin[0].name.firstname, login: true } });
+>>>>>>> 54a35e4704b9a7b9e2f25a166898d46d1e5bcb5c
             } else {
                 res.status(200).send(book);
             }
+<<<<<<< HEAD
         });
 })
 // admin retrieve all accounts
@@ -129,10 +145,30 @@ routes.route("/accounts").post((req, res) => {
             res.status(503).json({
                 message: 'Service unavailable'
             });
+=======
         }
     });
 });
 
+routes.route('/register').post((req, res) => {
+    models.Staffs.find({ username: req.body.username, email: req.body.email }, function (err, account) {
+        if (account.length) {
+            res.send('Name/email exists already! Try another one.');
+        } else {
+            let staff = new models.Staffs(req.body);
+            staff.save().then(() => {
+                res.status(200).json(req.body.name.firstname + ' is added successfully');
+                console.log(staff);
+            })
+                .catch(() => {
+                    res.send('Name/email exists already! Try another one.');
+                })
+>>>>>>> 54a35e4704b9a7b9e2f25a166898d46d1e5bcb5c
+        }
+    });
+});
+
+<<<<<<< HEAD
 // admin delete account
 routes.route("/deleteAccount").post((req, res) => {
     models.Staffs.findOneAndRemove(
@@ -149,10 +185,33 @@ routes.route("/deleteAccount").post((req, res) => {
             res.status(503).json({
                 message: 'Service unavailable'
             });
+=======
+routes.route('/code').post((req, res) => {
+    //THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE
+    function makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+>>>>>>> 54a35e4704b9a7b9e2f25a166898d46d1e5bcb5c
         }
+        return result;
+    }
+    console.log(makeid(8));
+    //END HERE
+
+
+    models.Codes.find({ id: req.body.code }, (err, data) => {
+        console.log(data);
+        res.json(data);
+    }).catch(() => {
+        res.status(404).json('ID Not Found');
     });
+
 });
 
+<<<<<<< HEAD
 // admin retrieve all transactions
 routes.route("/transactions").post((req, res) => {
     /*  NOTE!!
@@ -194,4 +253,26 @@ IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */
 //     });
 // });
 
+=======
+routes.route('/update').post((req, res) => {
+    models.Staffs.findOne({ email: req.body.email }, (err, staff) => {
+        if (err) throw err;
+        staff.account.username = req.body.account.username;
+        staff.account.password = req.body.account.password;
+        staff.name.firstname = req.body.name.firstname;
+        staff.name.lastname = req.body.name.lastname;
+        staff.email = req.body.email;
+        staff.position = req.body.position;
+        console.log(staff);
+
+        staff.save().then(() => {
+            console.log('User successfully updated!');
+            res.status(200).json(req.body.name.firstname + ' is updated successfully');
+        }).catch(() => {
+            res.json('Cannot update the account');
+        });
+
+    });
+})
+>>>>>>> 54a35e4704b9a7b9e2f25a166898d46d1e5bcb5c
 module.exports = routes;

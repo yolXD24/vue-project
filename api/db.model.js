@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
+const SALT_WORK_FACTOR = 10;
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
 // Define collection and schema for Post
-let Admin = new Schema({
+
+let StaffSchema = new Schema({
+
     username: {
-        type: String
+        type: String,
+        unique: true, //NOTE TO THE FRONTEND: LOWECASE MUST BE REQUIRED UPON REGISTERING  //test
     },
     password: {
         type: String
@@ -23,14 +28,17 @@ let Staff = new Schema({
     },
     username: {
         type: String,
-        unique: true
+        required: true
+    },
+
+    name: {
+        firstname: String,
+        lastname: String
     },
     email: {
         type: String,
-        unique: true
-    },
-    position: {
-        type: String
+        unique: true,
+        lowercase: true
     },
     admin: {
         type: Boolean
@@ -53,6 +61,27 @@ let Staff = new Schema({
 
     {
 
+    // generate a salt
+    bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+        if (err) return next(err);
+
+        // hash the password using our new salt
+        bcrypt.hash(user.password, salt, function (err, hash) {
+            if (err) return next(err);
+
+            // override the cleartext password with the hashed one
+            user.password = hash;
+            next();
+        });
+    });
+});
+
+StaffSchema.methods.comparePassword = function (candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+}
 
         log in
     "_id": {
