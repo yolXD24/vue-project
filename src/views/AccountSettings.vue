@@ -2,7 +2,7 @@
   <v-row justify="center" >
     <v-dialog  v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
       <template v-slot:activator="{ on }">
-        <v-btn color="primary" class=" white--text text--accent-5" rounded with="500" dark v-on="on">Update Account</v-btn>
+        <v-btn color="primary" class=" white--text text--accent-5" rounded with="500" dark v-on="on">Update Settings</v-btn>
       </template>
       <v-card>
         <v-toolbar dark color="primary">

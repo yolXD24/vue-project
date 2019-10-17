@@ -6,7 +6,7 @@
       </template>
       <v-card  >
             <v-toolbar class="elevation-1" color="grey lighten-3">
-            <v-toolbar-title>Enter Password</v-toolbar-title>
+            <v-toolbar-title>Enter Password to Update Account</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
         <v-card-text>
@@ -26,7 +26,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text @click="dialog = false">Close</v-btn>
+          <v-btn color="red darken-1" text @click="closeDialog">Close</v-btn>
           <v-btn color="blue darken-1" text @click="validate">Confirm Password</v-btn>
         </v-card-actions>
       </v-card>
@@ -49,6 +49,10 @@ export default {
     };
   },
   methods: {
+    closeDialog(){
+      this.dialog = false;
+      this.password = ""
+    },
     validate() {
       if (this.$refs.form.validate()) {
         this.confirmPass();

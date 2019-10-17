@@ -64,6 +64,11 @@ export default {
         this.$emit("notify", "Profile update is now available!");
       }
       this.confirmed = resp;
+    // updateInfo(new_info){
+    //   this.credentials = new_info
+    // },
+    // proceed_update(result){
+    //   this.confirmed = result
     }
   },
   created() {
