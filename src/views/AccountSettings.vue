@@ -27,6 +27,7 @@
         </v-toolbar>
         <AccountForm
           v-on:updated_response="closeDialog"
+          v-on:accountFormResponse="accountFormResponse1"
           ref="form"
           MyTitle="Update Account"
           MyButton="Update"
@@ -65,6 +66,9 @@ export default {
         this.dialog = false;
         this.$refs.form.clearFields();
       }
+    },
+    accountFormResponse1(message){
+      this.$emit("accountFormResponse",message)
     }
   }
 };
