@@ -1,38 +1,60 @@
 <template>
-<v-container id="body" fluid>
-  <v-row align="center" justify="center">
-    <v-col cols="12" sm="10" md="4">
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <v-card class="mycard mx-10" :loading="loading" >
-        <br>
-        <center>
-          <v-avatar size="100">
-            <img position="center" src="@/assets/logo.png" alt="logo">
-          </v-avatar>
-        <v-card-title primary-title class="justify-center ">
-          <div>
-            <div class="blue--text title  darken-1--text display-1 ">Xpress_DocX</div>
-          </div>
-        </v-card-title>
-        </center>
-
-        <v-card-text id="card-body">
-          <v-text-field label="Login" v-model="username" name="login" prepend-icon="mdi-account" type="text"></v-text-field>
-          <v-text-field id="password" v-model="password" label="Password" name="password" prepend-icon="mdi-lock" type="password"></v-text-field>
-          <br>
+  <v-container id="body" fluid>
+    <v-row align="center" justify="center">
+      <v-col cols="12" sm="10" md="4">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <v-card class="mycard mx-10" :loading="loading">
+          <br />
           <center>
-            <v-btn color="primary" width="200"  :disabled="disable"  @click="login()" rounded>Login</v-btn>
+            <v-avatar size="100">
+              <img position="center" src="@/assets/logo.png" alt="logo" />
+            </v-avatar>
+            <v-card-title primary-title class="justify-center ">
+              <div>
+                <div class="blue--text title  darken-1--text display-1 ">
+                  Xpress_DocX
+                </div>
+              </div>
+            </v-card-title>
           </center>
-        </v-card-text>
-        <br>
-      </v-card>
-    </v-col>
-  </v-row>
-</v-container>
+
+          <v-card-text id="card-body">
+            <v-text-field
+              label="Login"
+              v-model="username"
+              name="login"
+              prepend-icon="mdi-account"
+              type="text"
+            ></v-text-field>
+            <v-text-field
+              id="password"
+              v-model="password"
+              label="Password"
+              name="password"
+              prepend-icon="mdi-lock"
+              type="password"
+            ></v-text-field>
+            <br />
+            <center>
+              <v-btn
+                color="primary"
+                width="200"
+                :disabled="disable"
+                @click="login()"
+                rounded
+                >Login</v-btn
+              >
+            </center>
+          </v-card-text>
+          <br />
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>

@@ -2,9 +2,13 @@
   <v-container fluid grid-list-xl>
     <v-row justify="center">
       <v-col cols="11">
-        <v-card title="Edit Profile" text="Complete your profile" class="elevation-4">
+        <v-card
+          title="Edit Profile"
+          text="Complete your profile"
+          class="elevation-4"
+        >
           <v-toolbar class="elevation-1" color="grey lighten-3">
-            <v-toolbar-title>{{MyTitle}}</v-toolbar-title>
+            <v-toolbar-title>{{ MyTitle }}</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
           <v-form ref="form" v-model="valid" lazy-validation>
@@ -93,7 +97,16 @@
                   ></v-select>
                 </v-col>
                 <v-col cols="12" class="text-center">
-                  <v-btn color="primary" large width="200" class=" white--text text--accent-5" :disabled="isDisable" rounded @click="validate()">{{MyButton}} </v-btn>
+                  <v-btn
+                    color="primary"
+                    large
+                    width="200"
+                    class="white--text text--accent-5"
+                    :disabled="isDisable"
+                    rounded
+                    @click="validate()"
+                    >{{ MyButton }}</v-btn
+                  >
                 </v-col>
               </v-row>
             </v-container>
@@ -104,7 +117,6 @@
     </v-row>
     <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
       {{ text }}
-      
       <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
   </v-container>
@@ -188,13 +200,16 @@ export default {
             this.update(account, this.url + "update");
           }
         } else {
-          this.text = "Passwords don't match!";
-          this.snackbar = true;
+          this.$emit("accountFormResponse", "Passwords don't match!");
+          // this.text = "Passwords don't match!";
+          // this.snackbar = true;
           this.c_password = null;
         }
       } else {
-        this.text = "Invalid account settings!";
-        this.snackbar = true;
+        this.$emit("accountFormResponse", "Invalid account settings!");
+
+        // this.text = "Invalid account settings!";
+        // this.snackbar = true;
       }
     },
     register(account, _url) {
@@ -203,15 +218,22 @@ export default {
         .post(_url, account)
         .then(res => {
           if (!res.data.exist) {
-            this.text = "Account Saved Successfully!";
-            this.snackbar = true;
+            this.$emit("accountFormResponse", "Account Saved Successfully!");
+
+            // this.text = "Account Saved Successfully!";
+            // this.snackbar = true;
             // location.reload(true)
             setTimeout(() => {
               this.$router.push("/admin/AccountManagement");
             }, 1000);
           } else {
-            this.text = "Username / Email is not available!";
-            this.snackbar = true;
+            this.$emit(
+              "accountFormResponse",
+              "Username / Email is not available!"
+            );
+
+            // this.text = "Username / Email is not available!";
+            // this.snackbar = true;
           }
         })
         .catch(err => {
@@ -224,8 +246,13 @@ export default {
         .then(res => {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("default", res.data.default_pass);
-          this.text = "Account was Updated Success fully!";
-          this.snackbar = true;
+          // this.text = "Account was Updated Success fully!";
+          this.$emit(
+            "accountFormResponse",
+            "Account was Updated Success fully!"
+          );
+
+          // this.snackbar = true;
           setTimeout(() => {
             this.$emit(
               "updated_response",
@@ -234,8 +261,10 @@ export default {
           }, 1200);
         })
         .catch(err => {
-          this.text = "Something went wrong!";
-          this.snackbar = true;
+          this.$emit("accountFormResponse", "Something went wrong!");
+
+          // this.text = "Something went wrong!";
+          // this.snackbar = true;
         });
     },
     clearFields() {

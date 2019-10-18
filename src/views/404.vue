@@ -1,7 +1,7 @@
 <template>
   <center>
-    <br><br>
-    <br><br>
+    <br /><br />
+    <br /><br />
     <div class="fof">
       <h1>Page Not Found ....</h1>
     </div>
