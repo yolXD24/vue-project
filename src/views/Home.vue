@@ -23,7 +23,6 @@
 <script>
 import printJS from "print-js";
 import axios from "axios";
-import { type } from "os";
 export default {
   data() {
     return {
@@ -49,12 +48,11 @@ export default {
       //     console.log(err);
       //   });
       axios({
-        url: "http://localhost:4000/files/code",
-        responseType: "arraybuffer"
-      })
+          url: "http://localhost:4000/admin/files/code"
+        })
         .then(res => {
           printJS({
-            printable: someJSONdata,
+            printable: res.data,
             properties: ["name", "email", "phone"],
             type: "json"
           });

@@ -23,14 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use("/admin", routes);
-app.get('/files/code', function(req, res) {
-    var filePath = "./files/notes.pdf";
 
-    fs.readFile(filePath, function(err, data) {
-        res.contentType("application/pdf");
-        res.send(data);
-    });
-});
 app.listen(PORT, function() {
     console.log("Server is running on Port:", PORT);
 });
