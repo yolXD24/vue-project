@@ -1,8 +1,9 @@
 const express = require("express");
 const routes = express.Router();
-// const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
-// let models = require("./db.model");
+var fs = require('fs')
+    // const jwt = require("jsonwebtoken");
+    // const bcrypt = require("bcryptjs");
+    // let models = require("./db.model");
 
 //MODELS
 var login = require("./models/model.login");
@@ -56,7 +57,11 @@ routes.route("/transactions").post((req, res) => {
 });
 
 routes.route('/files/code').get((req, res) => {
-    res.status(200).send({ name: "Yol Torres", position: "Slave" })
+    var filePath = "./files/test.pdf"
+    var file = fs.readFileSync(filePath, 'binary');
+    res.write(file, 'binary');
+    res.end();
+    // res.status(200).send({ Name: "Yol Torres", Position: "Slave" })
 
     /*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
     IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */

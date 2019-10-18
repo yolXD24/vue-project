@@ -2,7 +2,7 @@
 <v-container fluid grid-list-xl>
   <v-row align="center" justify="center">
     <v-col cols="11">
-      <v-card>
+      <v-card :loading="loading">
         <v-toolbar class="elevation-1" color="grey lighten-3">
           <v-toolbar-title>Claim Form</v-toolbar-title>
           <div class="flex-grow-1"></div>
@@ -22,40 +22,51 @@
 
 <script>
 import printJS from "print-js";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
 export default {
   data() {
     return {
       code: "",
-      file: ""
+      file: "",
+      loading: false
       // disabled: false
     };
   },
   methods: {
     myMethod() {
-      // printJS({ printable: "http://localhost:4000/files/code", type: "pdf", showModal: true });
-
-      // axios
-      //   .get("http://localhost:4000/files/code", { code: this.code })
-      //   .then(res => {
-      //     var fileURL = window.URL.createObjectURL(new Blob([res.data]));
-
-      //     printJS({ printable: fileURL, type: "pdf", showModal: true });
-
-      //     console.log(fileURL);
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 5000);
       axios({
-          url: "http://localhost:4000/admin/files/code"
-        })
+        url: "http://localhost:4000/admin/files/code"
+      })
         .then(res => {
-          printJS({
-            printable: res.data,
-            properties: ["name", "email", "phone"],
-            type: "json"
-          });
+          // https://pdfmake.github.io/docs/document-definition-object/watermark/
+          var form_hub = {
+            pageSize: "LETTER",
+            watermark: {
+              text: "{ Form_Hub }",
+              color: "skyblue",
+              opacity: 0.8,
+              fontSize: 100,
+              italics: false,
+              angle: -50
+            },
+
+            content: [
+              {
+                text: res.data
+              }
+            ]
+          };
+          setTimeout(() => {
+            var win = window.open("", "_blank");
+            pdfMake.createPdf(form_hub).open({}, win);
+          }, 3000);
         })
         .catch(function(err) {
           console.log(err);
