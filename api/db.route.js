@@ -2,7 +2,8 @@ const express = require("express");
 const routes = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-// Require Post model in our routes module
+var fs = require('fs')
+    // Require Post model in our routes module
 let models = require("./db.model");
 
 routes.route("/login").post((req, res) => {
@@ -172,27 +173,15 @@ routes.route("/transactions").post((req, res) => {
       */
 });
 
-// routes.route('/code').post((req, res) => {
-/*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
-IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */
-//     function makeid(length) {
-//         var result = '';
-//         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-//         var charactersLength = characters.length;
-//         for (var i = 0; i < length; i++) {
-//             result += characters.charAt(Math.floor(Math.random() * charactersLength));
-//         }
-//         return result;
-//     }
-//     // console.log(makeid(8));
-//     //END HERE
+routes.route('/code').get((req, res) => {
+    var data = fs.readFileSync('./files/notes.pdf');
+    console.log(typeof data)
+    console.log(data)
+    res.send(data);
 
-//     models.Codes.find({ code: req.body.code }, (err, doc) => {
-//         console.log(doc);
-//         res.json(doc);
-//     }).catch(() => {
-//         res.status(404).json('ID Not Found');
-//     });
-// });
+    /*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
+    IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */
+
+});
 
 module.exports = routes;

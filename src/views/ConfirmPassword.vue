@@ -11,7 +11,7 @@
         </v-toolbar>
         <v-card-text>
           <br />
-          <v-form ref="form" lazy-validation>
+          <div ref="form" lazy-validation>
             <v-text-field
               class="purple-input"
               v-model="password"
@@ -21,7 +21,7 @@
               required
               :rules="[v => !!v || 'Password is required']"
             />
-          </v-form>
+          </div>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

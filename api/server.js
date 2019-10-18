@@ -6,6 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const config = require("./DB.js");
 const routes = require("./db.route");
+var fs = require('fs')
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
@@ -22,7 +23,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use("/admin", routes);
+app.get('/files/code', function(req, res) {
+    var filePath = "./files/notes.pdf";
 
+    fs.readFile(filePath, function(err, data) {
+        res.contentType("application/pdf");
+        res.send(data);
+    });
+});
 app.listen(PORT, function() {
     console.log("Server is running on Port:", PORT);
 });
