@@ -1,9 +1,11 @@
 const express = require("express");
 const routes = express.Router();
 var fs = require('fs')
-    // const jwt = require("jsonwebtoken");
-    // const bcrypt = require("bcryptjs");
-    // let models = require("./db.model");
+var mammoth = require("mammoth");
+
+// const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcryptjs");
+// let models = require("./db.model");
 
 //MODELS
 var login = require("./models/model.login");
@@ -57,10 +59,19 @@ routes.route("/transactions").post((req, res) => {
 });
 
 routes.route('/files/code').get((req, res) => {
-    var filePath = "./files/test.pdf"
-    var file = fs.readFileSync(filePath, 'binary');
-    res.write(file, 'binary');
-    res.end();
+    // var filePath = "./files/test.doc"
+    // var file = fs.readFileSync(filePath, 'utf8');
+    // res.write(file, 'binary');
+    // res.end();
+
+    mammoth.extractRawText({ path: "./files/lou_bgy._id_app.docx" })
+        .then(function(result) {
+            var text = result.value; // The raw text 
+            var messages = result.messages;
+            res.send(text);
+
+        })
+        .done();
     // res.status(200).send({ Name: "Yol Torres", Position: "Slave" })
 
     /*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
