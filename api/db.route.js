@@ -63,11 +63,20 @@ routes.route('/files/code').get((req, res) => {
     // var file = fs.readFileSync(filePath, 'utf8');
     // res.write(file, 'binary');
     // res.end();
-
-    mammoth.extractRawText({ path: "./files/lou_bgy._id_app.docx" })
+    // var options = {
+    //     convertImage: mammoth.images.imgElement(function(image) {
+    //         return image.read("base64").then(function(imageBuffer) {
+    //             return {
+    //                 src: "data:" + image.contentType + ";base64," + imageBuffer
+    //             };
+    //         });
+    //     })
+    // };
+    // console.log(mammoth.convertToHtml({ path: "./files/yol.docx" }, options));
+    // https://github.com/cainsyake/vue-doc-preview
+    mammoth.extractRawText({ path: "./files/yol.docx" })
         .then(function(result) {
             var text = result.value; // The raw text 
-            var messages = result.messages;
             res.send(text);
 
         })

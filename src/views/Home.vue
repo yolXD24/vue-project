@@ -10,6 +10,7 @@
         <v-card-text>
           <v-text-field id="code" v-model="code" label="Claim Code" prepend-icon="mdi-lock" type="text"></v-text-field>
         </v-card-text>
+
         <center>
           <v-btn color="primary" class=" white--text text--accent-5" rounded with="500" dark @click="myMethod">Check Document</v-btn>
         </center>
@@ -17,6 +18,8 @@
       </v-card>
     </v-col>
   </v-row>
+    <!-- <VueDocPreview :value="file" type="office" /> -->
+
 </v-container>
 </template>
 
@@ -24,9 +27,14 @@
 import printJS from "print-js";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import VueDocPreview from 'vue-doc-preview'
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
 export default {
+  components:{
+    VueDocPreview
+  },
   data() {
     return {
       code: "",
@@ -37,6 +45,7 @@ export default {
   },
   methods: {
     myMethod() {
+      this.file ="@/api/files/yol.docx "
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
@@ -45,6 +54,7 @@ export default {
         url: "http://localhost:4000/admin/files/code"
       })
         .then(res => {
+          //   npm install --save docx file-saver
           // https://pdfmake.github.io/docs/document-definition-object/watermark/
           var form_hub = {
             pageSize: "LETTER",
