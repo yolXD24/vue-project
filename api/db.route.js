@@ -59,29 +59,10 @@ routes.route("/transactions").post((req, res) => {
 });
 
 routes.route('/files/code').get((req, res) => {
-    // var filePath = "./files/test.doc"
-    // var file = fs.readFileSync(filePath, 'utf8');
-    // res.write(file, 'binary');
-    // res.end();
-    // var options = {
-    //     convertImage: mammoth.images.imgElement(function(image) {
-    //         return image.read("base64").then(function(imageBuffer) {
-    //             return {
-    //                 src: "data:" + image.contentType + ";base64," + imageBuffer
-    //             };
-    //         });
-    //     })
-    // };
-    // console.log(mammoth.convertToHtml({ path: "./files/yol.docx" }, options));
-    // https://github.com/cainsyake/vue-doc-preview
-    mammoth.extractRawText({ path: "./files/yol.docx" })
-        .then(function(result) {
-            var text = result.value; // The raw text 
-            res.send(text);
-
-        })
-        .done();
-    // res.status(200).send({ Name: "Yol Torres", Position: "Slave" })
+    res.status(200).send({
+        firstname: "Hannah",
+        lastname: "Pelino",
+    })
 
     /*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
     IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */

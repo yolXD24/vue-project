@@ -1,50 +1,73 @@
 <template>
-<v-container fluid grid-list-xl>
-  <v-row align="center" justify="center">
-    <v-col cols="11">
-      <v-card :loading="loading">
-        <v-toolbar class="elevation-1" color="grey lighten-3">
-          <v-toolbar-title>Claim Form</v-toolbar-title>
-          <div class="flex-grow-1"></div>
-        </v-toolbar>
-        <v-card-text>
-          <v-text-field id="code" v-model="code" label="Claim Code" prepend-icon="mdi-lock" type="text"></v-text-field>
-        </v-card-text>
+  <v-container
+    fluid
+    grid-list-xl
+  >
+    <v-row
+      align="center"
+      justify="center"
+    >
+      <v-col cols="11">
+        <v-card :loading="loading">
+          <v-toolbar
+            class="elevation-1"
+            color="grey lighten-3"
+          >
+            <v-toolbar-title>Claim Form</v-toolbar-title>
+            <div class="flex-grow-1"></div>
+          </v-toolbar>
+          <v-card-text>
+            <v-text-field
+              id="code"
+              v-model="code"
+              label="Claim Code"
+              prepend-icon="mdi-lock"
+              type="text"
+            ></v-text-field>
+          </v-card-text>
 
-        <center>
-          <v-btn color="primary" class=" white--text text--accent-5" rounded with="500" dark @click="myMethod">Check Document</v-btn>
-        </center>
-        <br>
-      </v-card>
-    </v-col>
-  </v-row>
+          <center>
+            <v-btn
+              color="primary"
+              class=" white--text text--accent-5"
+              rounded
+              with="500"
+              dark
+              @click="myMethod"
+            >Check Document</v-btn>
+          </center>
+          <br>
+        </v-card>
+      </v-col>
+    </v-row>
     <!-- <VueDocPreview :value="file" type="office" /> -->
 
-</v-container>
+  </v-container>
 </template>
 
 <script>
-import printJS from "print-js";
+import jwt_decode from "jwt-decode";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import {  } from "@/src/assets/js/generateForm";
+import GenerateForm from "@/middleware/generateForm.js";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
 export default {
-  components:{
-    VueDocPreview
-  },
   data() {
     return {
       code: "",
       file: "",
-      loading: false
+      loading: false,
+
       // disabled: false
     };
   },
   methods: {
+    toCapital(name) {
+      return name.charAt(0).toUpperCase() + name.slice(1)
+    },
     myMethod() {
-      this.file ="@/api/files/yol.docx "
+      console.log(jwt_decode(localStorage.getItem("token")).id.username);
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
@@ -53,31 +76,22 @@ export default {
         url: "http://localhost:4000/admin/files/code"
       })
         .then(res => {
-          //   npm install --save docx file-saver
-          // https://pdfmake.github.io/docs/document-definition-object/watermark/
-          var form_hub = {
-            pageSize: "LETTER",
-            watermark: {
-              text: "{ Form_Hub }",
-              color: "skyblue",
-              opacity: 0.8,
-              fontSize: 100,
-              italics: false,
-              angle: -50
-            },
-
-            content: [
-              {
-                text: res.data
-              }
-            ]
-          };
+          var today = new Date()
+          var details = {
+            business: "Internet Shop",
+            location:"Nasipit , Talamban",
+            date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+            exp_date: today.getFullYear() + '-' + (today.getMonth() + 3) + '-' + today.getDate()
+          }
+          var emp = jwt_decode(localStorage.getItem("token")).id
+          var fullname = this.toCapital(res.data.firstname) + " " + this.toCapital(res.data.lastname)
+          var incharge = this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname)
           setTimeout(() => {
             var win = window.open("", "_blank");
-            pdfMake.createPdf(form_hub).open({}, win);
+            pdfMake.createPdf(GenerateForm.createForm("clearance", fullname, incharge, details)).open({}, win);
           }, 3000);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
         });
     }
