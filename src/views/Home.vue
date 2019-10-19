@@ -27,8 +27,7 @@
 import printJS from "print-js";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import VueDocPreview from 'vue-doc-preview'
-
+import {  } from "@/src/assets/js/generateForm";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
 export default {
