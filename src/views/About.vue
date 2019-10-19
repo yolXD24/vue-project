@@ -27,7 +27,6 @@
                 @click="update"
                 v-on:updated_info="updateInfo"
                 v-on:accountFormResponse="accountFormResponsetoApp"
-                
               />
               <ConfirmPassword
                 v-if="!confirmed"
@@ -78,8 +77,8 @@ export default {
       // proceed_update(result){
       //   this.confirmed = result
     },
-    accountFormResponsetoApp(message){
-      this.$emit("notify",message)
+    accountFormResponsetoApp(message) {
+      this.$emit("notify", message);
     }
   },
   created() {

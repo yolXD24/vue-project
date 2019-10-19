@@ -67,8 +67,8 @@ export default {
         this.$refs.form.clearFields();
       }
     },
-    accountFormResponse1(message){
-      this.$emit("accountFormResponse",message)
+    accountFormResponse1(message) {
+      this.$emit("accountFormResponse", message);
     }
   }
 };

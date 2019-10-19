@@ -1,7 +1,6 @@
-import INDIGENCY from './indigency.js';
-import CLEARANCE from './clearance.js';
+import INDIGENCY from "./indigency.js";
+import CLEARANCE from "./clearance.js";
 export default {
-
     responseForm: {},
     form_hub: {
         userPassword: "1234",
@@ -24,12 +23,23 @@ export default {
     },
 
     createForm(type, fullname, incharge, details) {
-        if (type == 'clearance') {
-            this.responseForm = CLEARANCE.generate(fullname, incharge, this.form_hub, details)
+        if (type === "clearance") {
+            this.responseForm = CLEARANCE.generate(
+                fullname,
+                incharge,
+                this.form_hub,
+                details
+            );
         } else {
-            this.responseForm = INDIGENCY.generate(fullname, incharge, this.form_hub)
-
+            this.responseForm = INDIGENCY.generate(fullname, incharge, this.form_hub);
         }
-        return this.responseForm
+
+        return this.responseForm;
+    },
+    clear() {
+        this.form_hub.content = []
+        this.form_hub.styles = {}
+        this.form_hub.footer = []
+        this.responseForm = {}
     }
-}
+};

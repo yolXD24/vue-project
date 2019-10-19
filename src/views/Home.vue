@@ -36,12 +36,11 @@
               @click="myMethod"
             >Check Document</v-btn>
           </center>
-          <br>
+          <br />
         </v-card>
       </v-col>
     </v-row>
     <!-- <VueDocPreview :value="file" type="office" /> -->
-
   </v-container>
 </template>
 
@@ -57,39 +56,64 @@ export default {
     return {
       code: "",
       file: "",
-      loading: false,
+      loading: false
 
       // disabled: false
     };
   },
   methods: {
     toCapital(name) {
-      return name.charAt(0).toUpperCase() + name.slice(1)
+      return name.charAt(0).toUpperCase() + name.slice(1);
     },
     myMethod() {
       console.log(jwt_decode(localStorage.getItem("token")).id.username);
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
-      }, 5000);
+      }, 1000);
       axios({
         url: "http://localhost:4000/admin/files/code"
       })
         .then(res => {
-          var today = new Date()
+          var today = new Date();
           var details = {
             business: "Internet Shop",
-            location:"Nasipit , Talamban",
-            date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
-            exp_date: today.getFullYear() + '-' + (today.getMonth() + 3) + '-' + today.getDate()
-          }
-          var emp = jwt_decode(localStorage.getItem("token")).id
-          var fullname = this.toCapital(res.data.firstname) + " " + this.toCapital(res.data.lastname)
-          var incharge = this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname)
+            location: "Nasipit , Talamban",
+            date:
+              today.getFullYear() +
+              "-" +
+              (today.getMonth() + 1) +
+              "-" +
+              today.getDate(),
+            exp_date:
+              today.getFullYear() +
+              "-" +
+              (today.getMonth() + 3) +
+              "-" +
+              today.getDate()
+          };
+          var emp = jwt_decode(localStorage.getItem("token")).id;
+          var fullname =
+            this.toCapital(res.data.firstname) +
+            " " +
+            this.toCapital(res.data.lastname);
+          var incharge =
+            this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
           setTimeout(() => {
             var win = window.open("", "_blank");
-            pdfMake.createPdf(GenerateForm.createForm("clearance", fullname, incharge, details)).open({}, win);
-          }, 3000);
+            pdfMake
+              .createPdf(
+                GenerateForm.createForm(
+                  this.code,
+                  fullname,
+                  incharge,
+                  details
+                )
+              )
+              .open({}, win);
+              GenerateForm.clear()
+              this.code = ""
+          }, 1000);
         })
         .catch(function (err) {
           console.log(err);
@@ -98,4 +122,3 @@ export default {
   }
 };
 </script>
-
