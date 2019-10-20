@@ -25,7 +25,10 @@ npm run test
 npm run lint
 ```
 
-### Backend configuration (server side)
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### For the Backend Setup
 ```
 cd api
 npm install
