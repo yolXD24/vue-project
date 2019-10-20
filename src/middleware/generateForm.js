@@ -18,7 +18,23 @@ export default {
         pageMargins: [70, 70],
         // background: this.background,
         content: [],
-        styles: {},
+        styles: {
+            text_center: {
+                alignment: "center",
+                fontSize: 14
+            },
+            text_right: {
+                alignment: "right"
+            },
+            text_justify: {
+                alignment: "justify",
+                preserveLeadingSpaces: true,
+            },
+            header: {
+                fontSize: 14,
+                bold: true
+            }
+        },
         footer: []
     },
 

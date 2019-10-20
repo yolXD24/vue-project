@@ -44,32 +44,6 @@ export default {
       ],
       style: ["text_center"]
     });
-
-    form_hub.styles = {
-      text_center: {
-        alignment: "center"
-      },
-      text_justify: {
-        alignment: "justify"
-      },
-      text_right: {
-        alignment: "right"
-      },
-      logo_left: {
-        alignment: "justify"
-      },
-      logo_right: {
-        alignment: "right"
-      },
-      header: {
-        fontSize: 14,
-        bold: true
-      },
-      sub_header: {},
-      greetings: {},
-      footer: {}
-    };
-
     return form_hub;
   }
 };

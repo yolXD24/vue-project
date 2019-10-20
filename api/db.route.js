@@ -60,8 +60,8 @@ routes.route("/transactions").post((req, res) => {
 
 routes.route('/files/code').get((req, res) => {
     res.status(200).send({
-        firstname: "Hannah",
-        lastname: "Pelino",
+        firstname: "Yol",
+        lastname: "Torres",
     })
 
     /*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT

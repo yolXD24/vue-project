@@ -1,18 +1,9 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
-  >
-    <v-row
-      align="center"
-      justify="center"
-    >
+  <v-container fluid grid-list-xl>
+    <v-row align="center" justify="center">
       <v-col cols="11">
         <v-card :loading="loading">
-          <v-toolbar
-            class="elevation-1"
-            color="grey lighten-3"
-          >
+          <v-toolbar class="elevation-1" color="grey lighten-3">
             <v-toolbar-title>Claim Form</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
@@ -29,7 +20,7 @@
           <center>
             <v-btn
               color="primary"
-              class=" white--text text--accent-5"
+              class="white--text text--accent-5"
               rounded
               with="500"
               dark
@@ -76,21 +67,34 @@ export default {
       })
         .then(res => {
           var today = new Date();
+          const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+          ];
+
           var details = {
             business: "Internet Shop",
             location: "Nasipit , Talamban",
-            date:
-              today.getFullYear() +
-              "-" +
-              (today.getMonth() + 1) +
-              "-" +
-              today.getDate(),
-            exp_date:
-              today.getFullYear() +
-              "-" +
-              (today.getMonth() + 3) +
-              "-" +
-              today.getDate()
+            date: {
+              year: today.getFullYear(),
+              month: monthNames[today.getMonth()],
+              day: today.getDate()
+            },
+            exp_date: {
+              year: today.getFullYear(),
+              month: monthNames[today.getMonth() + 3],
+              day: today.getDate() - 1
+            }
           };
           var emp = jwt_decode(localStorage.getItem("token")).id;
           var fullname =
@@ -103,19 +107,14 @@ export default {
             var win = window.open("", "_blank");
             pdfMake
               .createPdf(
-                GenerateForm.createForm(
-                  this.code,
-                  fullname,
-                  incharge,
-                  details
-                )
+                GenerateForm.createForm(this.code, fullname, incharge, details)
               )
               .open({}, win);
-              GenerateForm.clear()
-              this.code = ""
+            GenerateForm.clear();
+            this.code = "";
           }, 1000);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           console.log(err);
         });
     }

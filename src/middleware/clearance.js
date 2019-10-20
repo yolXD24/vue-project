@@ -1,106 +1,50 @@
 export default {
     name: "clearance",
     generate(fullname, incharge, form_hub, details) {
-        form_hub.content.push({
+        form_hub.content.push(
+            {
                 text: [{
-                        text: "Republic of the Philippines\nProvince of Cebu\nCity of Cebu\n"
-                    },
-                    { text: "Barangay Talamban ", bold: true },
-                    { text: "\n\nOFFICE OF THE BARANGAY COUNCIL\n\n", fontSize: 12 },
-                    {
-                        text: "\nB A R A N G A Y\tB U S I N E S S\n",
-                        fontSize: 14
-                    },
-                    { text: "C L E A R A C E \n\n", style: "text_center", fontSize: 18 },
-                    {
-                        text: "\nTO WHOM IT MAY CONCERN:\n\n\t",
-                        style: ["text_justify"],
-                        fontSize: 12
-                    },
-                    {
-                        text: "\t\t\tPursuant to the ordinance of this Barangay , this CLEARANCE is granted to  ",
-                        preserveLeadingSpaces: true,
-                        fontSize: 12
-                    },
-                    { text: fullname.toUpperCase() + " ", bold: true },
-                    {
-                        text: "owner of ",
-                        style: ["text_justify"]
-                    },
-                    { text: details.business.toUpperCase() + " ", bold: true },
-                    {
-                        text: "located at ",
-                        preserveLeadingSpaces: true,
-                        fontSize: 12
-                    },
-                    { text: details.location.toUpperCase() + " \n\n", bold: true },
-                    {
-                        text: "\t\t\tApplicant is hereby advised to follow  all existing laws and ordinances in relation with the conduct of his/her business.Violation of the same sound is a ground for revocation of this clearance.\n\n\t\tClearance is valid up to " +
-                            details.exp_date +
-                            " unless revoked due to valid cause.Issued this " +
-                            details.date +
-                            " at Barangay Talamban , Cebu City , Cebu , Philippines.\n\n\n\n\n\n\n\n",
-                        preserveLeadingSpaces: true,
-                        fontSize: 12,
-                        style: "text_justify"
-                    },
+                    text: "Republic of the Philippines\nProvince of Cebu\nCity of Cebu\n"
+                },
+                { text: "Barangay Talamban ", bold: true },
+                { text: "\n\nOFFICE OF THE BARANGAY COUNCIL\n\n\n", fontSize: 12 },
 
-                ],
+                { text: "B A R A N G A Y\tC L E A R A C E \n\n", style: "text_center", fontSize: 18 },
+                {
+                    text: "\n\n\n\TO WHOM IT MAY CONCERN:\n\n\t",
+                    style: ["text_justify"],
+                    fontSize: 12
+                },
+                {
+                    text: "\t\t\tTHIS IS TO CERTIFY that ",
+                    preserveLeadingSpaces: true,
+                    fontSize: 12
+                },
+                { text: fullname+" ", bold: true },
+                { text: "a resident of  " },
+                { text: "Adress ", bold: true },
+                { text: "has the intention to construct / demolish / excavate ", style: "text_justify" },
+                { text: "Purpose ", bold: true },
+                { text: "in this . It is further certified that the Barangay interposes no objection on the said project.\n\n\t\t\t\tISSUED upon the request of the above-named person for whatever legal purposes.\n\n\t\t\t\tGIVEN this  ", style: "text_justify" },
+                { text: details.date.day+" ", bold: true },
+                { text: "day of  " },
+                { text: details.date.month+","+details.date.year+". \n\n\n\n\n\n\n\n", bold: true }],//end of text array
+
                 style: ["text_center"]
-            }, {
-                columns: [
-                    { text: "Yol Torres", style: 'text_justify' },
-                    { text: incharge, style: 'text_right' }
-                ],
-                style: "text_center"
-            }, {
-                columns: [
-                    { text: "\nIssued By", style: 'text_justify' },
-                    { text: "\nPunong Barangay", style: 'text_right' }
-                ],
-                style: "text_center"
-            },
-
-        );
-
-        form_hub.styles = {
-            text_center: {
-                alignment: "center"
-            },
-            text_justify: {
-                alignment: "justify"
-            },
-            text_right: {
-                alignment: "right"
-            },
-            logo_left: {
-                alignment: "justify"
-            },
-            logo_right: {
-                alignment: "right"
-            },
-            header: {
-                fontSize: 14,
-                bold: true
-            },
-            sub_header: {},
-            greetings: {},
-            footer: {}
-        };
-
-        form_hub.footer = [{
-                text: "IMPORTANT\nThis Barangay Clearance  is not valid without official seal.\nAny erasure  and alternarion invalidates the same.\n",
-                bold: true,
-                style: "text_center",
-                fontSize: 10
             },
             {
-                text: "TO BE POSTED INSIDE THE PREMISES OF THE BUSINESS ESTABLISHMENT\n\n\n",
-                fontSize: 10,
+                columns: [
+                    { text: "Personel Incharge", style: 'text_justify' },
+                    { text: "Kapitan name", style: 'text_right' }
+                ],
                 style: "text_center"
-            }
-        ];
-
+            }, {
+                columns: [
+                    { text: "\nIssued By", style: ['text_justify', "header"] },
+                    { text: "\nPunong Barangay", style: ['text_right', "header"] }
+                ],
+                style: "text_center"
+            });//end of push function
         return form_hub;
     }
 }
