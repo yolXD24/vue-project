@@ -26,10 +26,11 @@ npm run lint
 ```
 
 ### Backend configuration (server side)
+```
 cd api
 npm install
 node server
-
+```
 
 
 Torres|Tanilon|Bargaso|Garrido
