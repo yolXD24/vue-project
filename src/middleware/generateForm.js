@@ -1,5 +1,6 @@
 import INDIGENCY from "./indigency.js";
 import CLEARANCE from "./clearance.js";
+import PERMIT from "./businessClearance.js";
 export default {
     responseForm: {},
     form_hub: {
@@ -39,7 +40,14 @@ export default {
     },
 
     createForm(type, fullname, incharge, details) {
-        if (type === "clearance") {
+        if (type === "permit") {
+            this.responseForm = PERMIT.generate(
+                fullname,
+                incharge,
+                this.form_hub,
+                details
+            )
+        } else if (type === "clearance") {
             this.responseForm = CLEARANCE.generate(
                 fullname,
                 incharge,
@@ -47,9 +55,12 @@ export default {
                 details
             );
         } else {
-            this.responseForm = INDIGENCY.generate(fullname, incharge, this.form_hub);
+            this.responseForm = INDIGENCY.generate(
+                fullname,
+                incharge,
+                this.form_hub
+            );
         }
-
         return this.responseForm;
     },
     clear() {
@@ -58,4 +69,4 @@ export default {
         this.form_hub.footer = []
         this.responseForm = {}
     }
-};
+}

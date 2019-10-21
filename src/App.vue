@@ -32,7 +32,6 @@
 <script>
 import Header from "@/components/Menu";
 import Login from "@/views/Login";
-import jwt_decode from "jwt-decode";
 export default {
   name: "App",
   components: {

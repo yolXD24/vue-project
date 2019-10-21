@@ -33,7 +33,6 @@
           MyButton="Update"
           Default_Password=""
           :MyUpdate="true"
-          :Info="userInfo"
           :MyDisabled="false"
         />
       </v-card>
@@ -42,11 +41,13 @@
 </template>
 <script>
 import AccountForm from "@/components/AccountForm.vue";
-import jwt_decode from "jwt-decode";
 
 export default {
   components: {
     AccountForm
+  },
+  props:{
+    credentials:Object
   },
   data() {
     return {
@@ -54,15 +55,15 @@ export default {
       notifications: false,
       sound: true,
       widgets: false,
-      userInfo: jwt_decode(localStorage.getItem("token")).id
+      // userInfo: jwt_decode(localStorage.getItem("token")).id
     };
   },
   methods: {
     closeDialog(info) {
       if (info === false || info) {
-        this.userInfo = jwt_decode(localStorage.getItem("token")).id;
-        this.$emit("updated_info", this.userInfo);
-        this.userInfo = info;
+        // this.userInfo = jwt_decode(localStorage.getItem("token")).id;
+        this.$emit("updated_info", this.credentials);
+        // this.userInfo = info;
         this.dialog = false;
         this.$refs.form.clearFields();
       }
