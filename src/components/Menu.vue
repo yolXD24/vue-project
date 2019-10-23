@@ -1,12 +1,21 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" permanent app>
+    <v-navigation-drawer
+      v-model="drawer"
+      elevation="5"
+      permanent
+      app
+      id="sidebar"
+    >
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title text-center">Menu</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list nav dense>
+      <v-list
+        nav
+        dense
+      >
         <v-divider></v-divider>
         <v-list-item
           active-class="blue darken-2 white--text text--accent-4"
@@ -50,6 +59,12 @@
     </v-navigation-drawer>
   </div>
 </template>
+<style scoped>
+#sidebar{
+opacity: 0.8!important;
+}
+</style>
+
 <script>
 import jwt_decode from "jwt-decode";
 

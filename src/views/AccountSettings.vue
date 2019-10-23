@@ -34,6 +34,7 @@
           Default_Password=""
           :MyUpdate="true"
           :MyDisabled="false"
+          :Info="credentials"
         />
       </v-card>
     </v-dialog>

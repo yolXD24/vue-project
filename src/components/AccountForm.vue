@@ -1,5 +1,8 @@
 <template>
-  <v-container fluid grid-list-xl>
+  <v-container
+    fluid
+    grid-list-xl
+  >
     <v-row justify="center">
       <v-col cols="11">
         <v-card
@@ -7,14 +10,24 @@
           text="Complete your profile"
           class="elevation-4"
         >
-          <v-toolbar class="elevation-1" color="grey lighten-3">
+          <v-toolbar
+            class="elevation-1"
+            color="grey lighten-3"
+          >
             <v-toolbar-title>{{ MyTitle }}</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
-          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+          >
             <v-container class="py-0">
               <v-row>
-                <v-col cols="14" md="6">
+                <v-col
+                  cols="14"
+                  md="6"
+                >
                   <v-text-field
                     class="purple-input"
                     v-model="username"
@@ -26,7 +39,10 @@
                   />
                 </v-col>
 
-                <v-col cols="14" md="6">
+                <v-col
+                  cols="14"
+                  md="6"
+                >
                   <v-text-field
                     label="Email Address"
                     class="purple-input"
@@ -37,21 +53,29 @@
                   />
                 </v-col>
 
-                <v-col cols="12" md="6">
+                <v-col
+                  cols="12"
+                  md="6"
+                >
                   <v-text-field
                     label="First Name"
                     class="purple-input"
                     v-model="fname"
                     :counter="20"
+                    :disabled="intput_disable"
                     :rules="nameRules"
                     prepend-icon="mdi-rename-box"
                     required
                   />
                 </v-col>
 
-                <v-col cols="12" md="6">
+                <v-col
+                  cols="12"
+                  md="6"
+                >
                   <v-text-field
                     v-model="lname"
+                    :disabled="intput_disable"
                     :counter="20"
                     :rules="nameRules"
                     label="Lastname"
@@ -61,7 +85,10 @@
                   />
                 </v-col>
 
-                <v-col cols="14" md="6">
+                <v-col
+                  cols="14"
+                  md="6"
+                >
                   <v-text-field
                     class="purple-input"
                     v-model="password"
@@ -74,7 +101,10 @@
                   />
                 </v-col>
 
-                <v-col cols="14" md="6">
+                <v-col
+                  cols="14"
+                  md="6"
+                >
                   <v-text-field
                     v-model="c_password"
                     :rules="passwordRules"
@@ -88,15 +118,20 @@
 
                 <v-col cols="12">
                   <v-select
+                    @change="checkName"
                     v-model="position"
                     :items="items"
+                    :disabled="!MyDisabled"
                     prepend-icon="mdi-account-child-outline "
                     :rules="[v => !!v || 'Position is required']"
                     label="Position"
                     required
                   ></v-select>
                 </v-col>
-                <v-col cols="12" class="text-center">
+                <v-col
+                  cols="12"
+                  class="text-center"
+                >
                   <v-btn
                     color="primary"
                     large
@@ -105,8 +140,7 @@
                     :disabled="isDisable"
                     rounded
                     @click="validate()"
-                    >{{ MyButton }}</v-btn
-                  >
+                  >{{ MyButton }}</v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -115,9 +149,17 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
       {{ text }}
-      <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+      <v-btn
+        color="blue"
+        text
+        @click="snackbar = false"
+      >Close</v-btn>
     </v-snackbar>
   </v-container>
 </template>
@@ -140,6 +182,7 @@ export default {
     return {
       valid: true,
       isDisable: false,
+      intput_disable: true,
       username: "",
       fname: "",
       password_type: "text",
@@ -169,11 +212,35 @@ export default {
         v => !!v || "E-mail is required",
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
-      position: null,
-      items: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
+      position: this.Info ? this.Info.position : null,
+      items: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"],
+
     };
   },
   methods: {
+    checkName() {
+      switch (this.position) {
+        case this.items[0]:
+          this.intput_disable = true
+          this.fname = "Chervin"
+          this.lname = "Tanilon"
+          break;
+        case this.items[1]:
+          this.fname = "Renan"
+          this.lname = "Bargaso"
+          this.intput_disable = true
+          break;
+        case this.items[2]:
+          this.intput_disable = true
+          this.fname = "Yol Jr"
+          this.lname = "Torres"
+          break;
+        case this.items[3]:
+          this.intput_disable = false
+        default:
+          break;
+      }
+    },
     validate() {
       this.isDisable = true;
       setTimeout(() => {

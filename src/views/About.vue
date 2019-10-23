@@ -1,17 +1,20 @@
 <template>
   <v-container
     fluid
+    class="body"
     grid-list-xl
   >
     <v-card
       :loading="loading"
-      class="mx-auto my-12 "
-      max-width="400"
+      class="mx-auto my-12 v-card"
+      max-width="500"
+      elevation="5"
     >
+      <br>
       <v-card-text class="text-center">
         <v-avatar
-          color="primary"
-          size="130"
+          :color="colors[Math.floor(Math.random()*this.colors.length)]"
+          size="150"
         >
           <span class="white--text display-3 font-weight-bold text-uppercase">{{
             credentials.firstname[0] + credentials.lastname[0]
@@ -22,17 +25,19 @@
           class="mx-5"
         >
           <v-card-text class="black--text text--accent-4">
-            <h4 class=" title text-uppercase">
+            <h4 class=" headline font-weight-black text-uppercase">
               Name : {{ credentials.firstname + " " + credentials.lastname }}
             </h4>
             <br />
-            <h6 class="subtitle-2  mb-3 ">
-              Username : {{ credentials.username }}
-            </h6>
-            <h6 class="subtitle-2  mb-3">Email : {{ credentials.email }}</h6>
-            <h6 class="subtitle-2  mb-3 text-capitalize">
-              position : {{ credentials.position }}
-            </h6>
+            <div class="font-weight-medium title mb-3">
+              <h5>
+                Username : {{ credentials.username }}
+              </h5>
+              <h5>Email : {{ credentials.email }}</h5>
+              <h5 class="text-capitalize">
+                position : {{ credentials.position }}
+              </h5>
+            </div>
             <center>
               <br />
               <AccountSettings
@@ -51,10 +56,13 @@
           </v-card-text>
         </v-row>
       </v-card-text>
+      <br><br>
     </v-card>
   </v-container>
 </template>
-
+<style lang="scss">
+  @import '../assets/style.css';
+</style>
 <script>
 import jwt_decode from "jwt-decode";
 import AccountSettings from "./AccountSettings.vue";
@@ -69,6 +77,7 @@ export default {
   },
   data() {
     return {
+      colors: ["primary", "secondary", "#FF8A80", "#4A148C", "#FF80AB", "#7986CB", "#4FC3F7", "#F57F17", "#78909C", "#BF360C", "#00796B", "#FF4081"],
       loading: false,
       confirmed: false
     };
@@ -95,9 +104,6 @@ export default {
     myNotify(message) {
       this.$emit("notify", message);
     }
-  },
-  mounted() {
-    console.log(this.$children);
   }
 };
 </script>

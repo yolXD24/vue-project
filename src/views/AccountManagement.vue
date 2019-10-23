@@ -1,19 +1,27 @@
 <template>
-  <v-container fluid grid-list-xl>
+  <v-container
+    fluid
+    grid-list-xl
+  >
     <v-row justify="center">
       <v-col cols="11">
-        <v-card-text class="display-1 text-center font-weight-light">
-          Accounts Management
-        </v-card-text>
-        <v-card class="elevation-4">
+
+        <v-card class="elevation-4 v-card">
+          <v-card-text class="display-1 text-center font-weight-light">
+            Accounts Management
+          </v-card-text>
+          <hr>
           <template>
             <v-data-table
               :headers="headers"
               :items="accounts"
-              class="elevation-1"
+              class="elevation-1 v-table"
             >
               <template v-slot:item.action="{ item }">
-                <v-icon small @click="deleteItem(item)">
+                <v-icon
+                  small
+                  @click="deleteItem(item)"
+                >
                   mdi-delete
                 </v-icon>
               </template>
@@ -28,7 +36,9 @@
     </v-row>
   </v-container>
 </template>
-
+<style lang="scss">
+  @import '../assets/style.css';
+</style>
 <script>
 import axios from "axios";
 import jwt_decode from "jwt-decode";

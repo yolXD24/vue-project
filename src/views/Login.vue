@@ -2,67 +2,105 @@
   <v-container
     id="body"
     fluid
-    v-bind:style="{ background: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)) , url(' + bg + ')' }"
   >
-    <v-row align="center" justify="center">
-      <v-col cols="12" sm="10" md="5">
-        <br />
-        <br />
-        <br />
-        <br />
-        <v-card class="mycard mx-10" :loading="loading">
-          <br />
-          <center>
-            <v-avatar size="100">
-              <img position="center" src="@/assets/logo.png" alt="logo" />
-            </v-avatar>
-            <v-card-title primary-title class="justify-center">
-              <div>
-                <div class="blue--text title darken-1--text display-1">Xpress_DocX</div>
-              </div>
-            </v-card-title>
-          </center>
+    <v-row
+      id="content"
+      align="center"
+      justify="center"
+    >
+      <v-col
+        cols="12"
+        sm="10"
+        md="5"
+      >
+        <center>
 
-          <v-card-text id="card-body">
-            <v-text-field
-              label="Login"
-              v-model="username"
-              name="login"
-              prepend-icon="mdi-account"
-              type="text"
-            ></v-text-field>
-            <v-text-field
-              id="password"
-              v-model="password"
-              label="Password"
-              name="password"
-              prepend-icon="mdi-lock"
-              type="password"
-            ></v-text-field>
+          <v-card
+            class="mycard mx-10"
+            :loading="loading"
+          >
             <br />
             <center>
-              <v-btn color="primary" width="200" :disabled="disable" @click="login()" rounded>Login</v-btn>
+              <v-avatar size="100">
+                <img
+                  position="center"
+                  src="@/assets/logo.png"
+                  alt="logo"
+                />
+              </v-avatar>
+              <v-card-title
+                primary-title
+                class="justify-center"
+              >
+                <div>
+                  <div class="blue--text title darken-1--text display-1">Xpress_DocX</div>
+                </div>
+              </v-card-title>
             </center>
-          </v-card-text>
-          <br />
-        </v-card>
+
+            <v-card-text id="card-body">
+              <v-text-field
+                label="Username / Email"
+                v-model="username"
+                name="login"
+                prepend-icon="mdi-account"
+                type="text"
+              ></v-text-field>
+              <v-text-field
+                id="password"
+                v-model="password"
+                label="Password"
+                name="password"
+                prepend-icon="mdi-lock"
+                type="password"
+              ></v-text-field>
+              <br />
+              <center>
+                <v-btn
+                  color="primary"
+                  width="200"
+                  :disabled="disable"
+                  @click="login()"
+                  rounded
+                >Login</v-btn>
+              </center>
+            </v-card-text>
+            <br />
+          </v-card>
+        </center>
       </v-col>
     </v-row>
+
   </v-container>
+
 </template>
 
 <style scoped>
+
 #body {
-  height: 100%;
+ position: relative;
+  height: 100%!important;
   width: 100% !important;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)) ,url("https://source.unsplash.com/user/cinquantesix");
   background-size: cover !important  ;
   background-position: top center !important;
   background-attachment: fixed !important;
   background-repeat: no-repeat !important;
+  overflow: auto;
 }
 .mycard {
   opacity: 0.8 !important;
 }
+#content{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    
+}
+
 </style>
 
 <script>
@@ -74,8 +112,6 @@ export default {
       disable: false,
       username: "",
       password: "",
-      bg:
-        "https://source.unsplash.com/user/cinquantesix"//" +       Math.floor(Math.random() + 1)
     };
   },
   methods: {

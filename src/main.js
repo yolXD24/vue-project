@@ -9,7 +9,7 @@ new Vue({
     router,
     vuetify,
     props: {
-        token: localStorage.getItem("token")
+        token: localStorage.getItem
     },
     render: h => h(App)
 }).$mount("#app");

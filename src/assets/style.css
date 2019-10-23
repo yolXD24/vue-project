@@ -1,0 +1,30 @@
+#body {
+    position: relative;
+    height: 100%!important;
+    width: 100% !important;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://source.unsplash.com/user/cinquantesix");
+    background-size: cover !important;
+    background-position: top center !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+    overflow: auto;
+}
+
+html {
+    height: 100%!important;
+    overflow: hidden;
+}
+
+.v-card {
+    /* background: rgba(255, 255, 255, 0.7)!important; */
+    opacity: 0.8!important;
+}
+
+.v-table {
+    background: rgba(255, 255, 255, 0.7)!important
+}
+
+table.v-table tbody td,
+table.v-table tbody th {
+    height: 24px!important;
+}

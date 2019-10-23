@@ -8,11 +8,13 @@
         <v-btn
           color="primary"
           rounded
+           width="200"
+           large
           dark
           v-on="on"
         >Update</v-btn>
       </template>
-      <v-card>
+      <v-card id="plain">
         <v-toolbar
           class="elevation-1"
           color="grey lighten-3"
@@ -27,7 +29,6 @@
             lazy-validation
           >
             <v-text-field
-
               class="purple-input"
               v-model="password"
               prepend-icon="mdi-lock"
@@ -55,6 +56,11 @@
     </v-dialog>
   </v-row>
 </template>
+<style scoped>
+#plain{
+  opacity: 1!important;
+}
+</style>
 
 <script>
 import axios from "axios";
@@ -103,9 +109,6 @@ export default {
   },
   created(){
     this.my_ref = "form"
-  },
-  mounted() {
-    console.log(this.my_ref)
   }
 };
 </script>

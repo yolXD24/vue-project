@@ -1,13 +1,32 @@
 <template>
-  <v-app app id="body">
+  <v-app
+    app
+    id="body"
+  >
     <Header v-if="token !== null" />
-    <v-content dark id="content">
+    <v-content
+      dark
+      id="content"
+    >
       <router-view v-on:notify="app_notify" />
-      <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+      <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+        absolute
+      >
         {{ text }}
-        <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+        <v-btn
+          color="blue"
+          text
+          @click="snackbar = false"
+        >Close</v-btn>
       </v-snackbar>
-      <v-footer padless absolute inset dense>
+      <v-footer
+        padless
+        absolute
+        inset
+        dense
+      >
         <v-col
           class="text-center"
           cols="12"
@@ -19,15 +38,15 @@
             colored-border
             type="error"
             elevation="2"
-            >Note : Password must be Changed!</v-alert
-          >
+          >Note : Password must be Changed!</v-alert>
         </v-col>
       </v-footer>
     </v-content>
   </v-app>
 </template>
-
-<style scoped></style>
+<style lang="scss">
+  @import './assets/style.css';
+</style>
 
 <script>
 import Header from "@/components/Menu";
