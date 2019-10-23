@@ -10,8 +10,6 @@
         <br />
         <br />
         <br />
-        <br />
-        <br />
         <v-card class="mycard mx-10" :loading="loading">
           <br />
           <center>

@@ -7,12 +7,12 @@ import Register from "./views/Register.vue";
 import TransactionHistory from "./views/History.vue";
 import AccountManagement from "./views/AccountManagement.vue";
 import NotFound from "./views/404.vue";
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 
 Vue.use(Router);
 
 var myProps = {
-    credentials: jwt_decode(localStorage.getItem("token")).id
+    credentials: localStorage.getItem("token") ? jwt_decode(localStorage.getItem("token")).id : null
 }
 var router = new Router({
     mode: "history",
