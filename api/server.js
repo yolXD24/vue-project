@@ -6,6 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const config = require("./DB.js");
 const routes = require("./db.route");
+var fs = require('fs')
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(

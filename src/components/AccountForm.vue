@@ -2,9 +2,13 @@
   <v-container fluid grid-list-xl>
     <v-row justify="center">
       <v-col cols="11">
-        <v-card title="Edit Profile" text="Complete your profile" class="elevation-4">
+        <v-card
+          title="Edit Profile"
+          text="Complete your profile"
+          class="elevation-4"
+        >
           <v-toolbar class="elevation-1" color="grey lighten-3">
-            <v-toolbar-title>{{MyTitle}}</v-toolbar-title>
+            <v-toolbar-title>{{ MyTitle }}</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
           <v-form ref="form" v-model="valid" lazy-validation>
@@ -93,7 +97,16 @@
                   ></v-select>
                 </v-col>
                 <v-col cols="12" class="text-center">
-                  <v-btn color="primary" large width="200" class=" white--text text--accent-5"  rounded @click="validate()">{{MyButton}} </v-btn>
+                  <v-btn
+                    color="primary"
+                    large
+                    width="200"
+                    class="white--text text--accent-5"
+                    :disabled="isDisable"
+                    rounded
+                    @click="validate()"
+                    >{{ MyButton }}</v-btn
+                  >
                 </v-col>
               </v-row>
             </v-container>
@@ -104,7 +117,6 @@
     </v-row>
     <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
       {{ text }}
-      
       <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
   </v-container>
@@ -127,7 +139,7 @@ export default {
   data() {
     return {
       valid: true,
-      isDisable: "",
+      isDisable: false,
       username: "",
       fname: "",
       password_type: "text",
@@ -163,6 +175,10 @@ export default {
   },
   methods: {
     validate() {
+      this.isDisable = true;
+      setTimeout(() => {
+        this.isDisable = false;
+      }, 800);
       if (this.$refs.form.validate()) {
         if (this.password === this.c_password) {
           var account = {
@@ -184,13 +200,11 @@ export default {
             this.update(account, this.url + "update");
           }
         } else {
-          this.text = "Passwords don't match!";
-          this.snackbar = true;
+          this.$emit("accountFormResponse", "Passwords don't match!");
           this.c_password = null;
         }
       } else {
-        this.text = "Invalid account settings!";
-        this.snackbar = true;
+        this.$emit("accountFormResponse", "Invalid account settings!");
       }
     },
     register(account, _url) {
@@ -199,15 +213,15 @@ export default {
         .post(_url, account)
         .then(res => {
           if (!res.data.exist) {
-            this.text = "Account Saved Successfully!";
-            this.snackbar = true;
-            // location.reload(true)
+            this.$emit("accountFormResponse", "Account Saved Successfully!");
             setTimeout(() => {
               this.$router.push("/admin/AccountManagement");
             }, 1000);
           } else {
-            this.text = "Username / Email is not available!";
-            this.snackbar = true;
+            this.$emit(
+              "accountFormResponse",
+              "Username / Email is not available!"
+            );
           }
         })
         .catch(err => {
@@ -220,15 +234,22 @@ export default {
         .then(res => {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("default", res.data.default_pass);
-          this.text = "Account was Updated Success fully!";
-          this.snackbar = true;
+          // this.text = "Account was Updated Success fully!";
+          this.$emit(
+            "accountFormResponse",
+            "Account was Updated Success fully!"
+          );
+
+          // this.snackbar = true;
           setTimeout(() => {
-            this.$emit("updated_response" , jwt_decode(localStorage.getItem("token")).id);
+            this.$emit(
+              "updated_response",
+              jwt_decode(localStorage.getItem("token")).id
+            );
           }, 1200);
         })
         .catch(err => {
-          this.text = "Something went wrong!";
-          this.snackbar = true;
+          this.$emit("accountFormResponse", "Something went wrong!");
         });
     },
     clearFields() {
@@ -240,11 +261,11 @@ export default {
     if (this.MyUpdate) {
       this.password_type = "password";
     }
-    if (this.Info !== null) {
-      (this.username = this.Info.username),
-        (this.fname = this.Info.firstname),
-        (this.lname = this.Info.lastname),
-        (this.position = this.Info.position);
+    if (this.Info) {
+      this.username = this.Info.username;
+      this.fname = this.Info.firstname;
+      this.lname = this.Info.lastname;
+      this.position = this.Info.position;
       this.email = this.Info.email;
     }
   }

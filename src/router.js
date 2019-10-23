@@ -7,9 +7,13 @@ import Register from "./views/Register.vue";
 import TransactionHistory from "./views/History.vue";
 import AccountManagement from "./views/AccountManagement.vue";
 import NotFound from "./views/404.vue";
+import jwt_decode from "jwt-decode";
 
 Vue.use(Router);
 
+var myProps = {
+    credentials: localStorage.getItem("token") ? jwt_decode(localStorage.getItem("token")).id : null
+}
 var router = new Router({
     mode: "history",
     base: process.env.BASE_URL,
@@ -26,27 +30,14 @@ var router = new Router({
             meta: {
                 tokenRequired: true
             },
-            beforeEnter: (to, from, next) => {
-                if (localStorage.getItem('token') === null) {
-                    next('/login')
-                } else {
-                    next()
-                }
-            }
         },
         {
             path: "/admin/settings",
             component: About,
+            props: myProps,
             meta: {
                 tokenRequired: true
             },
-            beforeEnter: (to, from, next) => {
-                if (localStorage.getItem('token') === null) {
-                    next('/login')
-                } else {
-                    next()
-                }
-            }
         },
         {
             path: "/admin/history",
@@ -54,13 +45,6 @@ var router = new Router({
             meta: {
                 tokenRequired: true
             },
-            beforeEnter: (to, from, next) => {
-                if (localStorage.getItem('token') === null) {
-                    next('/login')
-                } else {
-                    next()
-                }
-            }
         },
         {
             path: "/admin/register",
@@ -68,13 +52,6 @@ var router = new Router({
             meta: {
                 tokenRequired: true
             },
-            beforeEnter: (to, from, next) => {
-                if (localStorage.getItem('token') === null) {
-                    next('/login')
-                } else {
-                    next()
-                }
-            }
         },
         {
             path: "/admin/AccountManagement",
@@ -82,13 +59,6 @@ var router = new Router({
             meta: {
                 tokenRequired: true
             },
-            beforeEnter: (to, from, next) => {
-                if (localStorage.getItem('token') === null) {
-                    next('/login')
-                } else {
-                    next()
-                }
-            }
         },
 
         {
@@ -98,29 +68,6 @@ var router = new Router({
             meta: {
                 tokenRequired: false
             },
-            beforeEnter: (to, from, next) => {
-                if (localStorage.getItem('token') !== null) {
-                    next('/home')
-
-                } else {
-                    next()
-                }
-            }
-        },
-        {
-            path: "/about",
-            name: "about",
-            component: About,
-            meta: {
-                tokenRequired: true
-            },
-            beforeEnter: (to, from, next) => {
-                if (localStorage.getItem('token') !== null) {
-                    next()
-                } else {
-                    next('/login')
-                }
-            }
         },
         {
             path: "*",
@@ -129,10 +76,23 @@ var router = new Router({
             redirect: {
                 path: "/"
             }
-
-        },
+        }
     ]
 });
 
-
+router.beforeEach((to, from, next) => {
+    if (!to.meta.tokenRequired) {
+        if (localStorage.getItem("token") !== null) {
+            next("/home");
+        } else {
+            next();
+        }
+    } else {
+        if (localStorage.getItem("token") === null) {
+            next("/login");
+        } else {
+            next();
+        }
+    }
+})
 export default router;

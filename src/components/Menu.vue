@@ -22,21 +22,21 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <template  v-for="item in admin_items">
-        <v-list-item
-          v-if="is_admin === true"
-          active-class="blue darken-2 white--text text--accent-4"
-          :key="item.title"
-          :to="item.link"
-          @click.stop="drawer = !drawer"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <template v-for="item in admin_items">
+          <v-list-item
+            v-if="is_admin === true"
+            active-class="blue darken-2 white--text text--accent-4"
+            :key="item.title"
+            :to="item.link"
+            @click.stop="drawer = !drawer"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </template>
         <v-list-item @click="logout()">
           <v-list-item-icon>
@@ -76,7 +76,7 @@ export default {
     }
   },
   mounted() {
-    this.is_admin = jwt_decode(localStorage.getItem("token")).id.admin
+    this.is_admin = jwt_decode(localStorage.getItem("token")).id.admin;
     this.items = [
       {
         title: "Home",

@@ -1,34 +1,33 @@
 <template>
-<v-container fluid grid-list-xl>
-  <v-row justify="center">
-    <v-col cols="11">
-      <v-card-text class="display-1 text-center font-weight-light">
-        Accounts Management
-      </v-card-text>
-      <v-card class="elevation-4">
-        <template>
-  <v-data-table
-    :headers="headers"
-    :items="accounts"
-    class="elevation-1"
-  >
-        <template v-slot:item.action="{ item }">
-        <v-icon small @click="deleteItem(item)">
-          mdi-delete
-        </v-icon>
-</template>
-  </v-data-table>
-</template>
-      </v-card>
-    </v-col>
-        <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+  <v-container fluid grid-list-xl>
+    <v-row justify="center">
+      <v-col cols="11">
+        <v-card-text class="display-1 text-center font-weight-light">
+          Accounts Management
+        </v-card-text>
+        <v-card class="elevation-4">
+          <template>
+            <v-data-table
+              :headers="headers"
+              :items="accounts"
+              class="elevation-1"
+            >
+              <template v-slot:item.action="{ item }">
+                <v-icon small @click="deleteItem(item)">
+                  mdi-delete
+                </v-icon>
+              </template>
+            </v-data-table>
+          </template>
+        </v-card>
+      </v-col>
+      <!-- <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
       {{ text }}
       <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
-    </v-snackbar>
-  </v-row>
-</v-container>
+    </v-snackbar> -->
+    </v-row>
+  </v-container>
 </template>
-
 
 <script>
 import axios from "axios";
@@ -37,9 +36,9 @@ import jwt_decode from "jwt-decode";
 export default {
   data() {
     return {
-      snackbar: false,
-      text: "",
-      timeout: 2000,
+      // snackbar: false,
+      // text: "",
+      // timeout: 2000,
       headers: [
         {
           sortable: true,
@@ -94,11 +93,9 @@ export default {
         .post(url, { _id: item._id })
         .then(res => {
           if (res.data) {
-            this.text = "Deleted successfully!";
-            this.snackbar = true;
+            this.$emit("notify", "Deleted Successfully!");
           } else {
-            this.text = "Deleted Failed!";
-            this.snackbar = true;
+            this.$emit("notify", "Deleted Failed!");
           }
         })
         .catch(err => {

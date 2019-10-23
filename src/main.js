@@ -6,7 +6,10 @@ import vuetify from "./plugins/vuetify";
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  vuetify,
+    router,
+    vuetify,
+    props: {
+        token: localStorage.getItem("token")
+    },
     render: h => h(App)
-  }).$mount("#app");
+}).$mount("#app");

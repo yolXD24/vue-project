@@ -52,3 +52,13 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### For the Backend Setup
+```
+cd api
+npm install
+node server
+```
+
+
+Torres|Tanilon|Bargaso|Garrido

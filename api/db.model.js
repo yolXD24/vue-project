@@ -50,6 +50,12 @@ let Staff = new Schema({
     collection: 'staff'
 })
 
+let Code = new Schema({
+    _id: String,
+    type: String
+},{
+    collection: 'codes'
+})
 /**
  * Need object model for transaction
  *  {
@@ -108,4 +114,6 @@ Staff.pre("save", function (next) {
 
 const Admins = mongoose.model('Admin', Admin);
 const Staffs = mongoose.model('Staff', Staff);
-module.exports = { Admins, Staffs };
+const Codes = mongoose.model('Code', Code);
+module.exports = { Admins, Staffs, Codes };
+
