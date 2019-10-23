@@ -1,13 +1,26 @@
 <template>
-  <v-container fluid grid-list-xl>
-    <v-card :loading="loading" class="mx-auto my-12 " max-width="400">
+  <v-container
+    fluid
+    grid-list-xl
+  >
+    <v-card
+      :loading="loading"
+      class="mx-auto my-12 "
+      max-width="400"
+    >
       <v-card-text class="text-center">
-        <v-avatar color="primary" size="130">
+        <v-avatar
+          color="primary"
+          size="130"
+        >
           <span class="white--text display-3 font-weight-bold text-uppercase">{{
             credentials.firstname[0] + credentials.lastname[0]
-          }}</span>
+            }}</span>
         </v-avatar>
-        <v-row align="center" class="mx-5">
+        <v-row
+          align="center"
+          class="mx-5"
+        >
           <v-card-text class="black--text text--accent-4">
             <h4 class=" title text-uppercase">
               Name : {{ credentials.firstname + " " + credentials.lastname }}
@@ -26,9 +39,11 @@
                 v-if="confirmed"
                 @click="update"
                 v-on:updated_info="updateInfo"
+                :credentials="credentials"
                 v-on:accountFormResponse="accountFormResponsetoApp"
               />
               <ConfirmPassword
+                :credentials="credentials"
                 v-if="!confirmed"
                 v-on:is_confirmed="confirm_password"
               />
@@ -45,6 +60,9 @@ import jwt_decode from "jwt-decode";
 import AccountSettings from "./AccountSettings.vue";
 import ConfirmPassword from "./ConfirmPassword.vue";
 export default {
+  props: {
+    credentials: Object
+  },
   components: {
     AccountSettings,
     ConfirmPassword
@@ -52,7 +70,6 @@ export default {
   data() {
     return {
       loading: false,
-      credentials: "",
       confirmed: false
     };
   },
@@ -66,23 +83,21 @@ export default {
     },
     confirm_password(resp) {
       if (!resp) {
-        this.$emit("notify", "Password incorrect!");
+        this.myNotify("Password incorrect!")
       } else {
-        this.$emit("notify", "Profile update is now available!");
+        this.myNotify("Profile update is now available!")
       }
       this.confirmed = resp;
-      // updateInfo(new_info){
-      //   this.credentials = new_info
-      // },
-      // proceed_update(result){
-      //   this.confirmed = result
     },
     accountFormResponsetoApp(message) {
+      this.myNotify(message)
+    },
+    myNotify(message) {
       this.$emit("notify", message);
     }
   },
-  created() {
-    this.credentials = jwt_decode(localStorage.getItem("token")).id;
+  mounted() {
+    console.log(this.$children);
   }
 };
 </script>

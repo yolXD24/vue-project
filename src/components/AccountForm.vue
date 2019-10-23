@@ -201,15 +201,10 @@ export default {
           }
         } else {
           this.$emit("accountFormResponse", "Passwords don't match!");
-          // this.text = "Passwords don't match!";
-          // this.snackbar = true;
           this.c_password = null;
         }
       } else {
         this.$emit("accountFormResponse", "Invalid account settings!");
-
-        // this.text = "Invalid account settings!";
-        // this.snackbar = true;
       }
     },
     register(account, _url) {
@@ -219,10 +214,6 @@ export default {
         .then(res => {
           if (!res.data.exist) {
             this.$emit("accountFormResponse", "Account Saved Successfully!");
-
-            // this.text = "Account Saved Successfully!";
-            // this.snackbar = true;
-            // location.reload(true)
             setTimeout(() => {
               this.$router.push("/admin/AccountManagement");
             }, 1000);
@@ -231,9 +222,6 @@ export default {
               "accountFormResponse",
               "Username / Email is not available!"
             );
-
-            // this.text = "Username / Email is not available!";
-            // this.snackbar = true;
           }
         })
         .catch(err => {
@@ -262,9 +250,6 @@ export default {
         })
         .catch(err => {
           this.$emit("accountFormResponse", "Something went wrong!");
-
-          // this.text = "Something went wrong!";
-          // this.snackbar = true;
         });
     },
     clearFields() {
