@@ -49,6 +49,7 @@
 </style>
 
 <script>
+/* eslint-disable */
 import Header from "@/components/Menu";
 import Login from "@/views/Login";
 export default {

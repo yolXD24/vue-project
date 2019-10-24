@@ -1,167 +1,57 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
-  >
-    <v-row justify="center">
-      <v-col cols="11">
-        <v-card
-          title="Edit Profile"
-          text="Complete your profile"
-          class="elevation-4"
-        >
-          <v-toolbar
-            class="elevation-1"
-            color="grey lighten-3"
-          >
-            <v-toolbar-title>{{ MyTitle }}</v-toolbar-title>
-            <div class="flex-grow-1"></div>
-          </v-toolbar>
-          <v-form
-            ref="form"
-            v-model="valid"
-            lazy-validation
-          >
-            <v-container class="py-0">
-              <v-row>
-                <v-col
-                  cols="14"
-                  md="6"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    v-model="username"
-                    :counter="10"
-                    :rules="usernameRules"
-                    label="Username"
-                    prepend-icon="mdi-chart-bubble"
-                    required
-                  />
-                </v-col>
+<v-container fluid grid-list-xl>
+  <v-row justify="center">
+    <v-col cols="11">
+      <v-card title="Edit Profile" text="Complete your profile" class="elevation-4">
+        <v-toolbar class="elevation-1" color="grey lighten-3">
+          <v-toolbar-title>{{ MyTitle }}</v-toolbar-title>
+          <div class="flex-grow-1"></div>
+        </v-toolbar>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-container class="py-0">
+            <v-row>
+              <v-col cols="14" md="6">
+                <v-text-field class="purple-input" v-model="username" :counter="10" @keyup.enter="login" :rules="usernameRules" label="Username" prepend-icon="mdi-chart-bubble" required />
+              </v-col>
 
-                <v-col
-                  cols="14"
-                  md="6"
-                >
-                  <v-text-field
-                    label="Email Address"
-                    class="purple-input"
-                    v-model="email"
-                    :rules="emailRules"
-                    prepend-icon="mdi-at"
-                    required
-                  />
-                </v-col>
+              <v-col cols="14" md="6">
+                <v-text-field label="Email Address" class="purple-input" @keyup.enter="login" v-model="email" :rules="emailRules" prepend-icon="mdi-at" required />
+              </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    label="First Name"
-                    class="purple-input"
-                    v-model="fname"
-                    :counter="20"
-                    :disabled="intput_disable"
-                    :rules="nameRules"
-                    prepend-icon="mdi-rename-box"
-                    required
-                  />
-                </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field label="First Name" class="purple-input" v-model="fname" :counter="20" :disabled="intput_disable" @keyup.enter="login" :rules="nameRules" prepend-icon="mdi-rename-box" required />
+              </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    v-model="lname"
-                    :disabled="intput_disable"
-                    :counter="20"
-                    :rules="nameRules"
-                    label="Lastname"
-                    prepend-icon="mdi-rename-box"
-                    required
-                    class="purple-input"
-                  />
-                </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field v-model="lname" :disabled="intput_disable" :counter="20" @keyup.enter="login" :rules="nameRules" label="Lastname" prepend-icon="mdi-rename-box" required class="purple-input" />
+              </v-col>
 
-                <v-col
-                  cols="14"
-                  md="6"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    v-model="password"
-                    :rules="passwordRules"
-                    prepend-icon="mdi-lock"
-                    :type="password_type"
-                    label="Password"
-                    :disabled="MyDisabled"
-                    required
-                  />
-                </v-col>
+              <v-col cols="14" md="6">
+                <v-text-field class="purple-input" @keyup.enter="login" v-model="password" :rules="passwordRules" prepend-icon="mdi-lock" :type="password_type" label="Password" :disabled="MyDisabled" required />
+              </v-col>
 
-                <v-col
-                  cols="14"
-                  md="6"
-                >
-                  <v-text-field
-                    v-model="c_password"
-                    :rules="passwordRules"
-                    prepend-icon="mdi-lock"
-                    type="password"
-                    label=" Confirm Password"
-                    required
-                    class="purple-input"
-                  />
-                </v-col>
+              <v-col cols="14" md="6">
+                <v-text-field v-model="c_password" :rules="passwordRules" prepend-icon="mdi-lock" type="password" label=" Confirm Password" required @keyup.enter="login" class="purple-input" />
+              </v-col>
 
-                <v-col cols="12">
-                  <v-select
-                    @change="checkName"
-                    v-model="position"
-                    :items="items"
-                    :disabled="!MyDisabled"
-                    prepend-icon="mdi-account-child-outline "
-                    :rules="[v => !!v || 'Position is required']"
-                    label="Position"
-                    required
-                  ></v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                  class="text-center"
-                >
-                  <v-btn
-                    color="primary"
-                    large
-                    width="200"
-                    class="white--text text--accent-5"
-                    :disabled="isDisable"
-                    rounded
-                    @click="validate()"
-                  >{{ MyButton }}</v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-          <br />
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      absolute
-    >
-      {{ text }}
-      <v-btn
-        color="blue"
-        text
-        @click="snackbar = false"
-      >Close</v-btn>
-    </v-snackbar>
-  </v-container>
+              <v-col cols="12">
+                <v-select @change="checkName" v-model="position" :items="items" :disabled="!MyDisabled" prepend-icon="mdi-account-child-outline " :rules="[v => !!v || 'Position is required']" label="Position" required @keyup.enter="login"></v-select>
+              </v-col>
+              <v-col cols="12" class="text-center">
+                <v-btn color="primary" large width="200" class="white--text text--accent-5" :disabled="isDisable" rounded @click="validate()">{{ MyButton }}</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+        <br />
+      </v-card>
+    </v-col>
+  </v-row>
+  <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+    {{ text }}
+    <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+  </v-snackbar>
+</v-container>
 </template>
 
 <script>
@@ -274,6 +164,7 @@ export default {
         this.$emit("accountFormResponse", "Invalid account settings!");
       }
     },
+
     register(account, _url) {
       console.log(_url);
       axios

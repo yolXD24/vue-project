@@ -53,6 +53,7 @@
                 name="password"
                 prepend-icon="mdi-lock"
                 type="password"
+                @keyup.enter="login"
               ></v-text-field>
               <br />
               <center>

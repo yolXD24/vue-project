@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
@@ -11,7 +11,7 @@ let Admin = new Schema({
         type: String
     }
 }, {
-    collection: 'staff'
+    collection: "staff"
 });
 
 let Staff = new Schema({
@@ -39,15 +39,15 @@ let Staff = new Schema({
         type: String
     }
 }, {
-    collection: 'staff'
-})
+    collection: "staff"
+});
 
 let Code = new Schema({
     _id: String,
     type: String
-},{
-    collection: 'codes'
-})
+}, {
+    collection: "codes"
+});
 /**
  * Need object model for transaction
  *  {
@@ -75,7 +75,7 @@ let Code = new Schema({
 }
  */
 
-Staff.pre("save", function (next) {
+Staff.pre("save", function(next) {
     if (!this.isModified("password")) {
         return next();
     }
@@ -83,7 +83,7 @@ Staff.pre("save", function (next) {
     next();
 });
 
-const Admins = mongoose.model('Admin', Admin);
-const Staffs = mongoose.model('Staff', Staff);
-const Codes = mongoose.model('Code', Code);
+const Admins = mongoose.model("Admin", Admin);
+const Staffs = mongoose.model("Staff", Staff);
+const Codes = mongoose.model("Code", Code);
 module.exports = { Admins, Staffs, Codes };

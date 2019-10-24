@@ -1,11 +1,5 @@
 const express = require("express");
 const routes = express.Router();
-var fs = require('fs')
-var mammoth = require("mammoth");
-
-// const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
-// let models = require("./db.model");
 
 //MODELS
 var login = require("./models/model.login");
@@ -25,13 +19,22 @@ routes.route("/register").post((req, res) => {
 });
 //confirm password before updating its account
 routes.route("/confirm_password").post((req, res) => {
-        confirm_password(req.body.id, req.body.password, res);
-    })
-    //admin will update its profile
+    confirm_password(req.body.id, req.body.password, res);
+});
+//admin will update its profile
 routes.route("/update").post((req, res) => {
-        update(req.body.id, req.body.username, req.body.email, req.body.firstname, req.body.lastname, req.body.password, req.body.position, res);
-    })
-    // admin retrieve all accounts
+    update(
+        req.body.id,
+        req.body.username,
+        req.body.email,
+        req.body.firstname,
+        req.body.lastname,
+        req.body.password,
+        req.body.position,
+        res
+    );
+});
+// admin retrieve all accounts
 routes.route("/accounts").post((req, res) => {
     accounts(res);
 });
@@ -43,30 +46,29 @@ routes.route("/deleteAccount").post((req, res) => {
 // admin retrieve all transactions
 routes.route("/transactions").post((req, res) => {
     /*  NOTE!!
-       1.I send my id of the staff , if admin all transaction will be retrieve
-       2.if not admin retrieve transaction for that staff only
-       3.this is the transaction object
-              {
-                name:name of user,
-                request:type of document request by the user,
-                officer:officer in charge,
-                date:date of transaction
-              },
-      4.response should be array of transaction objects
-      thanks 
-      ^__^
-      */
+         1.I send my id of the staff , if admin all transaction will be retrieve
+         2.if not admin retrieve transaction for that staff only
+         3.this is the transaction object
+                {
+                  name:name of user,
+                  request:type of document request by the user,
+                  officer:officer in charge,
+                  date:date of transaction
+                },
+        4.response should be array of transaction objects
+        thanks 
+        ^__^
+        */
 });
 
-routes.route('/files/code').get((req, res) => {
+routes.route("/files/code").get((req, res) => {
     res.status(200).send({
         firstname: "Yol",
-        lastname: "Torres",
-    })
+        lastname: "Torres"
+    });
 
     /*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
-    IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */
-
+      IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */
 });
 // routes.route('/code').post((req, res) => {
 /*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
