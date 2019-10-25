@@ -2,12 +2,12 @@ const express = require("express");
 const routes = express.Router();
 
 //MODELS
-var login = require("./models/model.login");
-var register = require("./models/model.register");
-var confirm_password = require("./models/model.confirm_pass");
-var update = require("./models/model.update");
-var accounts = require("./models/model.accounts");
-var deleteAccount = require("./models/model.delAccount");
+var login = require("./modules/module.login");
+var register = require("./modules/module.register");
+var confirm_password = require("./modules/module.confirm_pass");
+var update = require("./modules/module.update");
+var accounts = require("./modules/module.accounts");
+var deleteAccount = require("./modules/module.delAccount");
 
 //account login
 routes.route("/login").post((req, res) => {
