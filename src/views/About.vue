@@ -1,46 +1,30 @@
 <template>
-  <v-container
-    fluid
-    class="body"
-    grid-list-xl
-  >
-    <v-card
-      :loading="loading"
-      class="mx-auto my-12 v-card"
-      max-width="500"
-      elevation="5"
-    >
-      <br>
+  <v-container fluid class="body" grid-list-xl>
+    <v-card :loading="loading" class="mx-auto my-12 v-card" max-width="500" elevation="5">
+      <br />
       <v-card-text class="text-center">
-        <v-avatar
-          :color="colors[Math.floor(Math.random()*this.colors.length)]"
-          size="150"
-        >
-          <span class="white--text display-3 font-weight-bold text-uppercase">{{
+        <v-avatar :color="colors[Math.floor(Math.random()*this.colors.length)]" size="150">
+          <span class="white--text display-3 font-weight-bold text-uppercase">
+            {{
             credentials.firstname[0] + credentials.lastname[0]
-            }}</span>
+            }}
+          </span>
         </v-avatar>
-        <v-row
-          align="center"
-          class="mx-5"
-        >
+        <v-row align="center" class="mx-5">
           <v-card-text class="black--text text--accent-4">
-            <h4 class=" headline font-weight-black text-uppercase">
-              Name : {{ credentials.firstname + " " + credentials.lastname }}
-            </h4>
+            <h4
+              class="headline font-weight-black text-uppercase"
+            >Name : {{ credentials.firstname + " " + credentials.lastname }}</h4>
             <br />
             <div class="font-weight-medium title mb-3">
-              <h5>
-                Username : {{ credentials.username }}
-              </h5>
+              <h5>Username : {{ credentials.username }}</h5>
               <h5>Email : {{ credentials.email }}</h5>
-              <h5 class="text-capitalize">
-                position : {{ credentials.position }}
-              </h5>
+              <h5 class="text-capitalize">position : {{ credentials.position }}</h5>
             </div>
             <center>
               <br />
               <AccountSettings
+                id="plain"
                 v-if="confirmed"
                 @click="update"
                 v-on:updated_info="updateInfo"
@@ -56,13 +40,12 @@
           </v-card-text>
         </v-row>
       </v-card-text>
-      <br><br>
+      <br />
+      <br />
     </v-card>
   </v-container>
 </template>
-<style lang="scss">
-  @import '../assets/style.css';
-</style>
+
 <script>
 import jwt_decode from "jwt-decode";
 import AccountSettings from "./AccountSettings.vue";
@@ -77,7 +60,20 @@ export default {
   },
   data() {
     return {
-      colors: ["primary", "secondary", "#FF8A80", "#4A148C", "#FF80AB", "#7986CB", "#4FC3F7", "#F57F17", "#78909C", "#BF360C", "#00796B", "#FF4081"],
+      colors: [
+        "primary",
+        "secondary",
+        "#FF8A80",
+        "#4A148C",
+        "#FF80AB",
+        "#7986CB",
+        "#4FC3F7",
+        "#F57F17",
+        "#78909C",
+        "#BF360C",
+        "#00796B",
+        "#FF4081"
+      ],
       loading: false,
       confirmed: false
     };
@@ -92,14 +88,14 @@ export default {
     },
     confirm_password(resp) {
       if (!resp) {
-        this.myNotify("Password incorrect!")
+        this.myNotify("Password incorrect!");
       } else {
-        this.myNotify("Profile update is now available!")
+        this.myNotify("Profile update is now available!");
       }
       this.confirmed = resp;
     },
     accountFormResponsetoApp(message) {
-      this.myNotify(message)
+      this.myNotify(message);
     },
     myNotify(message) {
       this.$emit("notify", message);

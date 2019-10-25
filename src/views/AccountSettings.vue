@@ -1,6 +1,7 @@
 <template>
   <v-row justify="center">
     <v-dialog
+      id="plain"
       v-model="dialog"
       fullscreen
       hide-overlay
@@ -9,15 +10,15 @@
       <template v-slot:activator="{ on }">
         <v-btn
           color="primary"
-          class=" white--text text--accent-5"
+          class="white--text text--accent-5"
           rounded
           with="500"
           dark
           v-on="on"
-          >Update Settings</v-btn
-        >
+        >Update Settings</v-btn>
       </template>
-      <v-card>
+       <!-- style='{background: url("https://source.unsplash.com/collections/8825242/' + random + '"})' -->
+      <v-card class="v-card-plain settings"  >
         <v-toolbar dark color="primary">
           <v-toolbar-title>Account Settings</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -31,7 +32,7 @@
           ref="form"
           MyTitle="Update Account"
           MyButton="Update"
-          Default_Password=""
+          Default_Password
           :MyUpdate="true"
           :MyDisabled="false"
           :Info="credentials"
@@ -47,15 +48,16 @@ export default {
   components: {
     AccountForm
   },
-  props:{
-    credentials:Object
+  props: {
+    credentials: Object
   },
   data() {
     return {
       dialog: false,
       notifications: false,
       sound: true,
-      widgets: false,
+      random :1,
+      widgets: false
       // userInfo: jwt_decode(localStorage.getItem("token")).id
     };
   },

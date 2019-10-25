@@ -77,7 +77,7 @@
 </template>
 
 <style scoped>
-
+/* 
 #body {
  position: relative;
   height: 100%!important;
@@ -88,7 +88,7 @@
   background-attachment: fixed !important;
   background-repeat: no-repeat !important;
   overflow: auto;
-}
+} */
 .mycard {
   opacity: 0.8 !important;
 }
