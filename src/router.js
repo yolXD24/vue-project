@@ -8,6 +8,8 @@ import TransactionHistory from "./views/History.vue";
 import AccountManagement from "./views/AccountManagement.vue";
 import NotFound from "./views/404.vue";
 import jwt_decode from "jwt-decode";
+import { isNullOrUndefined } from 'util';
+
 
 Vue.use(Router);
 
@@ -82,13 +84,13 @@ var router = new Router({
 
 router.beforeEach((to, from, next) => {
     if (!to.meta.tokenRequired) {
-        if (localStorage.getItem("token") !== null) {
+        if (!isNullOrUndefined(localStorage.getItem("token"))) {
             next("/home");
         } else {
             next();
         }
     } else {
-        if (localStorage.getItem("token") === null) {
+        if (isNullOrUndefined(localStorage.getItem("token"))) {
             next("/login");
         } else {
             next();
