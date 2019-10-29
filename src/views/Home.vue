@@ -24,7 +24,7 @@
               rounded
               with="500"
               dark
-              @click="myMethod"
+              @click="checkCode"
             >Check Document</v-btn>
           </center>
           <br />
@@ -56,7 +56,7 @@ export default {
     toCapital(name) {
       return name.charAt(0).toUpperCase() + name.slice(1);
     },
-    myMethod() {
+    checkCode() {
       console.log(jwt_decode(localStorage.getItem("token")).id.username);
       this.loading = true;
       setTimeout(() => {
