@@ -1,21 +1,12 @@
 <template>
   <div>
-    <v-navigation-drawer
-      v-model="drawer"
-      elevation="5"
-      permanent
-      app
-      id="sidebar"
-    >
+    <v-navigation-drawer v-model="drawer" elevation="5" permanent app id="sidebar">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title text-center">Menu</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list
-        nav
-        dense
-      >
+      <v-list nav dense>
         <v-divider></v-divider>
         <v-list-item
           active-class="blue darken-2 white--text text--accent-4"
@@ -60,8 +51,8 @@
   </div>
 </template>
 <style scoped>
-#sidebar{
-opacity: 0.8!important;
+#sidebar {
+  opacity: 0.8 !important;
 }
 </style>
 
@@ -82,7 +73,7 @@ export default {
     logout() {
       localStorage.removeItem("token");
       localStorage.removeItem("default");
-      location.reload(true);
+      this.$router.push("/login");
     }
   },
   watch: {

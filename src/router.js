@@ -14,71 +14,72 @@ import { isNullOrUndefined } from 'util';
 Vue.use(Router);
 
 var myProps = {
-    credentials: localStorage.getItem("token") ? jwt_decode(localStorage.getItem("token")).id : null
+    credentials: !isNullOrUndefined(localStorage.getItem("token")) ? jwt_decode(localStorage.getItem("token")).id : null
 }
 var router = new Router({
     mode: "history",
     base: process.env.BASE_URL,
-    routes: [{
-            path: "/",
-            redirect: {
-                path: "/home"
-            }
-        },
-        {
-            path: "/home",
-            name: "home",
-            component: Home,
-            meta: {
-                tokenRequired: true
-            },
-        },
-        {
-            path: "/admin/settings",
-            component: About,
-            props: myProps,
-            meta: {
-                tokenRequired: true
-            },
-        },
-        {
-            path: "/admin/history",
-            component: TransactionHistory,
-            meta: {
-                tokenRequired: true
-            },
-        },
-        {
-            path: "/admin/register",
-            component: Register,
-            meta: {
-                tokenRequired: true
-            },
-        },
-        {
-            path: "/admin/AccountManagement",
-            component: AccountManagement,
-            meta: {
-                tokenRequired: true
-            },
-        },
 
-        {
-            path: "/login",
-            name: "login",
-            component: Login,
-            meta: {
-                tokenRequired: false
-            },
-        },
-        {
-            path: "*",
-            name: "NotFound",
-            component: NotFound,
-            redirect: {
-                path: "/"
-            }
+    routes: [{
+        path: "/",
+        redirect: {
+            path: "/home"
         }
+    },
+    {
+        path: "/home",
+        name: "home",
+        component: Home,
+        meta: {
+            tokenRequired: true
+        },
+    },
+    {
+        path: "/admin/settings",
+        component: About,
+        props: myProps,
+        meta: {
+            tokenRequired: true
+        },
+    },
+    {
+        path: "/admin/history",
+        component: TransactionHistory,
+        meta: {
+            tokenRequired: true
+        },
+    },
+    {
+        path: "/admin/register",
+        component: Register,
+        meta: {
+            tokenRequired: true
+        },
+    },
+    {
+        path: "/admin/AccountManagement",
+        component: AccountManagement,
+        meta: {
+            tokenRequired: true
+        },
+    },
+
+    {
+        path: "/login",
+        name: "login",
+        component: Login,
+        meta: {
+            tokenRequired: false
+        },
+    },
+    {
+        path: "*",
+        name: "NotFound",
+        component: NotFound,
+        redirect: {
+            path: "/"
+        }
+    }
     ]
 });
 
