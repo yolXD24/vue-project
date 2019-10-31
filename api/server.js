@@ -11,7 +11,7 @@ const routes = require("./db.route");
 mongoose.Promise = global.Promise;
 console.log("connecting....");
 
-mongoose.connect(config.DB, { useNewUrlParser: true }, (err, data) => {
+mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true }, (err, data) => {
     if (err) {
         console.log("error : " + err);
     } else {
@@ -25,6 +25,6 @@ app.use(bodyParser.json());
 
 app.use("/admin", routes);
 
-app.listen(PORT, function() {
+app.listen(PORT, function () {
     console.log("Server is running on Port:", PORT);
 });
