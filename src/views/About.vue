@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="body" grid-list-xl>
     <v-card :loading="loading" class="mx-auto my-12 v-card" max-width="500" elevation="5">
-      <br />
+      <br>
       <v-card-text class="text-center">
         <v-avatar :color="colors[Math.floor(Math.random()*this.colors.length)]" size="150">
           <span class="white--text display-3 font-weight-bold text-uppercase">
@@ -15,14 +15,14 @@
             <h4
               class="headline font-weight-black text-uppercase"
             >Name : {{ credentials.firstname + " " + credentials.lastname }}</h4>
-            <br />
+            <br>
             <div class="font-weight-medium title mb-3">
               <h5>Username : {{ credentials.username }}</h5>
               <h5>Email : {{ credentials.email }}</h5>
               <h5 class="text-capitalize">position : {{ credentials.position }}</h5>
             </div>
             <center>
-              <br />
+              <br>
               <AccountSettings
                 id="plain"
                 v-if="confirmed"
@@ -40,8 +40,8 @@
           </v-card-text>
         </v-row>
       </v-card-text>
-      <br />
-      <br />
+      <br>
+      <br>
     </v-card>
   </v-container>
 </template>
@@ -50,6 +50,7 @@
 import jwt_decode from "jwt-decode";
 import AccountSettings from "./AccountSettings.vue";
 import ConfirmPassword from "./ConfirmPassword.vue";
+import { isNullOrUndefined } from "util";
 export default {
   props: {
     credentials: Object
@@ -100,6 +101,11 @@ export default {
     myNotify(message) {
       this.$emit("notify", message);
     }
+  },
+  mounted() {
+    this.credentials = isNullOrUndefined(this.credentials)
+      ? jwt_decode(localStorage.getItem("token")).id
+      : this.credentials;
   }
 };
 </script>

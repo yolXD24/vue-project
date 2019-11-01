@@ -149,7 +149,7 @@ export default {
           }
         })
         .catch(err => {
-          this.$emit("notify", "Please try again!");
+          this.$emit("notify", "Cannot connect to the server!");
 
           setTimeout(() => {
             this.loader(false);
