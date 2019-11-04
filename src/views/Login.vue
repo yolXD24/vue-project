@@ -37,6 +37,7 @@
                 </div>
               </v-card-title>
             </center>
+            <v-form ref= "form">
 
             <v-card-text id="card-body">
               <v-text-field
@@ -66,6 +67,7 @@
                 >Login</v-btn>
               </center>
             </v-card-text>
+            </v-form>
             <br />
           </v-card>
         </center>
@@ -92,16 +94,14 @@
 .mycard {
   opacity: 0.8 !important;
 }
-#content{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    
+#content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
-
 </style>
 
 <script>
@@ -112,7 +112,7 @@ export default {
       loading: false,
       disable: false,
       username: "",
-      password: "",
+      password: ""
     };
   },
   methods: {
@@ -136,12 +136,11 @@ export default {
               this.$emit("notify", "Welcome " + this.username + " !");
               localStorage.setItem("token", res.data.token);
               localStorage.setItem("default", res.data.default_pass);
-              this.$emit("loggedIn",localStorage.getItem("token"))
-              
-              this.$router.push("/")
+              this.$emit("loggedIn", localStorage.getItem("token"));
+
+              this.$router.push("/");
             } else {
-              this.password = "";
-              this.username = "";
+              this.$refs.form.reset();
               this.$emit("notify", "Invalid Credentials");
             }
           } else {

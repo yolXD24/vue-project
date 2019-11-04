@@ -195,7 +195,7 @@ export default {
           // this.text = "Account was Updated Success fully!";
           this.$emit(
             "accountFormResponse",
-            "Account was Updated Success fully!"
+            "Account was Updated Successfully!"
           );
 
           // this.snackbar = true;
