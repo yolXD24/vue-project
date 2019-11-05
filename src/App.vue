@@ -1,36 +1,13 @@
 <template>
-  <v-app
-    app
-    id="body"
-  >
-    <Header v-if="isSidebar" />
-    <v-content
-      dark
-      id="content"
-    >
-      <router-view
-        v-on:notify="app_notify"
-        v-on:loggedIn="setToken"
-      />
-      <v-snackbar
-        v-model="snackbar"
-        :timeout="timeout"
-        absolute
-      >
+  <v-app app id="body">
+    <Sidebar v-if="isSidebar" v-on:loggedIn="setToken" />
+    <v-content dark id="content">
+      <router-view v-on:notify="app_notify" v-on:loggedIn="setToken" />
+      <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
         {{ text }}
-        <v-btn
-          color="blue"
-          text
-          @click="snackbar = false"
-        >Close</v-btn>
+        <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
       </v-snackbar>
-      <v-footer
-        padless
-        absolute
-        inset
-        dense
-        style="background=transparent!"
-      >
+      <v-footer padless absolute inset dense style="background=transparent!">
         <v-col
           class="text-center"
           cols="12"
@@ -54,7 +31,7 @@
 
 <script>
 /* eslint-disable */
-import Header from "@/components/Menu";
+import Sidebar from "@/components/Menu";
 import Login from "@/views/Login";
 import { isNullOrUndefined } from "util";
 export default {
@@ -62,23 +39,23 @@ export default {
   props: ["credentials"],
   components: {
     Login,
-    Header
+    Sidebar
   },
   data() {
     return {
-      token: null,
-      is_default_password: null,
+      token: localStorage.getItem("token"),
       snackbar: false,
       text: "",
-      timeout: 2000,
-      isSidebar: false
+      timeout: 2000
     };
   },
   computed: {
-    // token() {
-    //   return localStorage.getItem("token")
-    // }
-    // this.token = localStorage.getItem("token");
+    isSidebar() {
+      return !isNullOrUndefined(this.token);
+    },
+    is_default_password() {
+      return;
+    }
   },
   methods: {
     app_notify(notification) {
@@ -90,12 +67,7 @@ export default {
     }
   },
   mounted() {
-    this.is_default_password = localStorage.getItem("default");
-
-  },
-  updated() {
-    this.token = localStorage.getItem("token")
-    this.isSidebar = !isNullOrUndefined(this.token);
+    // this.is_default_password = localStorage.getItem("default");
   }
 };
 </script>

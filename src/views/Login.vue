@@ -10,13 +10,13 @@
     >
       <v-col
         cols="12"
-        sm="10"
-        md="5"
+        sm="9"
+        md="4"
       >
         <center>
 
           <v-card
-            class="mycard mx-10"
+            class="mycard mx-12"
             :loading="loading"
           >
             <br />
@@ -136,8 +136,7 @@ export default {
               this.$emit("notify", "Welcome " + this.username + " !");
               localStorage.setItem("token", res.data.token);
               localStorage.setItem("default", res.data.default_pass);
-              // this.$emit("loggedIn", localStorage.getItem("token"));
-
+              this.$emit("loggedIn", localStorage.getItem("token"));
               this.$router.push("/");
             } else {
               this.$refs.form.reset();

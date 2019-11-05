@@ -1,57 +1,131 @@
 <template>
-<v-container fluid grid-list-xl>
-  <v-row justify="center">
-    <v-col cols="11">
-      <v-card title="Edit Profile" text="Complete your profile" class="elevation-4">
-        <v-toolbar class="elevation-1" color="grey lighten-3">
-          <v-toolbar-title>{{ MyTitle }}</v-toolbar-title>
-          <div class="flex-grow-1"></div>
-        </v-toolbar>
-        <v-form ref="form" v-model="valid" lazy-validation>
-          <v-container class="py-0">
-            <v-row>
-              <v-col cols="14" md="6">
-                <v-text-field class="purple-input" v-model="username" :counter="10" @keyup.enter="login" :rules="usernameRules" label="Username" prepend-icon="mdi-chart-bubble" required />
-              </v-col>
+  <v-container fluid grid-list-xl>
+    <v-row justify="center">
+      <v-col cols="11">
+        <v-card title="Edit Profile" text="Complete your profile" class="elevation-4">
+          <v-toolbar class="elevation-1" color="grey lighten-3">
+            <v-toolbar-title>{{ MyTitle }}</v-toolbar-title>
+            <div class="flex-grow-1"></div>
+          </v-toolbar>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-container class="py-0">
+              <v-row>
+                <v-col cols="14" md="6">
+                  <v-text-field
+                    class="purple-input"
+                    v-model="username"
+                    :counter="10"
+                    @keyup.enter="login"
+                    :rules="usernameRules"
+                    label="Username"
+                    prepend-icon="mdi-chart-bubble"
+                    required
+                  />
+                </v-col>
 
-              <v-col cols="14" md="6">
-                <v-text-field label="Email Address" class="purple-input" @keyup.enter="login" v-model="email" :rules="emailRules" prepend-icon="mdi-at" required />
-              </v-col>
+                <v-col cols="14" md="6">
+                  <v-text-field
+                    label="Email Address"
+                    class="purple-input"
+                    @keyup.enter="login"
+                    v-model="email"
+                    :rules="emailRules"
+                    prepend-icon="mdi-at"
+                    required
+                  />
+                </v-col>
 
-              <v-col cols="12" md="6">
-                <v-text-field label="First Name" class="purple-input" v-model="fname" :counter="20" :disabled="intput_disable" @keyup.enter="login" :rules="nameRules" prepend-icon="mdi-rename-box" required />
-              </v-col>
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    label="First Name"
+                    class="purple-input"
+                    v-model="fname"
+                    :counter="20"
+                    :disabled="intput_disable"
+                    @keyup.enter="login"
+                    :rules="nameRules"
+                    prepend-icon="mdi-rename-box"
+                    required
+                  />
+                </v-col>
 
-              <v-col cols="12" md="6">
-                <v-text-field v-model="lname" :disabled="intput_disable" :counter="20" @keyup.enter="login" :rules="nameRules" label="Lastname" prepend-icon="mdi-rename-box" required class="purple-input" />
-              </v-col>
+                <v-col cols="12" md="6">
+                  <v-text-field
+                    v-model="lname"
+                    :disabled="intput_disable"
+                    :counter="20"
+                    @keyup.enter="login"
+                    :rules="nameRules"
+                    label="Lastname"
+                    prepend-icon="mdi-rename-box"
+                    required
+                    class="purple-input"
+                  />
+                </v-col>
 
-              <v-col cols="14" md="6">
-                <v-text-field class="purple-input" @keyup.enter="login" v-model="password" :rules="passwordRules" prepend-icon="mdi-lock" :type="password_type" label="Password" :disabled="MyDisabled" required />
-              </v-col>
+                <v-col cols="14" md="6">
+                  <v-text-field
+                    class="purple-input"
+                    @keyup.enter="login"
+                    v-model="password"
+                    :rules="passwordRules"
+                    prepend-icon="mdi-lock"
+                    :type="password_type"
+                    label="Password"
+                    :disabled="MyDisabled"
+                    required
+                  />
+                </v-col>
 
-              <v-col cols="14" md="6">
-                <v-text-field v-model="c_password" :rules="passwordRules" prepend-icon="mdi-lock" type="password" label=" Confirm Password" required @keyup.enter="login" class="purple-input" />
-              </v-col>
+                <v-col cols="14" md="6">
+                  <v-text-field
+                    v-model="c_password"
+                    :rules="passwordRules"
+                    prepend-icon="mdi-lock"
+                    type="password"
+                    label=" Confirm Password"
+                    required
+                    @keyup.enter="login"
+                    class="purple-input"
+                  />
+                </v-col>
 
-              <v-col cols="12">
-                <v-select @change="checkName" v-model="position" :items="items" :disabled="!MyDisabled" prepend-icon="mdi-account-child-outline " :rules="[v => !!v || 'Position is required']" label="Position" required @keyup.enter="login"></v-select>
-              </v-col>
-              <v-col cols="12" class="text-center">
-                <v-btn color="primary" large width="200" class="white--text text--accent-5" :disabled="isDisable" rounded @click="validate()">{{ MyButton }}</v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-        <br />
-      </v-card>
-    </v-col>
-  </v-row>
-  <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
-    {{ text }}
-    <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
-  </v-snackbar>
-</v-container>
+                <v-col cols="12">
+                  <v-select
+                    @change="checkName"
+                    v-model="position"
+                    :items="items"
+                    :disabled="!MyDisabled"
+                    prepend-icon="mdi-account-child-outline "
+                    :rules="[v => !!v || 'Position is required']"
+                    label="Position"
+                    required
+                    @keyup.enter="login"
+                  ></v-select>
+                </v-col>
+                <v-col cols="12" class="text-center">
+                  <v-btn
+                    color="primary"
+                    large
+                    width="200"
+                    class="white--text text--accent-5"
+                    :disabled="isDisable"
+                    rounded
+                    @click="validate()"
+                  >{{ MyButton }}</v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
+          <br />
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+      {{ text }}
+      <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
+  </v-container>
 </template>
 
 <script>
@@ -75,7 +149,6 @@ export default {
       intput_disable: true,
       username: "",
       fname: "",
-      password_type: "text",
       text: "",
       snackbar: false,
       timeout: 2000,
@@ -103,30 +176,34 @@ export default {
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
       position: this.Info ? this.Info.position : null,
-      items: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"],
-
+      items: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
     };
+  },
+  computed: {
+    password_type() {
+      return this.MyUpdate ? "password" : "text";
+    }
   },
   methods: {
     checkName() {
       switch (this.position) {
         case this.items[0]:
-          this.intput_disable = true
-          this.fname = "Chervin"
-          this.lname = "Tanilon"
+          this.intput_disable = true;
+          this.fname = "Chervin";
+          this.lname = "Tanilon";
           break;
         case this.items[1]:
-          this.fname = "Renan"
-          this.lname = "Bargaso"
-          this.intput_disable = true
+          this.fname = "Renan";
+          this.lname = "Bargaso";
+          this.intput_disable = true;
           break;
         case this.items[2]:
-          this.intput_disable = true
-          this.fname = "Yol Jr"
-          this.lname = "Torres"
+          this.intput_disable = true;
+          this.fname = "Yol Jr";
+          this.lname = "Torres";
           break;
         case this.items[3]:
-          this.intput_disable = false
+          this.intput_disable = false;
         default:
           break;
       }
@@ -150,7 +227,6 @@ export default {
           if (!this.MyUpdate) {
             this.register(account, this.url + "register");
           } else {
-            this.password_type = "password";
             this.password = "";
             this.c_password = "";
             account.id = this.Info._id;
@@ -166,7 +242,6 @@ export default {
     },
 
     register(account, _url) {
-      console.log(_url);
       axios
         .post(_url, account)
         .then(res => {
@@ -192,13 +267,10 @@ export default {
         .then(res => {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("default", res.data.default_pass);
-          // this.text = "Account was Updated Success fully!";
           this.$emit(
             "accountFormResponse",
             "Account was Updated Successfully!"
           );
-
-          // this.snackbar = true;
           setTimeout(() => {
             this.$emit(
               "updated_response",
@@ -216,9 +288,6 @@ export default {
     }
   },
   mounted() {
-    if (this.MyUpdate) {
-      this.password_type = "password";
-    }
     if (this.Info) {
       this.username = this.Info.username;
       this.fname = this.Info.firstname;

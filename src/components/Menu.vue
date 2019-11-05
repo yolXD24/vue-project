@@ -62,17 +62,51 @@ import jwt_decode from "jwt-decode";
 export default {
   data() {
     return {
-      is_admin: null,
-      items: [],
-      admin_items: [],
+      // is_admin: null,
+      items: [
+        {
+          title: "Home",
+          icon: "mdi-chart-bubble",
+          link: "/home"
+        },
+        {
+          title: "Transaction History",
+          icon: "mdi-history",
+          link: "/admin/history"
+        },
+        {
+          title: "Account Settings",
+          icon: "mdi-settings",
+          link: "/admin/settings"
+        }
+      ],
+      admin_items: [
+        {
+          title: "Add Staff",
+          icon: "mdi-account-plus",
+          link: "/admin/register"
+        },
+        {
+          title: "Manage Accounts",
+          icon: "mdi-account-key",
+          link: "/admin/AccountManagement"
+        }
+      ],
       drawer: false,
       group: null
     };
   },
+  computed: {
+    is_admin() {
+      return jwt_decode(localStorage.getItem("token")).id.admin;
+    }
+  },
+
   methods: {
     logout() {
       localStorage.removeItem("token");
       localStorage.removeItem("default");
+      this.$emit("loggedIn", null);
       this.$router.push("/login");
     }
   },
@@ -80,38 +114,6 @@ export default {
     group() {
       this.drawer = false;
     }
-  },
-  mounted() {
-    this.is_admin = jwt_decode(localStorage.getItem("token")).id.admin;
-    this.items = [
-      {
-        title: "Home",
-        icon: "mdi-chart-bubble",
-        link: "/home"
-      },
-      {
-        title: "Transaction History",
-        icon: "mdi-history",
-        link: "/admin/history"
-      },
-      {
-        title: "Account Settings",
-        icon: "mdi-settings",
-        link: "/admin/settings"
-      }
-    ];
-    this.admin_items = [
-      {
-        title: "Add Staff",
-        icon: "mdi-account-plus",
-        link: "/admin/register"
-      },
-      {
-        title: "Manage Accounts",
-        icon: "mdi-account-key",
-        link: "/admin/AccountManagement"
-      }
-    ];
   }
 };
 </script>
