@@ -1,13 +1,36 @@
 <template>
-  <v-app app id="body">
+  <v-app
+    app
+    id="body"
+  >
     <Header v-if="isSidebar" />
-    <v-content dark id="content">
-      <router-view v-on:notify="app_notify" v-on:loggedIn="setToken" />
-      <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+    <v-content
+      dark
+      id="content"
+    >
+      <router-view
+        v-on:notify="app_notify"
+        v-on:loggedIn="setToken"
+      />
+      <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+        absolute
+      >
         {{ text }}
-        <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+        <v-btn
+          color="blue"
+          text
+          @click="snackbar = false"
+        >Close</v-btn>
       </v-snackbar>
-      <v-footer padless absolute inset dense style="background=transparent!">
+      <v-footer
+        padless
+        absolute
+        inset
+        dense
+        style="background=transparent!"
+      >
         <v-col
           class="text-center"
           cols="12"
@@ -51,6 +74,12 @@ export default {
       isSidebar: false
     };
   },
+  computed: {
+    // token() {
+    //   return localStorage.getItem("token")
+    // }
+    // this.token = localStorage.getItem("token");
+  },
   methods: {
     app_notify(notification) {
       this.text = notification;
@@ -62,10 +91,11 @@ export default {
   },
   mounted() {
     this.is_default_password = localStorage.getItem("default");
-    this.token = localStorage.getItem("token");
+
   },
   updated() {
-    this.isSidebar = !isNullOrUndefined(localStorage.getItem("token"));
+    this.token = localStorage.getItem("token")
+    this.isSidebar = !isNullOrUndefined(this.token);
   }
 };
 </script>

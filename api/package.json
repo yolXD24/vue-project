@@ -1,10 +1,11 @@
 {
     "name": "api",
     "version": "1.0.0",
-    "main": "DB.js",
+    "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon server.js"
+        "start": "nodemon server.js",
+        "dev": "nodemon server.js"
     },
     "keywords": [],
     "author": "",
@@ -15,11 +16,9 @@
         "crypto": "^1.0.1",
         "express": "^4.17.1",
         "jsonwebtoken": "^8.5.1",
-        "mammoth": "^1.4.8",
         "mongoose": "^5.7.3",
         "nodemon": "^1.19.4",
-        "simplecrypt": "^0.1.0",
-        "vue-doc-preview": "^0.3.1"
+        "simplecrypt": "^0.1.0"
     },
     "devDependencies": {},
     "description": ""

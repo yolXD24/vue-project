@@ -136,7 +136,7 @@ export default {
               this.$emit("notify", "Welcome " + this.username + " !");
               localStorage.setItem("token", res.data.token);
               localStorage.setItem("default", res.data.default_pass);
-              this.$emit("loggedIn", localStorage.getItem("token"));
+              // this.$emit("loggedIn", localStorage.getItem("token"));
 
               this.$router.push("/");
             } else {

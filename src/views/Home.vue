@@ -39,7 +39,7 @@
 import jwt_decode from "jwt-decode";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import GenerateForm from "@/middleware/generateForm.js";
+import GenerateForm from "@/forms/generateForm.js";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
 export default {
@@ -48,8 +48,6 @@ export default {
       code: "",
       file: "",
       loading: false
-
-      // disabled: false
     };
   },
   methods: {
@@ -57,7 +55,6 @@ export default {
       return name.charAt(0).toUpperCase() + name.slice(1);
     },
     checkCode() {
-      console.log(jwt_decode(localStorage.getItem("token")).id.username);
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
