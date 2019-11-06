@@ -1,13 +1,12 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
-  >
+  <v-container fluid grid-list-xl>
     <v-row justify="center">
       <v-col cols="11">
-        <v-card class="elevation-4 v-card" >
-        <v-card-text class="display-1 text-center font-weight-light">Transaction History</v-card-text>
-        <hr>
+        <v-card class="elevation-4 v-card">
+          <v-card-text class="display-1 text-center font-weight-light"
+            >Transaction History</v-card-text
+          >
+          <hr />
           <v-data-table
             :headers="headers"
             :transactions="transactions"
@@ -19,7 +18,7 @@
   </v-container>
 </template>
 <style lang="scss">
-  @import '../assets/style.css';
+@import "../assets/style.css";
 </style>
 <script>
 import jwt_decode from "jwt-decode";

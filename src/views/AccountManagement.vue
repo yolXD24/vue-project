@@ -1,16 +1,12 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
-  >
+  <v-container fluid grid-list-xl>
     <v-row justify="center">
       <v-col cols="11">
-
         <v-card class="elevation-4 v-card">
           <v-card-text class="display-1 text-center font-weight-light">
             Accounts Management
           </v-card-text>
-          <hr>
+          <hr />
           <template>
             <v-data-table
               :headers="headers"
@@ -18,10 +14,7 @@
               class="elevation-1 v-table"
             >
               <template v-slot:item.action="{ item }">
-                <v-icon
-                  small
-                  @click="deleteItem(item)"
-                >
+                <v-icon small @click="deleteItem(item)">
                   mdi-delete
                 </v-icon>
               </template>
@@ -37,7 +30,7 @@
   </v-container>
 </template>
 <style lang="scss">
-  @import '../assets/style.css';
+@import "../assets/style.css";
 </style>
 <script>
 import axios from "axios";

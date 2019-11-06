@@ -25,7 +25,8 @@
               with="500"
               dark
               @click="checkCode"
-            >Check Document</v-btn>
+              >Check Document</v-btn
+            >
           </center>
           <br />
         </v-card>

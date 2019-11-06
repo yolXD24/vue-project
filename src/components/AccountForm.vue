@@ -1,16 +1,33 @@
 <template>
-  <v-container fluid grid-list-xl>
+  <v-container
+    fluid
+    grid-list-xl
+  >
     <v-row justify="center">
       <v-col cols="11">
-        <v-card title="Edit Profile" text="Complete your profile" class="elevation-4">
-          <v-toolbar class="elevation-1" color="grey lighten-3">
+        <v-card
+          title="Edit Profile"
+          text="Complete your profile"
+          class="elevation-4"
+        >
+          <v-toolbar
+            class="elevation-1"
+            color="grey lighten-3"
+          >
             <v-toolbar-title>{{ MyTitle }}</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
-          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+          >
             <v-container class="py-0">
               <v-row>
-                <v-col cols="14" md="6">
+                <v-col
+                  cols="14"
+                  md="6"
+                >
                   <v-text-field
                     class="purple-input"
                     v-model="username"
@@ -23,7 +40,10 @@
                   />
                 </v-col>
 
-                <v-col cols="14" md="6">
+                <v-col
+                  cols="14"
+                  md="6"
+                >
                   <v-text-field
                     label="Email Address"
                     class="purple-input"
@@ -35,7 +55,10 @@
                   />
                 </v-col>
 
-                <v-col cols="12" md="6">
+                <v-col
+                  cols="12"
+                  md="6"
+                >
                   <v-text-field
                     label="First Name"
                     class="purple-input"
@@ -49,12 +72,15 @@
                   />
                 </v-col>
 
-                <v-col cols="12" md="6">
+                <v-col
+                  cols="12"
+                  md="6"
+                >
                   <v-text-field
                     v-model="lname"
                     :disabled="intput_disable"
                     :counter="20"
-                    @keyup.enter="login"
+                    @keyup.enter="validate()"
                     :rules="nameRules"
                     label="Lastname"
                     prepend-icon="mdi-rename-box"
@@ -63,10 +89,13 @@
                   />
                 </v-col>
 
-                <v-col cols="14" md="6">
+                <v-col
+                  cols="14"
+                  md="6"
+                >
                   <v-text-field
                     class="purple-input"
-                    @keyup.enter="login"
+                    @keyup.enter="validate()"
                     v-model="password"
                     :rules="passwordRules"
                     prepend-icon="mdi-lock"
@@ -77,7 +106,10 @@
                   />
                 </v-col>
 
-                <v-col cols="14" md="6">
+                <v-col
+                  cols="14"
+                  md="6"
+                >
                   <v-text-field
                     v-model="c_password"
                     :rules="passwordRules"
@@ -85,7 +117,7 @@
                     type="password"
                     label=" Confirm Password"
                     required
-                    @keyup.enter="login"
+                    @keyup.enter="validate()"
                     class="purple-input"
                   />
                 </v-col>
@@ -100,10 +132,13 @@
                     :rules="[v => !!v || 'Position is required']"
                     label="Position"
                     required
-                    @keyup.enter="login"
+                    @keyup.enter="validate()"
                   ></v-select>
                 </v-col>
-                <v-col cols="12" class="text-center">
+                <v-col
+                  cols="12"
+                  class="text-center"
+                >
                   <v-btn
                     color="primary"
                     large
@@ -121,9 +156,17 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
       {{ text }}
-      <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+      <v-btn
+        color="blue"
+        text
+        @click="snackbar = false"
+      >Close</v-btn>
     </v-snackbar>
   </v-container>
 </template>
@@ -139,8 +182,7 @@ export default {
     MyButton: String,
     MyDisabled: Boolean,
     MyUpdate: Boolean,
-    Default_Password: String,
-    Info: Object
+    Default_Password: String
   },
   data() {
     return {
@@ -182,6 +224,9 @@ export default {
   computed: {
     password_type() {
       return this.MyUpdate ? "password" : "text";
+    },
+    Info() {
+      return this.$store.getters.user
     }
   },
   methods: {
@@ -265,16 +310,16 @@ export default {
       axios
         .post(_url, account)
         .then(res => {
-          localStorage.setItem("token", res.data.token);
           localStorage.setItem("default", res.data.default_pass);
+          this.$store.getters.commit('setToken', res.data.token);
+          this.$store.getters.commit('setUser', res);
           this.$emit(
             "accountFormResponse",
             "Account was Updated Successfully!"
           );
           setTimeout(() => {
             this.$emit(
-              "updated_response",
-              jwt_decode(localStorage.getItem("token")).id
+              "updated_response"
             );
           }, 1200);
         })
@@ -282,19 +327,22 @@ export default {
           this.$emit("accountFormResponse", "Something went wrong!");
         });
     },
+    checkUpdate() {
+      if (this.Info) {
+        this.username = this.Info.username;
+        this.fname = this.Info.firstname;
+        this.lname = this.Info.lastname;
+        this.position = this.Info.position;
+        this.email = this.Info.email;
+      }
+    },
     clearFields() {
       this.password = "";
       this.c_password = "";
     }
   },
   mounted() {
-    if (this.Info) {
-      this.username = this.Info.username;
-      this.fname = this.Info.firstname;
-      this.lname = this.Info.lastname;
-      this.position = this.Info.position;
-      this.email = this.Info.email;
-    }
+    this.checkUpdate();
   }
 };
 </script>

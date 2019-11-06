@@ -10,13 +10,12 @@
     >
       <v-col
         cols="12"
-        sm="9"
+        sm="7"
         md="4"
       >
         <center>
-
           <v-card
-            class="mycard mx-12"
+            class="mycard pa-md-3 mx-lg-auto"
             :loading="loading"
           >
             <br />
@@ -33,49 +32,54 @@
                 class="justify-center"
               >
                 <div>
-                  <div class="blue--text title darken-1--text display-1">Xpress_DocX</div>
+                  <div class="blue--text title darken-1--text display-1">
+                    Xpress_DocX
+                  </div>
                 </div>
               </v-card-title>
             </center>
-            <v-form ref= "form">
-
-            <v-card-text id="card-body">
-              <v-text-field
-                label="Username / Email"
-                v-model="username"
-                name="login"
-                prepend-icon="mdi-account"
-                type="text"
-              ></v-text-field>
-              <v-text-field
-                id="password"
-                v-model="password"
-                label="Password"
-                name="password"
-                prepend-icon="mdi-lock"
-                type="password"
-                @keyup.enter="login"
-              ></v-text-field>
-              <br />
-              <center>
-                <v-btn
-                  color="primary"
-                  width="200"
-                  :disabled="disable"
-                  @click="login()"
-                  rounded
-                >Login</v-btn>
-              </center>
-            </v-card-text>
+            <v-form ref="form">
+              <v-card-text id="card-body">
+                <v-text-field
+                  label="Username / Email"
+                  v-model="credentials.username"
+                  :rules="[v=>!!v||'required']"
+                  name="login"
+                  prepend-icon="mdi-account"
+                  clearable
+                  @keyup.enter="validate()"
+                  type="text"
+                ></v-text-field>
+                <v-text-field
+                  id="password"
+                  v-model="credentials.password"
+                  label="Password"
+                  name="password"
+                  :rules="[v=>!!v||'required']"
+                  prepend-icon="mdi-lock"
+                  :type="show ? 'text' : 'password'"
+                  :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="show = !show"
+                  @keyup.enter="validate()"
+                ></v-text-field>
+                <br />
+                <center>
+                  <v-btn
+                    color="primary"
+                    width="200"
+                    :disabled="disable"
+                    @click="validate"
+                    rounded
+                  >Login</v-btn>
+                </center>
+              </v-card-text>
             </v-form>
             <br />
           </v-card>
         </center>
       </v-col>
     </v-row>
-
   </v-container>
-
 </template>
 
 <style scoped>
@@ -111,48 +115,41 @@ export default {
     return {
       loading: false,
       disable: false,
-      username: "",
-      password: ""
+      credentials: {
+        username: "",
+        password: ""
+      },
+      show: false
     };
   },
   methods: {
+    validate() {
+      if (this.$refs.form.validate()) {
+        this.login()
+      } else {
+        this.$emit("notify", "Fields cannot be empty");
+      }
+    },
     login() {
-      var credentials = {
-        account: {
-          username: this.username,
-          password: this.password
-        }
-      };
-      this.loader(true);
-      const url = "http://localhost:4000/admin/login";
-      axios
-        .post(url, credentials)
+      this.$store.dispatch('login', this.credentials)
         .then(res => {
-          setTimeout(() => {
-            this.loader(false);
-          }, 1000);
-          if (this.username != "" && this.password != "") {
-            if (res.data.auth) {
-              this.$emit("notify", "Welcome " + this.username + " !");
-              localStorage.setItem("token", res.data.token);
-              localStorage.setItem("default", res.data.default_pass);
-              this.$emit("loggedIn", localStorage.getItem("token"));
-              this.$router.push("/");
-            } else {
-              this.$refs.form.reset();
-              this.$emit("notify", "Invalid Credentials");
-            }
+          this.loader(false);
+          if (res.data.auth) {
+            this.$emit("notify", "Welcome " + this.$store.getters.user.username + " !");
+            this.$emit("loggedIn", localStorage.getItem("token"));
+            this.$router.push("/");
           } else {
-            this.$emit("notify", "Fields cannot be empty");
+            this.$refs.form.reset();
+            this.$emit("notify", "Invalid Credentials");
           }
         })
         .catch(err => {
+          console.log(err);
           this.$emit("notify", "Cannot connect to the server!");
+          this.loader(false);
 
-          setTimeout(() => {
-            this.loader(false);
-          }, 1000);
-        });
+        })
+
     },
     loader(status) {
       this.loading = status;

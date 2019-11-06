@@ -1,36 +1,19 @@
 <template>
   <v-row justify="center">
-    <v-dialog
-      v-model="dialog"
-      width="400"
-    >
+    <v-dialog v-model="dialog" width="400">
       <template v-slot:activator="{ on }">
-        <v-btn
-          color="primary"
-          rounded
-          width="200"
-          large
-          dark
-          v-on="on"
-        >Update</v-btn>
-      </template>
-      <v-card
-        class="v-card-plain"
-        @keyup.esc="closeDialog"
-      >
-        <v-toolbar
-          class="elevation-1"
-          color="grey lighten-3"
+        <v-btn color="primary" rounded width="200" large dark v-on="on"
+          >Update</v-btn
         >
+      </template>
+      <v-card class="v-card-plain" @keyup.esc="closeDialog">
+        <v-toolbar class="elevation-1" color="grey lighten-3">
           <v-toolbar-title>Enter Password to Update Account</v-toolbar-title>
           <div class="flex-grow-1"></div>
         </v-toolbar>
         <v-card-text>
           <br />
-          <div
-            :ref="my_ref"
-            lazy-validation
-          >
+          <div :ref="my_ref" lazy-validation>
             <v-text-field
               class="purple-input"
               v-model="password"
@@ -45,16 +28,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="red darken-1"
-            text
-            @click="closeDialog"
-          >Close</v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="validate"
-          >Confirm Password</v-btn>
+          <v-btn color="red darken-1" text @click="closeDialog">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="validate"
+            >Confirm Password</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -65,9 +42,6 @@
 import axios from "axios";
 
 export default {
-  props: {
-    credentials: Object
-  },
   data() {
     return {
       dialog: false,
@@ -79,7 +53,7 @@ export default {
   methods: {
     closeDialog() {
       this.dialog = false;
-      this.$refs.this.my_ref.reset()
+      this.$refs.this.my_ref.reset();
       // this.password = "";
     },
     validate() {
@@ -87,7 +61,7 @@ export default {
     },
     confirmPass() {
       var account = {
-        id: this.credentials._id,
+        id: this.$store.getters.user._id,
         password: this.password
       };
       axios

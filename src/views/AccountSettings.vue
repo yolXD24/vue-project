@@ -17,13 +17,20 @@
           v-on="on"
         >Update Settings</v-btn>
       </template>
-       <!-- style='{background: url("https://source.unsplash.com/collections/8825242/' + random + '"})' -->
-      <v-card class="v-card-plain settings"  >
-        <v-toolbar dark color="primary">
+      <!-- style='{background: url("https://source.unsplash.com/collections/8825242/' + random + '"})' -->
+      <v-card class="v-card-plain settings">
+        <v-toolbar
+          dark
+          color="primary"
+        >
           <v-toolbar-title>Account Settings</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Cancel</v-btn>
+            <v-btn
+              dark
+              text
+              @click="dialog = false"
+            >Cancel</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <AccountForm
@@ -35,7 +42,6 @@
           Default_Password
           :MyUpdate="true"
           :MyDisabled="false"
-          :Info="credentials"
         />
       </v-card>
     </v-dialog>
@@ -48,27 +54,22 @@ export default {
   components: {
     AccountForm
   },
-  props: {
-    credentials: Object
-  },
+
   data() {
     return {
       dialog: false,
       notifications: false,
       sound: true,
-      random :1,
+      random: 1,
       widgets: false
       // userInfo: jwt_decode(localStorage.getItem("token")).id
     };
   },
   methods: {
-    closeDialog(info) {
+    closeDialog() {
       if (info === false || info) {
-        // this.userInfo = jwt_decode(localStorage.getItem("token")).id;
-        this.$emit("updated_info", this.credentials);
-        // this.userInfo = info;
         this.dialog = false;
-        this.$refs.form.clearFields();
+        this.$refs.form.reset();
       }
     },
     accountFormResponse1(message) {

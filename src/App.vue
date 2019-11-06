@@ -1,6 +1,6 @@
 <template>
   <v-app app id="body">
-    <Sidebar v-if="isSidebar" v-on:loggedIn="setToken" />
+    <Sidebar v-if="$store.getters.status" v-on:loggedIn="setToken" />
     <v-content dark id="content">
       <router-view v-on:notify="app_notify" v-on:loggedIn="setToken" />
       <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
@@ -11,7 +11,7 @@
         <v-col
           class="text-center"
           cols="12"
-          v-if="is_default_password === 'true' && token !== null"
+          v-if="is_default_password === 'true' && $store.getters.token !== null"
         >
           <v-alert
             id="v-alert"
@@ -19,7 +19,8 @@
             colored-border
             type="error"
             elevation="2"
-          >Note : Password must be Changed!</v-alert>
+            >Note : Password must be Changed!</v-alert
+          >
         </v-col>
       </v-footer>
     </v-content>
@@ -31,9 +32,9 @@
 
 <script>
 /* eslint-disable */
-import Sidebar from "@/components/Menu";
+import Sidebar from "@/components/Sidebar";
 import Login from "@/views/Login";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, isNull } from "util";
 export default {
   name: "App",
   props: ["credentials"],
@@ -43,18 +44,17 @@ export default {
   },
   data() {
     return {
-      token: localStorage.getItem("token"),
       snackbar: false,
       text: "",
-      timeout: 2000
+      timeout: 2000,
     };
   },
   computed: {
     isSidebar() {
-      return !isNullOrUndefined(this.token);
+      return !isNullOrUndefined(this.$store.getters.token,);
     },
     is_default_password() {
-      return;
+      return  this.$store.getters.defaultPassword;
     }
   },
   methods: {
@@ -63,11 +63,8 @@ export default {
       this.snackbar = true;
     },
     setToken(token) {
-      this.token = token;
+      this.$store.commit('setToken', token);
     }
-  },
-  mounted() {
-    // this.is_default_password = localStorage.getItem("default");
   }
 };
 </script>

@@ -1,12 +1,21 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" elevation="5" permanent app id="sidebar">
+    <v-navigation-drawer
+      v-model="drawer"
+      elevation="5"
+      permanent
+      app
+      id="sidebar"
+    >
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title text-center">Menu</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list nav dense>
+      <v-list
+        nav
+        dense
+      >
         <v-divider></v-divider>
         <v-list-item
           active-class="blue darken-2 white--text text--accent-4"
@@ -58,6 +67,7 @@
 
 <script>
 import jwt_decode from "jwt-decode";
+import { isNull } from "util";
 
 export default {
   data() {
@@ -98,14 +108,13 @@ export default {
   },
   computed: {
     is_admin() {
-      return jwt_decode(localStorage.getItem("token")).id.admin;
+      return this.$store.getters.user.admin;
     }
   },
 
   methods: {
     logout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("default");
+     this.$store.dispatch('logout')
       this.$emit("loggedIn", null);
       this.$router.push("/login");
     }
@@ -114,6 +123,6 @@ export default {
     group() {
       this.drawer = false;
     }
-  }
+  },
 };
 </script>

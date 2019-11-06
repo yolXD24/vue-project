@@ -15,9 +15,9 @@ export default {
   components: {
     AccountForm
   },
-  methods:{
-    app_notify(msg){
-      this.$emit('notify', msg)
+  methods: {
+    app_notify(msg) {
+      this.$emit("notify", msg);
     }
   }
 };
