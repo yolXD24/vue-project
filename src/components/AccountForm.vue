@@ -62,6 +62,8 @@
                   <v-text-field
                     label="First Name"
                     class="purple-input"
+                    hint="numbers and symbols are not allowed!"
+                    placeholder="Default upon selecting position"
                     v-model="account.fname"
                     :counter="20"
                     :disabled="input_disable"
@@ -78,6 +80,8 @@
                   <v-text-field
                     v-model="account.lname"
                     :disabled="input_disable"
+                    placeholder="Default upon selecting position"
+                    hint="numbers and symbols are not allowed!"
                     :counter="20"
                     :rules="[rules.required,rules.nameRules]"
                     label="Lastname"
@@ -94,6 +98,7 @@
                   <v-text-field
                     class="purple-input"
                     v-model="account.password"
+                    placeholder="Password should be greater than 8 characters"
                     :rules="[rules.required,rules.passwordRules , rules.min , rules.matchPassword]"
                     prepend-icon="mdi-lock"
                     :type="password_type"
@@ -168,7 +173,7 @@
 
 <script>
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import nameCheckandAssign from "@/helpers/modules/nameCheckandAssign";
 
 export default {
   name: "AccountForm",
@@ -184,8 +189,8 @@ export default {
       valid: true,
       account: {
         username: "",
-        fname: "Default upon selecting position",
-        lname: "Default upon selecting position",
+        fname: "",
+        lname: "",
         email: "",
         admin: false,
         password: this.Default_Password,
@@ -206,9 +211,7 @@ export default {
         nameRules: v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
         emailRules: v => /.+@.+\..+/.test(v) || "E-mail must be valid",
         passwordRules: v => (v && v.length >= 8) || "Password must be more than 8 characters",
-        matchPassword: () =>
-          this.account.password === this.c_password ||
-          "Passwords don't match !"
+        matchPassword: () => this.account.password === this.c_password || "Passwords don't match !"
       },
       positions: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
     };
@@ -223,29 +226,10 @@ export default {
   },
   methods: {
     checkName() {
-      switch (this.account.position) {
-        case this.positions[0]:
-          this.input_disable = true;
-          this.account.fname = "Chervin";
-          this.account.lname = "Tanilon";
-          break;
-        case this.positions[1]:
-          this.account.fname = "Renan";
-          this.account.lname = "Bargaso";
-          this.input_disable = true;
-          break;
-        case this.positions[2]:
-          this.input_disable = true;
-          this.account.fname = "Yol Jr";
-          this.account.lname = "Torres";
-          break;
-        case this.positions[3]:
-          this.account.fname = ""
-          this.account.lname = ""
-          this.input_disable = false;
-        default:
-          break;
-      }
+      var details = nameCheckandAssign.checkName(this.account.position)
+      this.input_disable = details.disable;
+      this.account.fname = details.account[0];
+      this.account.lname = details.account[1];
     },
     validate() {
       this.isDisable = true;
@@ -267,14 +251,10 @@ export default {
           this.c_password = null;
         }
       }
-      // else {
-      //   this.$emit("accountFormResponse", "Invalid account settings!");
-      // }
+
     },
 
     register(account, _url) {
-      console.log(account);
-      
       axios
         .post(_url, account)
         .then(res => {
@@ -286,12 +266,16 @@ export default {
           } else {
             this.$emit(
               "accountFormResponse",
-              "Username / Email is not available!"
+              "Username / Email is already taken!"
             );
           }
         })
         .catch(err => {
-          console.error(err);
+          console.log(err);
+          this.$emit(
+              "accountFormResponse",
+              "Unable to connect to the server!"
+            );
         });
     },
     update(account, _url) {
@@ -312,12 +296,15 @@ export default {
           }, 1200);
         })
         .catch(err => {
+          console.log(err);
           this.$emit("accountFormResponse", "Something went wrong!");
         });
     },
     checkUpdate() {
       if (this.MyUpdate) {
-        this.account = this.Info
+        this.account = this.Info;
+        this.account.fname = this.Info.firstname;
+        this.account.lname = this.Info.lastname
         this.account.password = null
       }
     },

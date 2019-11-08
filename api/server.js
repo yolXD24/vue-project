@@ -6,7 +6,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const config = require("./DB.js");
 const routes = require("./db.route");
-// var fs = require('fs')
 
 mongoose.Promise = global.Promise;
 console.log("connecting....");
@@ -25,6 +24,8 @@ app.use(bodyParser.json());
 
 app.use("/admin", routes);
 
-app.listen(PORT, function () {
+app.listen(PORT, function() {
     console.log("Server is running on Port:", PORT);
 });
+
+// response layout {status :Number , error :{message :String , body:Object }, data :{message :"" , body :Object}}

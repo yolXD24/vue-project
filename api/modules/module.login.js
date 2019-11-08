@@ -13,6 +13,7 @@ module.exports = function(reqUsername, reqPassword, res) {
                     .compare(reqPassword, admin.password)
                     .then(match => {
                         if (match) {
+                            delete admin.password
                             let token = jwt.sign({ user: admin }, "docxpress");
                             res.status(200).send({
                                 error: false,
@@ -21,8 +22,6 @@ module.exports = function(reqUsername, reqPassword, res) {
                                 default_pass: reqPassword === "docxpress.default"
                             });
                         } else {
-                            console.log("incorrect password!");
-
                             return res
                                 .status(202)
                                 .send({ error: true, auth: false, token: null });

@@ -74,10 +74,7 @@ var router = new Router({
     ]
 });
 
-function isTokenNull(token) {
 
-    return token == 'null' || !token
-}
 router.beforeEach((to, from, next) => {
     if (!to.meta.tokenRequired) {
         if (store.getters.status) {
