@@ -1,8 +1,8 @@
 <template>
   <v-app app id="body">
-    <Sidebar v-if="$store.getters.status" v-on:loggedIn="setToken" />
+    <Sidebar v-if="$store.state.status"  />
     <v-content dark id="content">
-      <router-view v-on:notify="app_notify" v-on:loggedIn="setToken" />
+      <router-view v-on:notify="app_notify" />
       <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
         {{ text }}
         <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
@@ -61,9 +61,6 @@ export default {
     app_notify(notification) {
       this.text = notification;
       this.snackbar = true;
-    },
-    setToken(token) {
-      this.$store.commit('setToken', token);
     }
   }
 };

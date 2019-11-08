@@ -1,8 +1,8 @@
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./helpers/router";
+import router from "./system/router/index";
 import vuetify from "./plugins/vuetify";
-import store from "./store";
+import store from "./helpers/vuex/store";
 /*eslint-disable */
 
 Vue.config.productionTip = false;

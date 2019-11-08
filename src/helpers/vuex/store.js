@@ -20,7 +20,7 @@ export default new Vuex.Store({
         },
         user: state => {
             try {
-                return jwt_decode(state.token).id
+                return jwt_decode(state.token).user
             } catch (error) {
                 return { admin: false }
             }
@@ -31,6 +31,8 @@ export default new Vuex.Store({
         setToken(state, token) {
             state.token = token;
             localStorage.setItem('token', state.token)
+
+
         },
         auth_success(state) {
             state.status = true
@@ -43,18 +45,18 @@ export default new Vuex.Store({
 
         },
         logout(state) {
-            localStorage.removeItem('status')
             state.status = false;
             state.user = { admin: false }
-            console.log(typeof state.token);
 
         },
-        setUser(state, res) {
-            state.user = jwt_decode(res.data.token).id
+        setUser(state) {
+            state.user = jwt_decode(state.token).user
+            console.log(state.user);
+
         }
     },
     actions: {
-        login({ commit }, credentials) {
+        login({ commit, getters }, credentials) {
             return new Promise((resolve, reject) => {
                 const url = "http://localhost:4000/admin/login";
                 axios
@@ -63,12 +65,12 @@ export default new Vuex.Store({
                         localStorage.setItem("default", res.data.default_pass);
                         if (res.data.auth) {
                             commit('setToken', res.data.token)
-                            commit('auth_success', true)
-                            commit('setUser', res)
+                            commit('auth_success')
+                            commit('setUser')
                         } else {
                             commit('auth_error')
                         }
-                        resolve(res)
+                        resolve(getters.status)
                     })
                     .catch(err => {
                         commit('auth_error')
@@ -82,6 +84,7 @@ export default new Vuex.Store({
             commit('logout')
             localStorage.removeItem("token");
             localStorage.removeItem("default");
+            localStorage.removeItem("status");
         },
         register({ commit }, credentials) {
 

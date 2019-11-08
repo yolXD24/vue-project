@@ -40,7 +40,7 @@
 import jwt_decode from "jwt-decode";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import GenerateForm from "@/forms/generateForm.js";
+import GenerateForm from "@/system/forms/generateForm.js";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
 export default {
@@ -94,7 +94,7 @@ export default {
               day: today.getDate() - 1
             }
           };
-          var emp = jwt_decode(localStorage.getItem("token")).id;
+          var emp = this.$store.getters.user
           var fullname =
             this.toCapital(res.data.firstname) +
             " " +

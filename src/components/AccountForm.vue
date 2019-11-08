@@ -30,11 +30,11 @@
                 >
                   <v-text-field
                     class="purple-input"
-                    v-model="username"
+                    v-model="account.username"
                     :counter="10"
-                    @keyup.enter="login"
-                    :rules="usernameRules"
+                    :rules="[rules.required ,rules.max,rules.usernameRules]"
                     label="Username"
+                    hint="usernames are unique..."
                     prepend-icon="mdi-chart-bubble"
                     required
                   />
@@ -46,10 +46,10 @@
                 >
                   <v-text-field
                     label="Email Address"
+                    hint="emails are unique..."
                     class="purple-input"
-                    @keyup.enter="login"
-                    v-model="email"
-                    :rules="emailRules"
+                    v-model="account.email"
+                    :rules="[rules.required,rules.emailRules]"
                     prepend-icon="mdi-at"
                     required
                   />
@@ -62,11 +62,10 @@
                   <v-text-field
                     label="First Name"
                     class="purple-input"
-                    v-model="fname"
+                    v-model="account.fname"
                     :counter="20"
-                    :disabled="intput_disable"
-                    @keyup.enter="login"
-                    :rules="nameRules"
+                    :disabled="input_disable"
+                    :rules="[rules.required,rules.nameRules]"
                     prepend-icon="mdi-rename-box"
                     required
                   />
@@ -77,11 +76,10 @@
                   md="6"
                 >
                   <v-text-field
-                    v-model="lname"
-                    :disabled="intput_disable"
+                    v-model="account.lname"
+                    :disabled="input_disable"
                     :counter="20"
-                    @keyup.enter="validate()"
-                    :rules="nameRules"
+                    :rules="[rules.required,rules.nameRules]"
                     label="Lastname"
                     prepend-icon="mdi-rename-box"
                     required
@@ -95,9 +93,8 @@
                 >
                   <v-text-field
                     class="purple-input"
-                    @keyup.enter="validate()"
-                    v-model="password"
-                    :rules="passwordRules"
+                    v-model="account.password"
+                    :rules="[rules.required,rules.passwordRules , rules.min , rules.matchPassword]"
                     prepend-icon="mdi-lock"
                     :type="password_type"
                     label="Password"
@@ -112,12 +109,11 @@
                 >
                   <v-text-field
                     v-model="c_password"
-                    :rules="passwordRules"
+                    :rules="[rules.required,rules.passwordRules , rules.min , rules.matchPassword]"
                     prepend-icon="mdi-lock"
                     type="password"
                     label=" Confirm Password"
                     required
-                    @keyup.enter="validate()"
                     class="purple-input"
                   />
                 </v-col>
@@ -125,14 +121,13 @@
                 <v-col cols="12">
                   <v-select
                     @change="checkName"
-                    v-model="position"
-                    :items="items"
+                    v-model="account.position"
+                    :items="positions"
                     :disabled="!MyDisabled"
                     prepend-icon="mdi-account-child-outline "
-                    :rules="[v => !!v || 'Position is required']"
+                    :rules="[rules.required]"
                     label="Position"
                     required
-                    @keyup.enter="validate()"
                   ></v-select>
                 </v-col>
                 <v-col
@@ -187,38 +182,35 @@ export default {
   data() {
     return {
       valid: true,
+      account: {
+        username: "",
+        fname: "Default upon selecting position",
+        lname: "Default upon selecting position",
+        email: "",
+        admin: false,
+        password: this.Default_Password,
+        position: this.Info ? this.Info.position : null,
+      },
       isDisable: false,
-      intput_disable: true,
-      username: "",
-      fname: "",
+      input_disable: true,
       text: "",
       snackbar: false,
-      timeout: 2000,
       c_password: "",
-      lname: "",
+      timeout: 2000,
       url: "http://localhost:4000/admin/",
-      usernameRules: [
-        v => !!v || "Username is required",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
-      ],
-      nameRules: [
-        v => !!v || "Name is required",
-        v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
-        v => (v && v.length <= 20) || "Name must be less than 20 characters"
-      ],
-      password: this.Default_Password,
-      passwordRules: [
-        v => !!v || "Password is required",
-        v => /^[A-Z a-z0-9.]+$/.test(v) || "Password must be valid",
-        v => (v && v.length >= 8) || "Password must be more than 8 characters"
-      ],
-      email: "",
-      emailRules: [
-        v => !!v || "E-mail is required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-      ],
-      position: this.Info ? this.Info.position : null,
-      items: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
+      rules: {
+        required: value => !!value || "Required.",
+        usernameRules: v => (v && v.length <= 10) || "Name must be less than 10 characters",
+        min: v => (v && v.length >= 8) || "Min 8 characters",
+        max: v => (v && v.length <= 20) || "Name must be less than 20 characters",
+        nameRules: v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
+        emailRules: v => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        passwordRules: v => (v && v.length >= 8) || "Password must be more than 8 characters",
+        matchPassword: () =>
+          this.account.password === this.c_password ||
+          "Passwords don't match !"
+      },
+      positions: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
     };
   },
   computed: {
@@ -231,24 +223,26 @@ export default {
   },
   methods: {
     checkName() {
-      switch (this.position) {
-        case this.items[0]:
-          this.intput_disable = true;
-          this.fname = "Chervin";
-          this.lname = "Tanilon";
+      switch (this.account.position) {
+        case this.positions[0]:
+          this.input_disable = true;
+          this.account.fname = "Chervin";
+          this.account.lname = "Tanilon";
           break;
-        case this.items[1]:
-          this.fname = "Renan";
-          this.lname = "Bargaso";
-          this.intput_disable = true;
+        case this.positions[1]:
+          this.account.fname = "Renan";
+          this.account.lname = "Bargaso";
+          this.input_disable = true;
           break;
-        case this.items[2]:
-          this.intput_disable = true;
-          this.fname = "Yol Jr";
-          this.lname = "Torres";
+        case this.positions[2]:
+          this.input_disable = true;
+          this.account.fname = "Yol Jr";
+          this.account.lname = "Torres";
           break;
-        case this.items[3]:
-          this.intput_disable = false;
+        case this.positions[3]:
+          this.account.fname = ""
+          this.account.lname = ""
+          this.input_disable = false;
         default:
           break;
       }
@@ -259,34 +253,28 @@ export default {
         this.isDisable = false;
       }, 800);
       if (this.$refs.form.validate()) {
-        if (this.password === this.c_password) {
-          var account = {
-            username: this.username,
-            firstname: this.fname,
-            lastname: this.lname,
-            email: this.email,
-            position: this.position,
-            admin: false,
-            password: this.password
-          };
+        if (this.account.password === this.c_password) {
           if (!this.MyUpdate) {
-            this.register(account, this.url + "register");
+            this.register(this.account, this.url + "register");
           } else {
-            this.password = "";
+            this.account.password = "";
             this.c_password = "";
-            account.id = this.Info._id;
-            this.update(account, this.url + "update");
+            this.account.id = this.Info._id;
+            this.update(this.account, this.url + "update");
           }
         } else {
           this.$emit("accountFormResponse", "Passwords don't match!");
           this.c_password = null;
         }
-      } else {
-        this.$emit("accountFormResponse", "Invalid account settings!");
       }
+      // else {
+      //   this.$emit("accountFormResponse", "Invalid account settings!");
+      // }
     },
 
     register(account, _url) {
+      console.log(account);
+      
       axios
         .post(_url, account)
         .then(res => {
@@ -311,8 +299,8 @@ export default {
         .post(_url, account)
         .then(res => {
           localStorage.setItem("default", res.data.default_pass);
-          this.$store.getters.commit('setToken', res.data.token);
-          this.$store.getters.commit('setUser', res);
+          this.$store.commit('setToken', res.data.token);
+          this.$store.commit('setUser');
           this.$emit(
             "accountFormResponse",
             "Account was Updated Successfully!"
@@ -328,16 +316,13 @@ export default {
         });
     },
     checkUpdate() {
-      if (this.Info) {
-        this.username = this.Info.username;
-        this.fname = this.Info.firstname;
-        this.lname = this.Info.lastname;
-        this.position = this.Info.position;
-        this.email = this.Info.email;
+      if (this.MyUpdate) {
+        this.account = this.Info
+        this.account.password = null
       }
     },
     clearFields() {
-      this.password = "";
+      this.account.password = "";
       this.c_password = "";
     }
   },

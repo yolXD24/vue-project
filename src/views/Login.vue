@@ -134,9 +134,10 @@ export default {
       this.$store.dispatch('login', this.credentials)
         .then(res => {
           this.loader(false);
-          if (res.data.auth) {
-            this.$emit("notify", "Welcome " + this.$store.getters.user.username + " !");
-            this.$emit("loggedIn", localStorage.getItem("token"));
+          if (res) {
+            console.log(this.$store.state.user);
+            this.$emit("notify", "Welcome " + this.$store.state.user.username + " !");
+            this.$emit("loggedIn", this.$store.getters.token);
             this.$router.push("/");
           } else {
             this.$refs.form.reset();
@@ -147,7 +148,6 @@ export default {
           console.log(err);
           this.$emit("notify", "Cannot connect to the server!");
           this.loader(false);
-
         })
 
     },

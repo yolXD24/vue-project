@@ -6,7 +6,7 @@ import About from "@/views/About.vue";
 import Register from "@/views/Register.vue";
 import TransactionHistory from "@/views/History.vue";
 import AccountManagement from "@/views/AccountManagement.vue";
-import store from '../store.js'
+import store from '@/helpers/vuex/store.js'
 
 Vue.use(Router);
 
@@ -80,13 +80,13 @@ function isTokenNull(token) {
 }
 router.beforeEach((to, from, next) => {
     if (!to.meta.tokenRequired) {
-        if (!isTokenNull(store.getters.token)) {
+        if (store.getters.status) {
             next("/home");
         } else {
             next();
         }
     } else {
-        if (isTokenNull(store.getters.token)) {
+        if (!store.getters.status) {
             next("/login");
         } else {
             next();

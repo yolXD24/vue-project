@@ -114,9 +114,9 @@ export default {
 
   methods: {
     logout() {
-     this.$store.dispatch('logout')
+      this.$store.dispatch('logout')
       this.$emit("loggedIn", null);
-      this.$router.push("/login");
+      this.$router.push({ name: "login", })
     }
   },
   watch: {
@@ -124,5 +124,8 @@ export default {
       this.drawer = false;
     }
   },
+  mounted() {
+
+  }
 };
 </script>

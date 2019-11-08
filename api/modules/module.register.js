@@ -1,5 +1,13 @@
 let models = require("../db.model");
-module.exports = function (reqUsername, reqEmail,reqBody, res) {
+module.exports = function(reqUsername, reqEmail, reqBody, res) {
+    reqBody.firstname = reqBody.fname
+    reqBody.lastname = reqBody.lname
+    delete reqBody.fname;
+    delete reqBody.lname;
+    console.log(reqBody);
+
+
+
     models.Staffs.find({ username: reqUsername, email: reqEmail },
         (err, account) => {
             if (account.length) {

@@ -13,12 +13,11 @@ module.exports = function(reqUsername, reqPassword, res) {
                     .compare(reqPassword, admin.password)
                     .then(match => {
                         if (match) {
-                            let token = jwt.sign({ id: admin }, "docxpress");
+                            let token = jwt.sign({ user: admin }, "docxpress");
                             res.status(200).send({
                                 error: false,
                                 auth: true,
                                 token: token,
-                                user: admin,
                                 default_pass: reqPassword === "docxpress.default"
                             });
                         } else {

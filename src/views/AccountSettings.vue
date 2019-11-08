@@ -39,7 +39,6 @@
           ref="form"
           MyTitle="Update Account"
           MyButton="Update"
-          Default_Password
           :MyUpdate="true"
           :MyDisabled="false"
         />
