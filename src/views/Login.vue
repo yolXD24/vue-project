@@ -137,8 +137,7 @@ export default {
           if (res) {
             console.log(this.$store.state.user);
             this.$emit("notify", "Welcome " + this.$store.state.user.username + " !");
-            this.$emit("loggedIn", this.$store.getters.token);
-            this.$router.push("/");
+            this.$router.replace("/");
           } else {
             this.$refs.form.reset();
             this.$emit("notify", "Invalid Credentials");
@@ -146,6 +145,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          this.$store.dispatch('logout')
           this.$emit("notify", "Cannot connect to the server!");
           this.loader(false);
         })
