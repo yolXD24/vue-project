@@ -1,6 +1,5 @@
 <template>
   <v-container
-    id="body"
     fluid
   >
     <v-row
@@ -83,18 +82,6 @@
 </template>
 
 <style scoped>
-/* 
-#body {
- position: relative;
-  height: 100%!important;
-  width: 100% !important;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)) ,url("https://source.unsplash.com/user/cinquantesix");
-  background-size: cover !important  ;
-  background-position: top center !important;
-  background-attachment: fixed !important;
-  background-repeat: no-repeat !important;
-  overflow: auto;
-} */
 .mycard {
   opacity: 0.8 !important;
 }
@@ -109,7 +96,6 @@
 </style>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -131,6 +117,7 @@ export default {
       }
     },
     login() {
+      this.loader(true);
       this.$store.dispatch('login', this.credentials)
         .then(res => {
           this.loader(false);

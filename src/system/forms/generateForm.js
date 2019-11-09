@@ -4,8 +4,8 @@ import PERMIT from "./businessClearance.js";
 export default {
     responseForm: {},
     form_hub: {
-        userPassword: "1234",
-        ownerPassword: "1234", //+jwt_decode(localStorage.getItem('token')).id.username,
+        // userPassword: "1234",
+        // ownerPassword: "1234", //+jwt_decode(localStorage.getItem('token')).id.username,
         permissions: {
             printing: "highResolution", //'lowResolution'
             modifying: true,

@@ -1,5 +1,8 @@
 <template>
-  <v-container fluid grid-list-xl>
+  <v-container
+    fluid
+    grid-list-xl
+  >
     <v-row justify="center">
       <v-col cols="11">
         <v-card class="elevation-4 v-card">
@@ -14,34 +17,28 @@
               class="elevation-1 v-table"
             >
               <template v-slot:item.action="{ item }">
-                <v-icon small @click="deleteItem(item)">
-                  mdi-delete
-                </v-icon>
+                <v-btn
+                  @click="deleteItem(item)"
+                  text
+                  small
+                >
+                  <v-icon small>
+                    mdi-delete
+                  </v-icon>
+                  Delete
+                </v-btn>
               </template>
             </v-data-table>
           </template>
         </v-card>
       </v-col>
-      <!-- <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
-      {{ text }}
-      <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
-    </v-snackbar> -->
     </v-row>
   </v-container>
 </template>
-<style lang="scss">
-@import "../assets/style.css";
-</style>
 <script>
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-
 export default {
   data() {
     return {
-      // snackbar: false,
-      // text: "",
-      // timeout: 2000,
       headers: [
         {
           sortable: true,
@@ -78,32 +75,25 @@ export default {
 
   methods: {
     initialize() {
-      const url = "http://localhost:4000/admin/accounts";
-      axios
-        .post(url)
-        .then(res => {
-          this.accounts = jwt_decode(res.data.accounts).id;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.$store.dispatch('loadTable').then(accounts => {
+        this.accounts = accounts
+      }).catch(err => {
+        this.$emit("notify", "Something went wrong!!");
+        console.log(err);
+      });
     },
-    deleteItem(item) {
-      const index = this.accounts.indexOf(item);
+    deleteItem(account) {
+      const index = this.accounts.indexOf(account);
       this.accounts.splice(index, 1);
-      const url = "http://localhost:4000/admin/deleteAccount";
-      axios
-        .post(url, { _id: item._id })
-        .then(res => {
-          if (res.data) {
-            this.$emit("notify", "Deleted Successfully!");
-          } else {
-            this.$emit("notify", "Deleted Failed!");
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.$store.dispatch('deleteAccount', account).then(res => {
+        if (res) {
+          this.$emit("notify", "Deleted Successfully!");
+        } else {
+          this.$emit("notify", "Deleted Failed!");
+        }
+      }).catch(err => {
+        this.$emit("notify", "Something went wrong!!");
+      })
     }
   }
 };

@@ -1,13 +1,35 @@
 <template>
-  <v-app app id="body">
-    <Sidebar v-if="$store.state.status"  />
-    <v-content dark id="content">
+  <v-app
+    app
+    id="body"
+    :style="'background :linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('+background+')'"
+  >
+    <!--  url('https://source.unsplash.com/user/cinquantesix') -->
+    <Sidebar v-if="$store.state.status" />
+    <v-content
+      dark
+      id="content"
+    >
       <router-view v-on:notify="app_notify" />
-      <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+      <v-snackbar
+        v-model="snackbar"
+        :timeout="timeout"
+        absolute
+      >
         {{ text }}
-        <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+        <v-btn
+          color="blue"
+          text
+          @click="snackbar = false"
+        >Close</v-btn>
       </v-snackbar>
-      <v-footer padless absolute inset dense style="background=transparent!">
+      <v-footer
+        padless
+        absolute
+        inset
+        dense
+        style="background=transparent!"
+      >
         <v-col
           class="text-center"
           cols="12"
@@ -19,42 +41,33 @@
             colored-border
             type="error"
             elevation="2"
-            >Note : Password must be Changed!</v-alert
-          >
+          >Note : Password must be Changed!</v-alert>
         </v-col>
       </v-footer>
     </v-content>
   </v-app>
 </template>
-<style lang="scss">
-// @import './assets/style.css';
-</style>
-
 <script>
 /* eslint-disable */
 import Sidebar from "@/components/Sidebar";
-import Login from "@/views/Login";
-import { isNullOrUndefined, isNull } from "util";
+import axios from 'axios'
 export default {
   name: "App",
-  props: ["credentials"],
   components: {
-    Login,
     Sidebar
   },
   data() {
     return {
       snackbar: false,
+      background: "",
+      testbg: "",
       text: "",
       timeout: 2000,
     };
   },
   computed: {
-    isSidebar() {
-      return !isNullOrUndefined(this.$store.getters.token,);
-    },
     is_default_password() {
-      return  this.$store.getters.defaultPassword;
+      return this.$store.getters.defaultPassword;
     }
   },
   methods: {
@@ -62,6 +75,18 @@ export default {
       this.text = notification;
       this.snackbar = true;
     }
+  },
+
+  mounted() {
+   
+    
+    axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
+      this.background = res.request.responseURL
+    }).catch(err => {
+      this.app_notify("Failed to load some images...")
+      this.background = "@/assets/bg.jpg"
+    })
   }
+
 };
 </script>

@@ -1,9 +1,19 @@
 <template>
-  <v-container fluid grid-list-xl>
-    <v-row align="center" justify="center">
+  <v-container
+    fluid
+    grid-list-xl
+  >
+    <v-row
+      v-if="!preview"
+      align="center"
+      justify="center"
+    >
       <v-col cols="11">
         <v-card :loading="loading">
-          <v-toolbar class="elevation-1" color="grey lighten-3">
+          <v-toolbar
+            class="elevation-1"
+            color="grey lighten-3"
+          >
             <v-toolbar-title>Claim Form</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
@@ -25,31 +35,43 @@
               with="500"
               dark
               @click="checkCode"
-              >Check Document</v-btn
-            >
+            >Check Document</v-btn>
           </center>
           <br />
         </v-card>
       </v-col>
     </v-row>
-    <!-- <VueDocPreview :value="file" type="office" /> -->
+    <v-row>
+      <v-container>
+        <!-- <div class="preview">
+        </div> -->
+         <pdf :src="createdPDF"></pdf>
+      </v-container>
+    </v-row>
   </v-container>
 </template>
 
 <script>
+import pdf from 'vue-pdf'
 import jwt_decode from "jwt-decode";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import GenerateForm from "@/system/forms/generateForm.js";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
+import PDFobject from "pdfobject";
 export default {
   data() {
     return {
       code: "",
+      preview: false,
       file: "",
-      loading: false
+      loading: false,
+      createdPDF: ""
     };
+  },
+  components:{
+    pdf
   },
   methods: {
     toCapital(name) {
@@ -57,13 +79,11 @@ export default {
     },
     checkCode() {
       this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 1000);
-      axios({
-        url: "http://localhost:4000/admin/files/code"
-      })
+      axios.get("http://localhost:4000/admin/files/code/" + this.code)
         .then(res => {
+          console.log(res);
+
+          this.loading = false;
           var today = new Date();
           const monthNames = [
             "January",
@@ -102,17 +122,32 @@ export default {
           var incharge =
             this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
           setTimeout(() => {
-            var win = window.open("", "_blank");
-            pdfMake
-              .createPdf(
-                GenerateForm.createForm(this.code, fullname, incharge, details)
-              )
-              .open({}, win);
+            // var win = window.open("", "_blank");
+            // pdfMake
+            //   .createPdf(
+
+            //   )
+            //   .open({}, win);
+            var created_pdf;
+            pdfMake.createPdf(
+              GenerateForm.createForm(this.code, fullname, incharge, details)
+            ).getDataUrl((data_url) => {
+              this.createdPDF = data_url;
+              var options = {
+                height: "600px",
+                width :"80%"
+              };
+              this.preview = true
+              PDFobject.embed(created_pdf, ".preview",options);
+            });
+
+
             GenerateForm.clear();
             this.code = "";
           }, 1000);
         })
-        .catch(function(err) {
+        .catch((err) => {
+          this.loading = false;
           console.log(err);
         });
     }

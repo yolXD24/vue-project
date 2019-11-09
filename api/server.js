@@ -19,7 +19,7 @@ mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true, u
 });
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '110mb' }));
 app.use(bodyParser.json());
 
 app.use("/admin", routes);

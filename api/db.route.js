@@ -61,7 +61,13 @@ routes.route("/transactions").post((req, res) => {
         */
 });
 
-routes.route("/files/code").get((req, res) => {
+routes.route("/files/code/:code").get((req, res) => {
+    console.log(req.params.code);
+
+
+    /*NOTE!!
+        1. FIND THE DOCUMENT HAVING THE CODE
+    */
     res.status(200).send({
         firstname: "Yol",
         lastname: "Torres"
