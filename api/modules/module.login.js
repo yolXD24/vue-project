@@ -1,12 +1,14 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 let models = require("../db.model");
+let res_layout = require("../helpers/response");
 
-module.exports = function(reqUsername, reqPassword, res) {
+module.exports = function (reqUsername, reqPassword, res) {
     models.Admins.findOne({ username: reqUsername }, (err, admin) => {
         console.log(err);
         if (err) {
-            res.json(err);
+            res_layout.error.message = err
+            res.send(res_layout);
         } else {
             if (admin !== null) {
                 bcrypt
@@ -15,34 +17,32 @@ module.exports = function(reqUsername, reqPassword, res) {
                         if (match) {
                             delete admin.password
                             let token = jwt.sign({ user: admin }, "docxpress");
-                            res.status(200).send({
-                                error: false,
-                                auth: true,
-                                token: token,
-                                default_pass: reqPassword === "docxpress.default"
-                            });
+                            res_layout.data.body.auth = true
+                            res_layout.data.body.accessToken = token
+                            res_layout.data.body.default_pass = reqPassword === "docxpress.default"
+                            res.send(res_layout);
                         } else {
-                            return res
-                                .status(202)
-                                .send({ error: true, auth: false, token: null });
+                            res_layout.data.body.error=true
+                            return res.send(res_layout);
                         }
                     })
                     .catch(err => {
                         console.log(err);
-                        res.json(err);
+                        res_layout.error.body=err
+                        res.send(res_layout);
                     });
             } else {
                 console.log("not found!");
-
-                return res.status(200).send({ auth: false, token: null });
+                return res.send(res_layout);
             }
         }
     }).catch(err => {
         if (err) {
             console.log(err);
-            res.status(503).json({
-                message: "Service unavailable"
-            });
+            res_layout.error.message="Service unavailable"
+            res_layout.status=503
+            res_layout.error.body=err
+            res.send(res_layout);
         }
     });
 };

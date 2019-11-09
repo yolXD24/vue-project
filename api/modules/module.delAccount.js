@@ -1,19 +1,23 @@
 let models = require("../db.model");
+let res_layout = require("../helpers/response");
+
 module.exports = function (reqBody,res) {
     models.Staffs.findOneAndRemove(
         reqBody, { password: 0, admin: 0 },
         (err, account) => {
             if (!err) {
-                return res.status(200).json(true);
+                res_layout.data.body.success=true
+                return res.send(res_layout);
             } else {
-                return res.status(200).json(false);
+                return res.send(res_layout);
             }
         }
     ).catch(err => {
         if (err) {
-            res.status(503).json({
-                message: 'Service unavailable'
-            });
+            res_layout.status=503
+            res_layout.error.message="Service unavailable"
+            res_layout.error.body=err
+            res.send(res_layout);
         }
     });
 

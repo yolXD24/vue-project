@@ -1,4 +1,6 @@
 let models = require("../db.model");
+let res_layout = require("../helpers/response");
+
 module.exports = function(reqUsername, reqEmail, reqBody, res) {
     reqBody.firstname = reqBody.fname
     reqBody.lastname = reqBody.lname
@@ -6,29 +8,31 @@ module.exports = function(reqUsername, reqEmail, reqBody, res) {
     delete reqBody.lname;
     console.log(reqBody);
 
-
-
     models.Staffs.find({ username: reqUsername, email: reqEmail },
         (err, account) => {
             if (account.length) {
-                res.status(200).json({ exist: true });
+                res_layout.data.body.exist=true
+                res.send(res_layout);
             } else {
                 let staff = new models.Staffs(reqBody);
                 staff
                     .save()
                     .then(() => {
-                        res.status(201).json({ exist: false });
+                        res_layout.status=201
+                        res.send(res_layout);
                     })
                     .catch(err => {
-                        res.status(200).json({ exist: true });
+                        res_layout.data.body.exist=true
+                        res.send(res_layout);
                     });
             }
         }
     ).catch(err => {
         if (err) {
-            res.status(503).json({
-                message: 'Service unavailable'
-            });
+            res_layout.error.message="Service unavailable"
+            res_layout.error.body=err
+            res_layout.status=503
+            res.send(res_layout);
         }
     })
 }
