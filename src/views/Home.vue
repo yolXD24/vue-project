@@ -42,10 +42,28 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-container>
-        <!-- <div class="preview">
-        </div> -->
-         <pdf :src="createdPDF"></pdf>
+      <v-container class="justify-center">
+        <center>
+          <!-- <div class="preview"></div> -->
+
+          <div>
+            <pdf
+              v-if="preview"
+              ref="pdf_preview"
+              :src="createdPDF"
+              style="width: 70%"
+            ></pdf>
+            <br>
+            <br>
+            <v-btn
+              v-if="preview"
+              @click="printPDF()"
+            >
+              print
+            </v-btn>
+          </div>
+        </center>
+
       </v-container>
     </v-row>
   </v-container>
@@ -54,12 +72,14 @@
 <script>
 import pdf from 'vue-pdf'
 import jwt_decode from "jwt-decode";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-import GenerateForm from "@/system/forms/generateForm.js";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import axios from "axios";
-import PDFobject from "pdfobject";
+// import pdfMake from "pdfmake/build/pdfmake";
+// import pdfFonts from "pdfmake/build/vfs_fonts";
+// import GenerateForm from "@/system/forms/generateForm.js";
+// pdfMake.vfs = pdfFonts.pdfMake.vfs;
+// import axios from "axios";
+// import PDFobject from "pdfobject";
+import printJS from 'print-js';
+
 export default {
   data() {
     return {
@@ -70,87 +90,104 @@ export default {
       createdPDF: ""
     };
   },
-  components:{
+  components: {
     pdf
   },
   methods: {
-    toCapital(name) {
-      return name.charAt(0).toUpperCase() + name.slice(1);
-    },
+   
     checkCode() {
       this.loading = true;
-      axios.get("http://localhost:4000/admin/files/code/" + this.code)
-        .then(res => {
-          console.log(res);
+      this.preview = true
+      // axios.get("http://localhost:4000/admin/files/code/" + this.code)
+      //   .then(res => {
+      //     // console.log(res);
 
-          this.loading = false;
-          var today = new Date();
-          const monthNames = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-          ];
+      //     this.loading = false;
+      //     var today = new Date();
+      //     const monthNames = [
+      //       "January",
+      //       "February",
+      //       "March",
+      //       "April",
+      //       "May",
+      //       "June",
+      //       "July",
+      //       "August",
+      //       "September",
+      //       "October",
+      //       "November",
+      //       "December"
+      //     ];
 
-          var details = {
-            business: "Internet Shop",
-            location: "Nasipit , Talamban",
-            date: {
-              year: today.getFullYear(),
-              month: monthNames[today.getMonth()],
-              day: today.getDate()
-            },
-            exp_date: {
-              year: today.getFullYear(),
-              month: monthNames[today.getMonth() + 3],
-              day: today.getDate() - 1
-            }
-          };
-          var emp = this.$store.getters.user
-          var fullname =
-            this.toCapital(res.data.firstname) +
-            " " +
-            this.toCapital(res.data.lastname);
-          var incharge =
-            this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
-          setTimeout(() => {
-            // var win = window.open("", "_blank");
-            // pdfMake
-            //   .createPdf(
+      //     var details = {
+      //       business: "Internet Shop",
+      //       location: "Nasipit , Talamban",
+      //       date: {
+      //         year: today.getFullYear(),
+      //         month: monthNames[today.getMonth()],
+      //         day: today.getDate()
+      //       },
+      //       exp_date: {
+      //         year: today.getFullYear(),
+      //         month: monthNames[today.getMonth() + 3],
+      //         day: today.getDate() - 1
+      //       }
+      //     };
+      //     var emp = this.$store.getters.user
+      //     var fullname =
+      //       this.toCapital(res.data.firstname) +
+      //       " " +
+      //       this.toCapital(res.data.lastname);
+      //     var incharge =
+      //       this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
+      //     var created_pdf;
+      //     pdfMake.createPdf(
+      //       GenerateForm.createForm(this.code, fullname, incharge, details)
+      //     ).getBuffer((buffer) => {
+      //       this.createdPDF = buffer;
+      //     })
+    
+      //     GenerateForm.clear();
+      //     this.code = "";
+      //   })
+      //   .catch((err) => {
+      //     this.loading = false;
+      //     console.log(err);
+      //   });
+    },
+    printPDF() {
+      // this.preview = false
+      var pdfFile = new Blob([this.createdPDF], {
+        type: "application/pdf"
+      });
+      var pdfUrl = URL.createObjectURL(pdfFile);
+      printJS({ printable: pdfUrl, type: 'pdf', showModal: true, modalMessage: "ExpressDocX is generating preview...", onPdfOpen: () => { console.log("ok") }, onPrintDialogClose: () => { this.preview = false } });
 
-            //   )
-            //   .open({}, win);
-            var created_pdf;
-            pdfMake.createPdf(
-              GenerateForm.createForm(this.code, fullname, incharge, details)
-            ).getDataUrl((data_url) => {
-              this.createdPDF = data_url;
-              var options = {
-                height: "600px",
-                width :"80%"
-              };
-              this.preview = true
-              PDFobject.embed(created_pdf, ".preview",options);
-            });
+      var beforePrint = function () {
+        console.log('Functionality to run before printing.');
+      };
+
+      var afterPrint = function () {
+        console.log('Functionality to run after printing');
+      };
 
 
-            GenerateForm.clear();
-            this.code = "";
-          }, 1000);
-        })
-        .catch((err) => {
-          this.loading = false;
-          console.log(err);
+      if (window.matchMedia) {
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function (mql) {
+          if (mql.matches) {
+            beforePrint();
+          } else {
+            afterPrint();
+          }
         });
+      }
+
+      window.onbeforeprint = beforePrint;
+      window.onafterprint = afterPrint;
+
     }
   }
+
 };
 </script>

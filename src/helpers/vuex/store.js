@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 import logs from '../logs.js'
+import generatePDf from '@/system/functions/generatePDF';
 Vue.use(Vuex);
 
 export default new Vuex.Store({

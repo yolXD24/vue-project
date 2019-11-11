@@ -14,7 +14,7 @@
       >
         <center>
           <v-card
-            class="mycard pa-md-3 mx-lg-auto"
+            class="mycard  mx-lg-auto"
             :loading="loading"
           >
             <br />

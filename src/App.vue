@@ -78,8 +78,6 @@ export default {
   },
 
   mounted() {
-   
-    
     axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
       this.background = res.request.responseURL
     }).catch(err => {
