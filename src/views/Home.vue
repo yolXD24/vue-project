@@ -74,12 +74,6 @@
 import pdf from 'vue-pdf'
 import jwt_decode from "jwt-decode";
 import generatePDF from "../system/functions/generatePDF";
-// import pdfMake from "pdfmake/build/pdfmake";
-// import pdfFonts from "pdfmake/build/vfs_fonts";
-// import GenerateForm from "@/system/forms/generateForm.js";
-// pdfMake.vfs = pdfFonts.pdfMake.vfs;
-// import axios from "axios";
-// import PDFobject from "pdfobject";
 import printJS from 'print-js';
 
 export default {
