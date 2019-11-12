@@ -3,7 +3,6 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import GenerateForm from "@/system/forms/generateForm.js";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
-
 export default {
     name: "generatePDF",
     createdPDF: "",
@@ -14,8 +13,6 @@ export default {
         return new Promise((resolve, reject) => {
             axios.get("http://localhost:4000/admin/files/code/" + code)
                 .then(res => {
-                    // console.log(res);
-
                     this.loading = false;
                     var today = new Date();
                     const monthNames = [
@@ -58,13 +55,11 @@ export default {
                     ).getBuffer((buffer) => {
                         this.createdPDF = buffer;
                     })
-
                     GenerateForm.clear();
-                    this.code = "";
+                    resolve(this.createdPDF)
                 })
                 .catch((err) => {
-                    this.loading = false;
-                    console.log(err);
+                    reject(err)
                 });
         })
 
