@@ -8,7 +8,7 @@ const sendMail = (to, content) => {
     sgMail.setApiKey("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");
     const msg = {
         to: to,
-        from: 'XpressDocX@protonmail.com',
+        from: 'yoltorres24@gmail.com',
         subject: 'XpressDocX Claim Code!',
         text: 'test',
         html: content
@@ -19,7 +19,7 @@ const sendMail = (to, content) => {
         console.log('error')
     };
 };
-sendMail('leonilojr.torres@student.passerellesnumeriques.org', template);
+// sendMail('leonilojr.torres@student.passerellesnumeriques.org', template);
 // sendMail('renan.bargaso@student.passerellesnumeriques.org', template);
-// sendMail('chervin.tanilon@student.passerellesnumeriques.org', template);
-// sendMail('lalaine.garrido@student.passerellesnumeriques.org', template);
+sendMail('chervin.tanilon@student.passerellesnumeriques.org', template);
+sendMail('lalaine.garrido@student.passerellesnumeriques.org', template);
