@@ -99,7 +99,6 @@ export default {
           this.createdPDF = generated_pdf;
           this.code = "";
         }).catch(err => {
-          this.$emit('notify', "error" + err.error)
           this.preview = false;
           this.loading = false;
         })
@@ -115,9 +114,7 @@ export default {
         showModal: true,
         modalMessage: "ExpressDocX is generating preview...",
         onPdfOpen: () => {
-          this.$emit('notify', "success!")
-          this.preview = true
-
+          console.log("ok")
         },
         onPrintDialogClose: () => {
           this.preview = false

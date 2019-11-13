@@ -18,6 +18,7 @@ export default {
             default:
                 break;
         }
+
         return details
     }
 }
