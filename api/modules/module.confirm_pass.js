@@ -5,6 +5,8 @@ let errorResponse = require("../helpers/setErrorResponse");
 let successResponse = require("../helpers/setSuccessResponse");
 
 module.exports = function(reqId, reqPass, res) {
+    console.log(reqPass);
+
     models.Staffs.findById(reqId, (err, account) => {
         if (account !== null) {
             bcrypt.compare(reqPass, account.password)
