@@ -61,7 +61,6 @@ export default {
       sound: true,
       random: 1,
       widgets: false
-      // userInfo: jwt_decode(localStorage.getItem("token")).id
     };
   },
   methods: {
@@ -72,6 +71,7 @@ export default {
       }
     },
     accountFormResponse1(message) {
+      this.closeDialog();
       this.$emit("accountFormResponse", message);
     }
   }

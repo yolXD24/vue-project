@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 let models = require("../db.model");
-// let response = require("../helpers/response");
+let response = null
+let errorResponse = require("../helpers/setErrorResponse");
+let successResponse = require("../helpers/setSuccessResponse");
 
-module.exports = function(reqId, reqUser, reqEmail, reqFname, reqLname, reqPass, reqPosition, res) {
+module.exports = (reqId, reqUser, reqEmail, reqFname, reqLname, reqPass, reqPosition, res) => {
     reqPass = bcrypt.hashSync(reqPass, 10);
     models.Staffs.findOneAndUpdate({ "_id": reqId }, {
         "$set": {
@@ -15,12 +17,16 @@ module.exports = function(reqId, reqUser, reqEmail, reqFname, reqLname, reqPass,
             "position": reqPosition
         }
 
-    }).exec(function(err, account) {
-
-        if (err) throw err;
-        console.log("updated successfully")
-        let token = jwt.sign({ id: account }, "docxpress", { expiresIn: '8h' });
-        res.status(200).send({ error: false, auth: true, token: token, user: account, default_pass: account.password === "docxpress.default" });
-
+    }).exec((err, account) => {
+        if (err) {
+            response = errorResponse(503, err, "Update failed!")
+        } else {
+            response = successResponse(200, {
+                default_pass: reqPass === "docxpress.default",
+                accessToken: jwt.sign({ user: account }, "docxpress", { expiresIn: '8h' }),
+                auth: true
+            }, "Update Successful!")
+        }
+        res.status(response.status).send(response)
     })
 }

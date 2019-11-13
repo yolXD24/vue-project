@@ -28,7 +28,7 @@
         <v-card-text>
           <br />
           <div
-            :ref="my_ref"
+            ref="form"
             lazy-validation
           >
             <v-text-field
@@ -76,24 +76,18 @@ export default {
   methods: {
     closeDialog() {
       this.dialog = false;
-      this.$refs.this.my_ref.reset();
-      // this.password = "";
+      this.password = "";
     },
     validate() {
       var account = {
         id: this.$store.getters.user._id,
         password: this.password
       };
-      this.$store.commit('confirmPass', account).then(valid => {
-        if (valid) {
-          this.$emit("is_confirmed", true);
-        } else {
-          this.$refs.this.my_ref.reset();
-          this.$emit("is_confirmed", false);
-        }
+      this.$store.dispatch('confirmPass', account).then(valid => {
+        this.$emit("is_confirmed", true);
       }).catch(err => {
-        this.$emit("is_error", true);
-        console.log(err);
+        this.password = "";
+        this.$emit("is_error", err);
       });
     }
   }

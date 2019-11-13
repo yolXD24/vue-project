@@ -273,21 +273,22 @@ export default {
         .catch(err => {
           console.log(err);
           this.$emit(
-              "accountFormResponse",
-              "Unable to connect to the server!"
-            );
+            "accountFormResponse",
+            "Unable to connect to the server!"
+          );
         });
     },
     update(account, _url) {
       axios
         .post(_url, account)
         .then(res => {
-          localStorage.setItem("default", res.data.default_pass);
-          this.$store.commit('setToken', res.data.token);
+          const response = res.data.data
+          localStorage.setItem("default", response.body.default_pass);
+          this.$store.commit('setToken', response.body.accessToken);
           this.$store.commit('setUser');
           this.$emit(
             "accountFormResponse",
-            "Account was Updated Successfully!"
+            response.message
           );
           setTimeout(() => {
             this.$emit(
@@ -296,8 +297,8 @@ export default {
           }, 1200);
         })
         .catch(err => {
-          console.log(err);
-          this.$emit("accountFormResponse", "Something went wrong!");
+          console.log(err.response.data);
+          this.$emit("accountFormResponse", error.response.data.message);
         });
     },
     checkUpdate() {

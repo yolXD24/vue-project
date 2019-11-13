@@ -1,33 +1,31 @@
 const bcrypt = require("bcryptjs");
 let models = require("../db.model");
-module.exports = function (reqId, reqPass, res) {
+let response = null
+let errorResponse = require("../helpers/setErrorResponse");
+let successResponse = require("../helpers/setSuccessResponse");
+
+module.exports = function(reqId, reqPass, res) {
     models.Staffs.findById(reqId, (err, account) => {
-        console.log("!account")
         if (account !== null) {
             bcrypt.compare(reqPass, account.password)
                 .then(match => {
                     if (match) {
-                        console.log("found")
-                        res.status(200).send({ error: false, confirm: true })
+                        response = successResponse(200, {
+                            confirm: true
+                        }, "Password Confirmed!")
                     } else {
-                        console.log("!found")
-
-                        res.status(200).send({ error: true, confirm: false })
-                        return
+                        response = errorResponse(404, null, "Password is incorrect!")
                     }
+                    res.status(response.status).send(response)
                 }).catch(err => {
-                    console.log("!found")
-                    res.json(err);
+                    response = errorResponse(503, err, "Cannot find requested credentials!")
+                    res.status(response.status).send(response)
                 });
-        } else {
-            res.status(200).send({ error: true, confirm: false })
-
         }
     }).catch(err => {
         if (err) {
-            res.status(503).json({
-                message: 'Service unavailable'
-            });
+            response = errorResponse(503, err, "Service Unavailable!")
+            res.status(response.status).send(response)
         }
     })
 }

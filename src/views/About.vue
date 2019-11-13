@@ -97,15 +97,11 @@ export default {
       setTimeout(() => (this.loading = false), 2000);
     },
     confirm_password(resp) {
-      if (!resp) {
-        this.myNotify("Password incorrect!");
-      } else {
-        this.myNotify("Profile update is now available!");
-      }
+      this.myNotify("Profile update is now available!");
       this.confirmed = resp;
     },
-    confirm_password_error() {
-      this.myNotify("Something went wrong !");
+    confirm_password_error(err) {
+      this.myNotify(err.message);
     },
     accountFormResponsetoApp(message) {
       this.myNotify(message);

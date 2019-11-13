@@ -71,7 +71,6 @@ export default new Vuex.Store({
                         } else {
                             commit('auth_error')
                         }
-
                         resolve(getters.status)
                     })
                     .catch(error => {
@@ -122,17 +121,13 @@ export default new Vuex.Store({
         },
         confirmPass({ state }, account) {
             return new Promise((resolve, reject) => {
-                var valid = false
                 axios
                     .post(state.url + "confirm_password", account)
                     .then(res => {
-                        if (res.data.confirm) {
-                            valid = true
-                        }
-                        resolve(valid)
+                        resolve(res)
                     })
-                    .catch(err => {
-                        reject(err)
+                    .catch(error => {
+                        reject(error.response.data.error)
                     });
             })
         }
