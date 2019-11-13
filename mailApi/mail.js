@@ -5,7 +5,7 @@ template = template.replace("_CLAIMCODE_", 1234)
 
 const sendMail = (to, content) => {
     const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey("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");
+    sgMail.setApiKey(apiKey);
     const msg = {
         to: to,
         from: 'yoltorres24@gmail.com',
