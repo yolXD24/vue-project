@@ -90,7 +90,6 @@ export default {
     pdf
   },
   methods: {
-
     checkCode() {
       this.loading = true;
       generatePDF.generatePDF(this.code, this.$store.getters.user)

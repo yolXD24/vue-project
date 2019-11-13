@@ -6,8 +6,7 @@ import About from "@/views/About.vue";
 import Register from "@/views/Register.vue";
 import TransactionHistory from "@/views/History.vue";
 import AccountManagement from "@/views/AccountManagement.vue";
-// import {  } from "@/views/";
-import store from '@/helpers/vuex/store.js'
+import store from '../functions/vuex/store.js'
 
 Vue.use(Router);
 

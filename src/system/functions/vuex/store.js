@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
-import logs from '../logs.js'
+import logs from '@/helpers/logs.js'
 import generatePDf from '@/system/functions/generatePDF';
 Vue.use(Vuex);
 
@@ -112,6 +112,22 @@ export default new Vuex.Store({
                     })
                     .catch(err => {
                         reject(err);
+                    });
+            })
+        },
+        confirmPass({ state }, account) {
+            return new Promise((resolve, reject) => {
+                var valid = false
+                axios
+                    .post(state.url + "confirm_password", account)
+                    .then(res => {
+                        if (res.data.confirm) {
+                            valid = true
+                        }
+                        resolve(valid)
+                    })
+                    .catch(err => {
+                        reject(err)
                     });
             })
         }

@@ -1,6 +1,6 @@
-import INDIGENCY from "./indigency.js";
-import CLEARANCE from "./clearance.js";
-import PERMIT from "./businessClearance.js";
+import INDIGENCY from "../forms/indigency.js";
+import CLEARANCE from "../forms/clearance.js";
+import PERMIT from "../forms/businessClearance.js";
 export default {
     responseForm: {},
     form_hub: {

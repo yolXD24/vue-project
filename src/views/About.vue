@@ -47,6 +47,7 @@
               <ConfirmPassword
                 v-if="!confirmed"
                 v-on:is_confirmed="confirm_password"
+                v-on:is_error="confirm_password_error"
               />
             </center>
           </v-card-text>
@@ -90,10 +91,6 @@ export default {
       credentials: this.$store.getters.user
     }
   },
-
-  computed: {
-
-  },
   methods: {
     update() {
       this.loading = true;
@@ -106,6 +103,9 @@ export default {
         this.myNotify("Profile update is now available!");
       }
       this.confirmed = resp;
+    },
+    confirm_password_error() {
+      this.myNotify("Something went wrong !");
     },
     accountFormResponsetoApp(message) {
       this.myNotify(message);
