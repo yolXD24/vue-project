@@ -1,4 +1,8 @@
-let response = require("../helpers/response");
+let response = require("./response");
+let reset = require("./resetResponse")()
+    // reset()
+console.log(response);
+
 module.exports = (status, body, message) => {
     response.data.body = {}
     response.status = status
