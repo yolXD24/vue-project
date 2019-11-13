@@ -1,7 +1,7 @@
 import store from "@/system/functions/vuex/store";
 import { resolve } from "dns";
 import { reject } from "q";
-update = (account, _url) => {
+var update = (account, _url) => {
     store.state.axios
         .post(_url, account)
         .then(res => {
@@ -12,4 +12,4 @@ update = (account, _url) => {
         });
 }
 
-export {}
+export { update }
