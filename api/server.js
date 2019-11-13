@@ -28,4 +28,4 @@ app.listen(PORT, function() {
     console.log("Server is running on Port:", PORT);
 });
 
-// response layout {status :Number , error :{message :String , body:Object }, data :{message :"" , body :Object}}
+// response layout {status :Number , error :{message :String , body:Object }, data :{message :"" , body :Object}

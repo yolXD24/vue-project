@@ -25,7 +25,6 @@ module.exports = function(reqUsername, reqPassword, res) {
 
                         } else {
                             response = errorResponse(404, null, "Password is incorrect!")
-
                         }
                         res.status(response.status).send(response);
                     })
