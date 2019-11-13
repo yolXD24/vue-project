@@ -67,12 +67,9 @@
 
 <script>
 import jwt_decode from "jwt-decode";
-import { isNull } from "util";
-
 export default {
   data() {
     return {
-      // is_admin: null,
       items: [
         {
           title: "Home",
@@ -123,9 +120,6 @@ export default {
     group() {
       this.drawer = false;
     }
-  },
-  mounted() {
-
   }
 };
 </script>

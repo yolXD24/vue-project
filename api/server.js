@@ -9,7 +9,7 @@ const routes = require("./db.route");
 
 mongoose.Promise = global.Promise;
 console.log("connecting....");
-
+mongoose.useFindAndModify = true
 mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true }, (err, data) => {
     if (err) {
         console.log("error : " + err);

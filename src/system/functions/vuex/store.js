@@ -81,15 +81,11 @@ export default new Vuex.Store({
                     });
             })
         },
-
         logout({ commit }) {
             commit('logout')
             localStorage.removeItem("token");
             localStorage.removeItem("default");
             localStorage.removeItem("status");
-        },
-        register({ commit }, credentials) {
-
         },
         deleteAccount({ state }, account) {
             return new Promise((resolve, reject) => {
@@ -132,5 +128,4 @@ export default new Vuex.Store({
             })
         }
     }
-
 });
