@@ -1,12 +1,15 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 let models = require("../db.model");
+let response = null
+let errorResponse = require("../helpers/setErrorResponse");
+let successResponse = require("../helpers/setSuccessResponse");
 
 module.exports = function(reqUsername, reqPassword, res) {
     models.Admins.findOne({ username: reqUsername }, (err, admin) => {
-        console.log(err);
         if (err) {
-            res.json(err);
+            response = errorResponse(503, err, "Service Unavailable!")
+            res.status(response.status).send(response);
         } else {
             if (admin !== null) {
                 bcrypt
@@ -14,35 +17,26 @@ module.exports = function(reqUsername, reqPassword, res) {
                     .then(match => {
                         if (match) {
                             delete admin.password
-                            let token = jwt.sign({ user: admin }, "docxpress");
-                            res.status(200).send({
-                                error: false,
-                                auth: true,
-                                token: token,
-                                default_pass: reqPassword === "docxpress.default"
-                            });
+                            response = successResponse(200, {
+                                default_pass: reqPassword === "docxpress.default",
+                                accessToken: jwt.sign({ user: admin }, "docxpress", { expiresIn: '8h' }),
+                                auth: true
+                            }, "Login Successful!")
+
                         } else {
-                            return res
-                                .status(202)
-                                .send({ error: true, auth: false, token: null });
+                            response = errorResponse(404, null, "Password is incorrect!")
+
                         }
+                        res.status(response.status).send(response);
                     })
                     .catch(err => {
-                        console.log(err);
-                        res.json(err);
+                        response = errorResponse(404, err, "Username is not registered!")
+                        res.status(response.status).send(response);
                     });
             } else {
-                console.log("not found!");
-
-                return res.status(200).send({ auth: false, token: null });
+                response = errorResponse(404, err, "Account is not Found!")
+                res.status(response.status).send(response);
             }
         }
-    }).catch(err => {
-        if (err) {
-            console.log(err);
-            res.status(503).json({
-                message: "Service unavailable"
-            });
-        }
-    });
+    })
 };

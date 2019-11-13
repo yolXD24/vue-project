@@ -1,7 +1,5 @@
 <template>
-  <v-container
-    fluid
-  >
+  <v-container fluid>
     <v-row
       id="content"
       align="center"
@@ -121,19 +119,12 @@ export default {
       this.$store.dispatch('login', this.credentials)
         .then(res => {
           this.loader(false);
-          if (res) {
-            console.log(this.$store.state.user);
-            this.$emit("notify", "Welcome " + this.$store.state.user.username + " !");
-            this.$router.replace("/");
-          } else {
-            this.$refs.form.reset();
-            this.$emit("notify", "Invalid Credentials");
-          }
+          this.$emit("notify", "Welcome " + this.$store.state.user.username + " !");
+          this.$router.replace("/");
         })
         .catch(err => {
-          console.log(err);
           this.$store.dispatch('logout')
-          this.$emit("notify", "Cannot connect to the server!");
+          this.$emit("notify", err.message);
           this.loader(false);
         })
 

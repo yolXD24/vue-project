@@ -61,20 +61,24 @@ export default new Vuex.Store({
                 axios
                     .post(state.url + "login", { account: credentials })
                     .then(res => {
-                        localStorage.setItem("default", res.data.default_pass);
-                        if (res.data.auth) {
-                            commit('setToken', res.data.token)
+                        var response = res.data.data
+
+                        localStorage.setItem("default", response.body.default_pass);
+                        if (response.body.auth) {
+                            commit('setToken', response.body.accessToken)
                             commit('auth_success')
                             commit('setUser')
                         } else {
                             commit('auth_error')
                         }
+
                         resolve(getters.status)
                     })
-                    .catch(err => {
+                    .catch(error => {
                         commit('auth_error')
                         localStorage.removeItem('token')
-                        reject(err)
+                        reject(error.response.data.error)
+
                     });
             })
         },
