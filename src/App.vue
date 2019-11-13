@@ -50,7 +50,9 @@
 <script>
 /* eslint-disable */
 import Sidebar from "@/components/Sidebar";
-import axios from 'axios'
+import verifyToken from "./helpers/verifyToken";
+import { isNull } from "util";
+
 export default {
   name: "App",
   components: {
@@ -74,11 +76,24 @@ export default {
     app_notify(notification) {
       this.text = notification;
       this.snackbar = true;
+    },
+    checkLogin() {
+      verifyToken.VerifyToken().then(valid => {
+        if (!valid) {
+          this.$store.commit('logout');
+        }
+      }).catch(err => {
+        this.app_notify("error in verifying the token...")
+      })
+
     }
   },
 
   mounted() {
-    axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
+    if (!isNull(this.$store.state.status)) {
+      this.checkLogin();
+    }
+    this.$store.state.axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
       this.background = res.request.responseURL
     }).catch(err => {
       this.app_notify("Failed to load some images...")

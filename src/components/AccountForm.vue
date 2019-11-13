@@ -173,7 +173,7 @@
 
 <script>
 import axios from "axios";
-import nameCheckandAssign from "@/system/functions/nameCheckandAssign";
+import nameCheckandAssign from "@/helpers/nameCheckandAssign";
 
 export default {
   name: "AccountForm",
