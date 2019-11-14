@@ -73,6 +73,15 @@ let Code = new Schema({
     "password": "$2a$10$oLTah2qxKCONwwB5ZSCUku/Gr2eAXKBopVAF3Noc51GmDfpiz6tES",
     "__v": 0
 }
+
+"username": "admin",
+    "firstname": "adn",
+    "lastname": "Torres",
+    "email": "yol@gmail.com",
+    "position": "Brgy. Captain",
+    "admin": true,
+    "password": "$2a$10$oLTah2qxKCONwwB5ZSCUku/Gr2eAXKBopVAF3Noc51GmDfpiz6tES",
+
  */
 
 Staff.pre("save", function(next) {

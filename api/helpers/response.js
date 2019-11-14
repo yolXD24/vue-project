@@ -1,12 +1,3 @@
-// module.exports = {
-//     status: 200,
-//     error: { message: null, body: null },
-//     data: {
-//         message: null,
-//         body: { accessToken: null }
-//     }
-// }
-
 class Response {
     constructor() {
         this.status = 200

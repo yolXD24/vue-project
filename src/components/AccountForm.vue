@@ -99,7 +99,7 @@
                     class="purple-input"
                     v-model="account.password"
                     placeholder="Password should be greater than 8 characters"
-                    :rules="[rules.required,rules.passwordRules , rules.min , rules.matchPassword]"
+                    :rules="[rules.required,rules.passwordRules , rules.min ]"
                     prepend-icon="mdi-lock"
                     :type="password_type"
                     label="Password"
