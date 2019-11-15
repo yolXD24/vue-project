@@ -99,7 +99,7 @@
                     class="purple-input"
                     v-model="account.password"
                     placeholder="Password should be greater than 8 characters"
-                    :rules="[rules.required,rules.passwordRules , rules.min , rules.matchPassword]"
+                    :rules="[rules.required,rules.passwordRules , rules.min ]"
                     prepend-icon="mdi-lock"
                     :type="password_type"
                     label="Password"
@@ -173,8 +173,8 @@
 
 <script>
 import axios from "axios";
-import nameCheckandAssign from "@/system/functions/nameCheckandAssign";
-
+import nameCheckandAssign from "@/helpers/nameCheckandAssign";
+import { register, update } from "@/system/functions/request";
 export default {
   name: "AccountForm",
   props: {
@@ -239,10 +239,26 @@ export default {
       if (this.$refs.form.validate()) {
         if (this.account.password === this.c_password) {
           if (!this.MyUpdate) {
-            this.register(this.account, this.url + "register");
+            register(this.account, this.url + "register").then(res => {
+
+              if (!res.data.exist) {
+                this.$emit("accountFormResponse", "Account Saved Successfully!");
+                setTimeout(() => {
+                  this.$router.push("/admin/AccountManagement");
+                }, 1000);
+              } else {
+                this.$emit(
+                  "accountFormResponse",
+                  "Username / Email is already taken!"
+                );
+              }
+            }).catch(err => {
+              this.$emit(
+                "accountFormResponse",
+                "Unable to connect to the server!"
+              );
+            });
           } else {
-            this.account.password = "";
-            this.c_password = "";
             this.account.id = this.Info._id;
             this.update(this.account, this.url + "update");
           }
@@ -251,37 +267,41 @@ export default {
           this.c_password = null;
         }
       }
-
     },
 
-    register(account, _url) {
-      axios
-        .post(_url, account)
-        .then(res => {
-          if (!res.data.exist) {
-            this.$emit("accountFormResponse", "Account Saved Successfully!");
-            setTimeout(() => {
-              this.$router.push("/admin/AccountManagement");
-            }, 1000);
-          } else {
-            this.$emit(
-              "accountFormResponse",
-              "Username / Email is already taken!"
-            );
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          this.$emit(
-            "accountFormResponse",
-            "Unable to connect to the server!"
-          );
-        });
-    },
+
+    // register(account, _url) {
+    //   axios
+    //     .post(_url, account)
+    //     .then(res => {
+    //       if (!res.data.exist) {
+    //         this.$emit("accountFormResponse", "Account Saved Successfully!");
+    //         setTimeout(() => {
+    //           this.$router.push("/admin/AccountManagement");
+    //         }, 1000);
+    //       } else {
+    //         this.$emit(
+    //           "accountFormResponse",
+    //           "Username / Email is already taken!"
+    //         );
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //       this.$emit(
+    //         "accountFormResponse",
+    //         "Unable to connect to the server!"
+    //       );
+    //     });
+    // },
     update(account, _url) {
       axios
         .post(_url, account)
         .then(res => {
+          console.log(res);
+
+          this.account.password = "";
+          this.c_password = "";
           const response = res.data.data
           localStorage.setItem("default", response.body.default_pass);
           this.$store.commit('setToken', response.body.accessToken);
@@ -297,7 +317,7 @@ export default {
           }, 1200);
         })
         .catch(err => {
-          console.log(err.response.data);
+          console.log(err);
           this.$emit("accountFormResponse", error.response.data.message);
         });
     },
