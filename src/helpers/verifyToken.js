@@ -4,12 +4,15 @@ export default {
     name: "VerifyToken",
     VerifyToken() {
         return new Promise((resolve, reject) => {
-            axios.post(store.state.url + "verifytoken")
-                .then(res => {
-                    resolve(res.data.body.accessToken)
-                }).catch(err => {
-                    reject(err)
-                })
+            axios.post(store.state.url + "verifytoken", { token: store.getters.token })
+
+            .then(res => {
+                console.log(res);
+
+                resolve(res.data.data.body.valid)
+            }).catch(err => {
+                reject(err)
+            })
         })
     }
 }

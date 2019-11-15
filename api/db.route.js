@@ -8,6 +8,7 @@ var confirm_password = require("./modules/module.confirm_pass");
 var update = require("./modules/module.update");
 var accounts = require("./modules/module.accounts");
 var deleteAccount = require("./modules/module.delAccount");
+var verifytoken = require("./modules/module.verifytoken")
 
 //account login
 routes.route("/login").post((req, res) => {
@@ -33,6 +34,11 @@ routes.route("/accounts").post((req, res) => {
 routes.route("/deleteAccount").post((req, res) => {
     deleteAccount(req.body, res);
 });
+// verify client token
+routes.route('/verifytoken').post((req, res) => {
+    verifytoken(req.body.token, res)
+
+})
 
 // admin retrieve all transactions
 routes.route("/transactions").post((req, res) => {

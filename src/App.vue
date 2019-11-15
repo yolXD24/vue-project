@@ -80,10 +80,14 @@ export default {
     checkLogin() {
       verifyToken.VerifyToken().then(valid => {
         if (!valid) {
+          this.app_notify("Session Expired")
           this.$store.commit('logout');
+          this.$router.push("/login")
         }
       }).catch(err => {
-        this.app_notify("error in verifying the token...")
+        this.$store.commit('logout');
+        this.$router.push("/login")
+        this.app_notify("Session Expired")
       })
 
     }

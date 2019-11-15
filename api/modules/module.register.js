@@ -11,21 +11,23 @@ module.exports = function(reqUsername, reqEmail, reqBody, res) {
         (err, account) => {
             if (err) {
                 response = errorResponse(503, err, "Service Unavailable!")
-            }
-            if (account.length) {
-                res.status(200).json({ exist: true });
+            } else if (account.length) {
+                response = successResponse(200, { exist: true }, "Service Unavailable!")
+
             } else {
                 let staff = new models.Staffs(reqBody);
                 staff
                     .save()
                     .then(() => {
                         response = successResponse(200, account, "Registered Successfully!")
+                        res.status(response.status).send(response);
                     })
                     .catch(err => {
-                        response = errorResponse(503, null, "Service Unavailable!")
+                        response = errorResponse(503, err, "Service Unavailable!")
+                        res.status(response.status).send(response);
+
                     });
             }
-            res.status(response.status).send(response);
         }
     ).catch(err => {
         if (err) {

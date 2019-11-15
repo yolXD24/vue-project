@@ -240,18 +240,7 @@ export default {
         if (this.account.password === this.c_password) {
           if (!this.MyUpdate) {
             register(this.account, this.url + "register").then(res => {
-
-              if (!res.data.exist) {
-                this.$emit("accountFormResponse", "Account Saved Successfully!");
-                setTimeout(() => {
-                  this.$router.push("/admin/AccountManagement");
-                }, 1000);
-              } else {
-                this.$emit(
-                  "accountFormResponse",
-                  "Username / Email is already taken!"
-                );
-              }
+              this.registerHandler(res)
             }).catch(err => {
               this.$emit(
                 "accountFormResponse",
@@ -269,6 +258,22 @@ export default {
       }
     },
 
+    registerHandler(res) {
+      if (!res.data.exist) {
+        this.$emit("accountFormResponse", "Account Saved Successfully!");
+        setTimeout(() => {
+          this.$router.push("/admin/AccountManagement");
+        }, 1000);
+      } else {
+        this.$emit(
+          "accountFormResponse",
+          "Username / Email is already taken!"
+        );
+      }
+    },
+    updateHandler(res){
+
+    },
 
     // register(account, _url) {
     //   axios
@@ -294,7 +299,7 @@ export default {
     //       );
     //     });
     // },
-    update(account, _url) {
+ /*   update(account, _url) {
       axios
         .post(_url, account)
         .then(res => {
@@ -320,7 +325,7 @@ export default {
           console.log(err);
           this.$emit("accountFormResponse", error.response.data.message);
         });
-    },
+    },*/
     checkUpdate() {
       if (this.MyUpdate) {
         this.account = this.Info;
