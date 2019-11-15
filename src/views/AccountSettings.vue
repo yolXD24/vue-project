@@ -65,7 +65,10 @@ export default {
   },
   methods: {
     closeDialog() {
+      if (info === false || info) {
         this.dialog = false;
+        this.$refs.form.reset();
+      }
     },
     accountFormResponse1(message) {
       this.closeDialog();

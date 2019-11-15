@@ -6,6 +6,8 @@ let errorResponse = require("../helpers/setErrorResponse");
 let successResponse = require("../helpers/setSuccessResponse");
 
 module.exports = (reqId, reqUser, reqEmail, reqFname, reqLname, reqPass, reqPosition, res) => {
+    console.log(reqPass);
+
 
     models.Staffs.findOneAndUpdate({ "_id": reqId }, {
         "$set": {
