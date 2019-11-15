@@ -94,9 +94,9 @@ export default {
   },
 
   mounted() {
-    if (!isNull(this.$store.state.status)) {
-      this.checkLogin();
-    }
+    // if (!isNull(this.$store.state.status)) {
+    //   this.checkLogin();
+    // }
     this.$store.state.axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
       this.background = res.request.responseURL
     }).catch(err => {

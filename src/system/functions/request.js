@@ -19,10 +19,12 @@ var update = (account, _url) => {
         store.state.axios
             .post(_url, account)
             .then(res => {
-                console.log(res);
                 resolve(res.data.data)
             })
             .catch(error => {
+
+                console.log(JSON.stringify(error));
+
                 reject(error.response.data.error)
             });
     })
