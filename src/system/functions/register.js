@@ -1,7 +1,6 @@
 import store from "@/system/functions/vuex/store";
-import { reject } from "q";
 register = (account, _url) => {
-    return new Promise((resolve, response) => {
+    return new Promise((resolve, reject) => {
         store.state.axios
             .post(_url, account)
             .then(res => {
