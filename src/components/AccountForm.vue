@@ -99,7 +99,7 @@
                     class="purple-input"
                     v-model="account.password"
                     placeholder="Password should be greater than 8 characters"
-                    :rules="[rules.required,rules.passwordRules , rules.min , rules.matchPassword]"
+                    :rules="[rules.required,rules.passwordRules , rules.min ]"
                     prepend-icon="mdi-lock"
                     :type="password_type"
                     label="Password"
@@ -241,8 +241,6 @@ export default {
           if (!this.MyUpdate) {
             this.register(this.account, this.url + "register");
           } else {
-            this.account.password = "";
-            this.c_password = "";
             this.account.id = this.Info._id;
             this.update(this.account, this.url + "update");
           }
@@ -282,6 +280,10 @@ export default {
       axios
         .post(_url, account)
         .then(res => {
+          console.log(res);
+          
+          this.account.password = "";
+          this.c_password = "";
           const response = res.data.data
           localStorage.setItem("default", response.body.default_pass);
           this.$store.commit('setToken', response.body.accessToken);
@@ -297,7 +299,7 @@ export default {
           }, 1200);
         })
         .catch(err => {
-          console.log(err.response.data);
+          console.log(err);
           this.$emit("accountFormResponse", error.response.data.message);
         });
     },

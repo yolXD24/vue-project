@@ -23,16 +23,7 @@ routes.route("/confirm_password").post((req, res) => {
 });
 //admin will update its profile
 routes.route("/update").post((req, res) => {
-    update(
-        req.body.id,
-        req.body.username,
-        req.body.email,
-        req.body.firstname,
-        req.body.lastname,
-        req.body.password,
-        req.body.position,
-        res
-    );
+    update(req.body, res);
 });
 // admin retrieve all accounts
 routes.route("/accounts").post((req, res) => {
