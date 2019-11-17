@@ -251,9 +251,9 @@ export default {
             this.account.id = this.Info._id;
             update(this.account, this.url + "update").then(res => {
               this.updateHandler(res)
-            }).catch(error => {        
+            }).catch(error => {
               console.log(error);
-              this.$emit("accountFormResponse", error.response.data.message);
+              this.$emit("accountFormResponse", error.message);
             });
           }
         } else {
@@ -264,6 +264,7 @@ export default {
     },
 
     registerHandler(res) {
+      console.log(res);
       if (!res.body.exist) {
         this.$emit("accountFormResponse", "Account Saved Successfully!");
         setTimeout(() => {
@@ -278,13 +279,12 @@ export default {
     },
     updateHandler(res) {
       this.clearFields()
-      const response = res.data.data
-      localStorage.setItem("default", response.body.default_pass);
-      this.$store.commit('setToken', response.body.accessToken);
+      this.$store.commit('setDefault', res.body.default_pass)
+      this.$store.commit('setToken', res.body.accessToken);
       this.$store.commit('setUser');
       this.$emit(
         "accountFormResponse",
-        response.message
+        res.message
       );
       setTimeout(() => { this.$emit("updated_response") }, 1200);
     },

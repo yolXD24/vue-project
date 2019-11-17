@@ -24,7 +24,7 @@
         >Close</v-btn>
       </v-snackbar>
       <br><br>
-    <Footer  v-if="is_default_password === 'true' && $store.getters.token !== null"/>
+    <Footer  v-if="$store.getters.defaultPassword && $route.name != 'login'"/>
     </v-content>
 
   </v-app>

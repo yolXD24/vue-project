@@ -22,9 +22,6 @@ var update = (account, _url) => {
                 resolve(res.data.data)
             })
             .catch(error => {
-
-                console.log(JSON.stringify(error));
-
                 reject(error.response.data.error)
             });
     })

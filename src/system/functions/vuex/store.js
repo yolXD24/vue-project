@@ -8,8 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         token: localStorage.getItem("token"),
-        defaultPassword: localStorage.getItem("default"),
         status: localStorage.getItem('status'),
+        default_pass: localStorage.getItem('default'),
         user: { admin: false },
         url: "http://localhost:4000/admin/",
         logs,
@@ -20,7 +20,8 @@ export default new Vuex.Store({
             return state.token;
         },
         defaultPassword: state => {
-            return state.defaultPassword;
+            state.default_pass = localStorage.getItem("default") == 'true' ? true : false
+            return state.default_pass
         },
         user: state => {
             try {
@@ -36,6 +37,11 @@ export default new Vuex.Store({
         setToken(state, token) {
             state.token = token;
             localStorage.setItem('token', state.token);
+        },
+        setDefault(state, val) {
+            console.log(val);
+            state.default_pass = val
+            localStorage.setItem("default", val);
         },
         auth_success(state) {
             state.status = true
@@ -61,8 +67,7 @@ export default new Vuex.Store({
                     .post(state.url + "login", { account: credentials })
                     .then(res => {
                         var response = res.data.data
-
-                        localStorage.setItem("default", response.body.default_pass);
+                        commit("setDefault", response.body.default_pass);
                         if (response.body.auth) {
                             commit('setToken', response.body.accessToken)
                             commit('auth_success')
