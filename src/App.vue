@@ -26,7 +26,6 @@
       <br><br>
     <Footer  v-if="is_default_password === 'true' && $store.getters.token !== null"/>
     </v-content>
-
   </v-app>
 </template>
 <script>
