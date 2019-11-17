@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 import logs from '@/helpers/logs.js'
-import generatePDf from '@/system/functions/generatePDF';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -13,7 +12,8 @@ export default new Vuex.Store({
         status: localStorage.getItem('status'),
         user: { admin: false },
         url: "http://localhost:4000/admin/",
-        logs
+        logs,
+        axios
     },
     getters: {
         token: state => {

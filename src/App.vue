@@ -23,38 +23,22 @@
           @click="snackbar = false"
         >Close</v-btn>
       </v-snackbar>
-      <v-footer
-        padless
-        absolute
-        inset
-        dense
-        style="background=transparent!"
-      >
-        <v-col
-          class="text-center"
-          cols="12"
-          v-if="is_default_password === 'true' && $store.getters.token !== null"
-        >
-          <v-alert
-            id="v-alert"
-            border="left"
-            colored-border
-            type="error"
-            elevation="2"
-          >Note : Password must be Changed!</v-alert>
-        </v-col>
-      </v-footer>
+      <br><br>
+    <Footer  v-if="is_default_password === 'true' && $store.getters.token !== null"/>
     </v-content>
+
   </v-app>
 </template>
 <script>
 /* eslint-disable */
 import Sidebar from "@/components/Sidebar";
+import Footer from "@/components/Footer";
 import axios from 'axios'
 export default {
   name: "App",
   components: {
-    Sidebar
+    Sidebar,
+    Footer
   },
   data() {
     return {
