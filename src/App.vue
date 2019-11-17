@@ -43,7 +43,8 @@ export default {
   data() {
     return {
       snackbar: false,
-      background: require('@/assets/bg.jpg'),
+      background: "",
+      testbg: "",
       text: "",
       timeout: 2000,
     };
@@ -82,9 +83,7 @@ export default {
       this.background = res.request.responseURL
     }).catch(err => {
       this.app_notify("Failed to load some images...")
-      this.background = require('@/assets/bg.jpg')
-
-
+      this.background = "@/assets/bg.jpg"
     })
   }
 

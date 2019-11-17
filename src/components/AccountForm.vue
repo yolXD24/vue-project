@@ -244,7 +244,7 @@ export default {
             }).catch(err => {
               this.$emit(
                 "accountFormResponse",
-                err.message
+                "Unable to connect to the server!"
               );
             });
           } else {
@@ -252,7 +252,8 @@ export default {
             update(this.account, this.url + "update").then(res => {
               this.updateHandler(res)
             }).catch(error => {        
-              this.$emit("accountFormResponse", error.response.error.message);
+              console.log(error);
+              this.$emit("accountFormResponse", error.response.data.message);
             });
           }
         } else {

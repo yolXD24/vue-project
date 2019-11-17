@@ -87,7 +87,7 @@ export default {
         this.$emit("is_confirmed", true);
       }).catch(err => {
         this.password = "";
-        this.$emit("is_error", err.message);
+        this.$emit("is_error", err);
       });
     }
   }

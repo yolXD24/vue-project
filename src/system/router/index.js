@@ -29,6 +29,7 @@ var router = new Router({
         },
         {
             path: "/admin/settings",
+            name: 'settings',
             component: About,
             meta: {
                 tokenRequired: true

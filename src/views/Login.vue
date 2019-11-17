@@ -20,7 +20,7 @@
               <v-avatar size="100">
                 <img
                   position="center"
-                  :src="require('@/assets/logo.png')"
+                  src="@/assets/logo.png"
                   alt="logo"
                 />
               </v-avatar>

@@ -5,16 +5,11 @@ var register = (account, _url) => {
         store.state.axios
             .post(_url, account)
             .then(res => {
-                resolve(res.data.data)
+                console.log(res);
+                resolve(res)
             })
-            .catch(error => {
-                let errors = {}
-                if (!error.response) {
-                    errors.message = "Cannot connect to the server"
-                } else {
-                    errors = error.response.data.error
-                }
-                reject(errors);
+            .catch(err => {
+                reject(error.response.data.error)
             });
     })
 }
@@ -24,12 +19,13 @@ var update = (account, _url) => {
         store.state.axios
             .post(_url, account)
             .then(res => {
-                console.log(res.data.data);
                 resolve(res.data.data)
             })
             .catch(error => {
-                console.log(error.response.data.error);
-                reject(error.response.data.error);
+
+                console.log(JSON.stringify(error));
+
+                reject(error.response.data.error)
             });
     })
 }
