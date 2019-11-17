@@ -1,11 +1,12 @@
 <template>
-  <v-container fluid grid-list-xl>
+  <v-container
+    fluid
+    grid-list-xl
+  >
     <v-row justify="center">
       <v-col cols="11">
         <v-card class="elevation-4 v-card">
-          <v-card-text class="display-1 text-center font-weight-light"
-            >Transaction History</v-card-text
-          >
+          <v-card-text class="display-1 text-center font-weight-light">Transaction History</v-card-text>
           <hr />
           <v-data-table
             :headers="headers"
@@ -54,8 +55,8 @@ export default {
         value: "date"
       }
     ];
-    const url = "http://localhost:4000/history/transactions";
-    const id = jwt_decode(localStorage.getItem("token")).id._id;
+    const url = this.$store.state.url + "transactions";
+    const id = this.$store.getters.user._id
     axios
       .post(url, { _id: id })
       .then(res => {
@@ -63,6 +64,8 @@ export default {
       })
       .catch(err => {
         console.log(err);
+        
+        this.myNotify("Something went wrong");
       });
   }
 };
