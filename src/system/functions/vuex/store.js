@@ -107,7 +107,7 @@ export default new Vuex.Store({
                 axios
                     .post(state.url + "accounts")
                     .then(res => {
-                        resolve(jwt_decode(res.data.data.body.accessToken).accounts)
+                        resolve(res.data.data.body.accounts)
                     })
                     .catch(err => {
                         reject(err);
@@ -122,7 +122,7 @@ export default new Vuex.Store({
                         resolve(res)
                     })
                     .catch(error => {
-                        reject(error.response.data.error)
+                        reject(error.response.data.error);
                     });
             })
         }

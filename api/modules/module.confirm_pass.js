@@ -21,6 +21,8 @@ module.exports = function(reqId, reqPass, res) {
                     response = errorResponse(503, err, "Cannot find requested credentials!")
                     res.status(response.status).send(response)
                 });
+        } else {
+
         }
     }).catch(err => {
         if (err) {

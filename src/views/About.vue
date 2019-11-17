@@ -96,12 +96,12 @@ export default {
       this.loading = true;
       setTimeout(() => (this.loading = false), 2000);
     },
-    confirm_password(resp) {
+    confirm_password(resp) {      
       this.myNotify("Profile update is now available!");
       this.confirmed = resp;
     },
     confirm_password_error(err) {
-      this.myNotify(err.message);
+      this.myNotify(err);
     },
     accountFormResponsetoApp(message) {
       this.myNotify(message);

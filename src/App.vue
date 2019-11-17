@@ -59,8 +59,7 @@ export default {
   data() {
     return {
       snackbar: false,
-      background: "",
-      testbg: "",
+      background: require('@/assets/bg.jpg'),
       text: "",
       timeout: 2000,
     };
@@ -74,15 +73,34 @@ export default {
     app_notify(notification) {
       this.text = notification;
       this.snackbar = true;
+    },
+    checkLogin() {
+      verifyToken.VerifyToken().then(valid => {
+        if (!valid) {
+          this.app_notify("Session Expired")
+          this.$store.commit('logout');
+          this.$router.push("/login")
+        }
+      }).catch(err => {
+        this.$store.commit('logout');
+        this.$router.push("/login")
+        this.app_notify("Session Expired")
+      })
+
     }
   },
 
   mounted() {
-    axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
+    // if (!isNull(this.$store.state.status)) {
+    //   this.checkLogin();
+    // }
+    this.$store.state.axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
       this.background = res.request.responseURL
     }).catch(err => {
       this.app_notify("Failed to load some images...")
-      this.background = "@/assets/bg.jpg"
+      this.background = require('@/assets/bg.jpg')
+
+
     })
   }
 

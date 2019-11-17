@@ -240,86 +240,52 @@ export default {
         if (this.account.password === this.c_password) {
           if (!this.MyUpdate) {
             register(this.account, this.url + "register").then(res => {
-
-              if (!res.data.exist) {
-                this.$emit("accountFormResponse", "Account Saved Successfully!");
-                setTimeout(() => {
-                  this.$router.push("/admin/AccountManagement");
-                }, 1000);
-              } else {
-                this.$emit(
-                  "accountFormResponse",
-                  "Username / Email is already taken!"
-                );
-              }
+              this.registerHandler(res)
             }).catch(err => {
               this.$emit(
                 "accountFormResponse",
-                "Unable to connect to the server!"
+                err.message
               );
             });
           } else {
             this.account.id = this.Info._id;
-            this.update(this.account, this.url + "update");
+            update(this.account, this.url + "update").then(res => {
+              this.updateHandler(res)
+            }).catch(error => {        
+              this.$emit("accountFormResponse", error.response.error.message);
+            });
           }
         } else {
           this.$emit("accountFormResponse", "Passwords don't match!");
-          this.c_password = null;
+          this.c_password = "";
         }
       }
     },
 
-
-    // register(account, _url) {
-    //   axios
-    //     .post(_url, account)
-    //     .then(res => {
-    //       if (!res.data.exist) {
-    //         this.$emit("accountFormResponse", "Account Saved Successfully!");
-    //         setTimeout(() => {
-    //           this.$router.push("/admin/AccountManagement");
-    //         }, 1000);
-    //       } else {
-    //         this.$emit(
-    //           "accountFormResponse",
-    //           "Username / Email is already taken!"
-    //         );
-    //       }
-    //     })
-    //     .catch(err => {
-    //       console.log(err);
-    //       this.$emit(
-    //         "accountFormResponse",
-    //         "Unable to connect to the server!"
-    //       );
-    //     });
-    // },
-    update(account, _url) {
-      axios
-        .post(_url, account)
-        .then(res => {
-          console.log(res);
-
-          this.account.password = "";
-          this.c_password = "";
-          const response = res.data.data
-          localStorage.setItem("default", response.body.default_pass);
-          this.$store.commit('setToken', response.body.accessToken);
-          this.$store.commit('setUser');
-          this.$emit(
-            "accountFormResponse",
-            response.message
-          );
-          setTimeout(() => {
-            this.$emit(
-              "updated_response"
-            );
-          }, 1200);
-        })
-        .catch(err => {
-          console.log(err);
-          this.$emit("accountFormResponse", error.response.data.message);
-        });
+    registerHandler(res) {
+      if (!res.body.exist) {
+        this.$emit("accountFormResponse", "Account Saved Successfully!");
+        setTimeout(() => {
+          this.$router.push("/admin/AccountManagement");
+        }, 1000);
+      } else {
+        this.$emit(
+          "accountFormResponse",
+          "Username / Email is already taken!"
+        );
+      }
+    },
+    updateHandler(res) {
+      this.clearFields()
+      const response = res.data.data
+      localStorage.setItem("default", response.body.default_pass);
+      this.$store.commit('setToken', response.body.accessToken);
+      this.$store.commit('setUser');
+      this.$emit(
+        "accountFormResponse",
+        response.message
+      );
+      setTimeout(() => { this.$emit("updated_response") }, 1200);
     },
     checkUpdate() {
       if (this.MyUpdate) {
