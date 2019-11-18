@@ -53,6 +53,9 @@ export default new Vuex.Store({
         logout(state) {
             state.status = false;
             state.user = { admin: false }
+            localStorage.removeItem("token");
+            localStorage.removeItem("default");
+            localStorage.removeItem("status");
         },
         setUser(state) {
             state.user = jwt_decode(state.token).user
@@ -92,9 +95,6 @@ export default new Vuex.Store({
         },
         logout({ commit }) {
             commit('logout')
-            localStorage.removeItem("token");
-            localStorage.removeItem("default");
-            localStorage.removeItem("status");
         },
         deleteAccount({ state }, account) {
             return new Promise((resolve, reject) => {
