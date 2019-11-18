@@ -127,7 +127,6 @@ export default {
           this.$emit("notify", err.message);
           this.loader(false);
         })
-
     },
     loader(status) {
       this.loading = status;

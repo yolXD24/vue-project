@@ -75,11 +75,10 @@ export default {
 
   methods: {
     initialize() {
-      this.$store.dispatch('loadTable').then(accounts => {
+      this.$store.dispatch('loadAccountTable').then(accounts => {
         this.accounts = accounts
       }).catch(err => {
         this.$emit("notify", "Something went wrong!!");
-        console.log(err);
       });
     },
     deleteItem(account) {

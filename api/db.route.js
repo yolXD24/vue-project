@@ -9,6 +9,7 @@ var update = require("./modules/module.update");
 var accounts = require("./modules/module.accounts");
 var deleteAccount = require("./modules/module.delAccount");
 var verifytoken = require("./modules/module.verifytoken")
+var transactions = require("./modules/module.transactionLogs")
 
 //account login
 routes.route("/login").post((req, res) => {

@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 let models = require("../db.model");
 let response = null
 let errorResponse = require("../helpers/setErrorResponse");

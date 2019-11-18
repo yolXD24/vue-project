@@ -11,8 +11,11 @@ module.exports = function(reqUsername, reqEmail, reqBody, res) {
         (err, account) => {
             if (err) {
                 response = errorResponse(503, err, "Service Unavailable!")
+                res.status(response.status).send(response);
+
             } else if (account.length) {
                 response = successResponse(200, { exist: true }, "Service Unavailable!")
+                res.status(response.status).send(response);
 
             } else {
                 let staff = new models.Staffs(reqBody);
@@ -30,9 +33,8 @@ module.exports = function(reqUsername, reqEmail, reqBody, res) {
             }
         }
     ).catch(err => {
-        if (err) {
-            response = errorResponse(503, err, "Service Unavailable!")
-            res.status(response.status).send(response);
-        }
+        response = errorResponse(503, err, "Service Unavailable!")
+        res.status(response.status).send(response);
+
     })
 }

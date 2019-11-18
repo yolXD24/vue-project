@@ -39,7 +39,6 @@ export default new Vuex.Store({
             localStorage.setItem('token', state.token);
         },
         setDefault(state, val) {
-            console.log(val);
             state.default_pass = val
             localStorage.setItem("default", val);
         },
@@ -80,7 +79,13 @@ export default new Vuex.Store({
                     .catch(error => {
                         commit('auth_error')
                         localStorage.removeItem('token')
-                        reject(error.response.data.error)
+                        let errors = {}
+                        if (!error.response) {
+                            errors = { message: "Cannot connect to the server!" }
+                        } else {
+                            errors = error.response.data.error
+                        }
+                        reject(errors)
 
                     });
             })
@@ -102,20 +107,50 @@ export default new Vuex.Store({
                             resolve(false)
                         }
                     })
-                    .catch(err => {
-                        reject(err)
+                    .catch(error => {
+                        let errors = {}
+                        if (!error.response) {
+                            errors = { message: "Cannot connect to the server!" }
+                        } else {
+                            errors = error.response.data.error
+                        }
+                        reject(errors)
                     });
             });
         },
-        loadTable({ state }) {
+        loadAccountTable({ state }) {
             return new Promise((resolve, reject) => {
                 axios
                     .post(state.url + "accounts")
                     .then(res => {
                         resolve(res.data.data.body.accounts)
                     })
-                    .catch(err => {
-                        reject(err);
+                    .catch(error => {
+                        let errors = {}
+                        if (!error.response) {
+                            errors = { message: "Cannot connect to the server!" }
+                        } else {
+                            errors = error.response.data.error
+                        }
+                        reject(errors)
+                    });
+            })
+        },
+        loadHistoryTable({ state }) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post(state.url + "transactions", state.token)
+                    .then(res => {
+                        resolve(res.data.data.body.logs)
+                    })
+                    .catch(error => {
+                        let errors = {}
+                        if (!error.response) {
+                            errors = { message: "Cannot connect to the server!" }
+                        } else {
+                            errors = error.response.data.error
+                        }
+                        reject(errors)
                     });
             })
         },
@@ -127,9 +162,13 @@ export default new Vuex.Store({
                         resolve(res)
                     })
                     .catch(error => {
-                        console.log(error.response);
-
-                        reject(error.response.data.error)
+                        let errors = {}
+                        if (!error.response) {
+                            errors = { message: "Cannot connect to the server!" }
+                        } else {
+                            errors = error.response.data.error
+                        }
+                        reject(errors)
                     });
             })
         }

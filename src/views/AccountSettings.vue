@@ -9,10 +9,10 @@
     >
       <template v-slot:activator="{ on }">
         <v-btn
-          color="primary"
-          class="white--text text--accent-5"
+           color="primary"
           rounded
-          with="500"
+          width="200"
+          large
           dark
           v-on="on"
         >Update Settings</v-btn>

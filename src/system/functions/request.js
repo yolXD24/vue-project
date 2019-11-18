@@ -8,8 +8,15 @@ var register = (account, _url) => {
                 console.log(res);
                 resolve(res)
             })
-            .catch(err => {
-                reject(error.response.data.error)
+            .catch(error => {
+                let errors = {}
+                if (!error.response) {
+                    errors = { message: "Cannot connect to the server!" }
+                } else {
+                    errors = error.response.data.error
+                }
+
+                reject(errors)
             });
     })
 }
@@ -22,7 +29,14 @@ var update = (account, _url) => {
                 resolve(res.data.data)
             })
             .catch(error => {
-                reject(error.response.data.error)
+                let errors = {}
+                if (!error.response) {
+                    errors = { message: "Cannot connect to the server!" }
+                } else {
+                    errors = error.response.data.error
+                }
+
+                reject(errors)
             });
     })
 }

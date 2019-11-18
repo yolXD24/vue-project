@@ -4,7 +4,6 @@
     id="body"
     :style="'background :linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('+background+')'"
   >
-    <!--  url('https://source.unsplash.com/user/cinquantesix') -->
     <Sidebar v-if="$store.state.status" />
     <v-content
       dark
@@ -24,7 +23,7 @@
         >Close</v-btn>
       </v-snackbar>
       <br><br>
-    <Footer  v-if="$store.getters.defaultPassword && $route.name != 'login'"/>
+      <Footer v-if="is_default_password && $route.name != 'login'" />
     </v-content>
 
   </v-app>
@@ -34,6 +33,8 @@
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
 import axios from 'axios'
+import { verifyToken } from "@/helpers/verifyToken"
+import { isNull } from 'util';
 export default {
   name: "App",
   components: {
@@ -60,7 +61,7 @@ export default {
       this.snackbar = true;
     },
     checkLogin() {
-      verifyToken.VerifyToken().then(valid => {
+      verifyToken().then(valid => {
         if (!valid) {
           this.app_notify("Session Expired")
           this.$store.commit('logout');
@@ -71,19 +72,18 @@ export default {
         this.$router.push("/login")
         this.app_notify("Session Expired")
       })
-
     }
   },
 
   mounted() {
-    // if (!isNull(this.$store.state.status)) {
-    //   this.checkLogin();
-    // }
+    if (!isNull(this.$store.state.status)) {
+      this.checkLogin();
+    }
     this.$store.state.axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
       this.background = res.request.responseURL
     }).catch(err => {
       this.app_notify("Failed to load some images...")
-      this.background = "@/assets/bg.jpg"
+      this.background = require("@/assets/bg.jpg")
     })
   }
 

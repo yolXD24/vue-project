@@ -75,6 +75,10 @@ let Code = new Schema({
 }
  */
 
+let TransactionSchema = new Schema({
+    staffId: { type: String }
+})
+
 Staff.pre("save", function(next) {
     if (!this.isModified("password")) {
         return next();
@@ -86,4 +90,5 @@ Staff.pre("save", function(next) {
 const Admins = mongoose.model("Admin", Admin);
 const Staffs = mongoose.model("Staff", Staff);
 const Codes = mongoose.model("Code", Code);
-module.exports = { Admins, Staffs, Codes };
+const Transactions = mongoose.model("Transaction", TransactionSchema);
+module.exports = { Admins, Staffs, Codes, Transactions };

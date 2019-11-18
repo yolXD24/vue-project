@@ -54,7 +54,6 @@
         </v-row>
       </v-card-text>
       <br />
-      <br />
     </v-card>
   </v-container>
 </template>

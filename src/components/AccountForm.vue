@@ -278,6 +278,7 @@ export default {
       }
     },
     updateHandler(res) {
+      console.log(res);
       this.clearFields()
       this.$store.commit('setDefault', res.body.default_pass)
       this.$store.commit('setToken', res.body.accessToken);
