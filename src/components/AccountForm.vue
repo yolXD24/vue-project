@@ -101,7 +101,9 @@
                     placeholder="Password should be greater than 8 characters"
                     :rules="[rules.required,rules.passwordRules , rules.min ]"
                     prepend-icon="mdi-lock"
-                    :type="password_type"
+                    :type="visibility.show ? 'text' : 'password'"
+                    :append-icon="visibility.show ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="visibility.show = !visibility.show"
                     label="Password"
                     :disabled="MyDisabled"
                     required
@@ -115,8 +117,10 @@
                   <v-text-field
                     v-model="c_password"
                     :rules="[rules.required,rules.passwordRules , rules.min , rules.matchPassword]"
+                    :type="visibility.show1 ? 'text' : 'password'"
+                    :append-icon="visibility.show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="visibility.show1 = !visibility.show1"
                     prepend-icon="mdi-lock"
-                    type="password"
                     label=" Confirm Password"
                     required
                     class="purple-input"
@@ -201,7 +205,7 @@ export default {
       text: "",
       snackbar: false,
       c_password: "",
-      visibility: {show : false , show1 : false},
+      visibility: { show: this.MyDisabled ? true : false, show1: false },
       timeout: 2000,
       url: "http://localhost:4000/admin/",
       rules: {
