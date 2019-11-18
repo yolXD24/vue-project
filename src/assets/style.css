@@ -6,7 +6,7 @@
     background-position: top center !important;
     background-attachment: fixed !important;
     background-repeat: no-repeat !important;
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 html {

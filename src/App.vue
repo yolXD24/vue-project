@@ -2,9 +2,9 @@
   <v-app
     app
     id="body"
-    :style="'background :linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('+background+')'"
+    :style="'background :linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('+background+')'"
   >
-    <Sidebar v-if="$store.state.status" />
+    <Sidebar v-if="$store.state.status  && $route.name != 'notFound' " />
     <v-content
       dark
       id="content"
@@ -23,7 +23,7 @@
         >Close</v-btn>
       </v-snackbar>
       <br><br>
-      <Footer v-if="is_default_password && $route.name != 'login'" />
+      <Footer v-if="is_default_password && $route.name != 'login' " />
     </v-content>
 
   </v-app>

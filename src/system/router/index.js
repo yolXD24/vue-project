@@ -4,6 +4,7 @@ import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import About from "@/views/About.vue";
 import Register from "@/views/Register.vue";
+import NOTFOUND from "@/views/404.vue";
 import TransactionHistory from "@/views/History.vue";
 import AccountManagement from "@/views/AccountManagement.vue";
 import store from '../functions/vuex/store.js'
@@ -67,9 +68,8 @@ var router = new Router({
         },
         {
             path: "*",
-            redirect: {
-                path: "/"
-            }
+            name: 'notFound',
+            component: NOTFOUND
         }
     ]
 });
@@ -77,7 +77,7 @@ var router = new Router({
 
 router.beforeEach((to, from, next) => {
     if (!to.meta.tokenRequired) {
-        if (store.getters.status) {
+        if (store.getters.status && to.name !== 'notFound') {
             next("/home");
         } else {
             next();
