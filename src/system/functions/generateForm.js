@@ -61,7 +61,6 @@ export default {
     },
     clear() {
         this.form_hub.content = [];
-        this.form_hub.styles = {};
         this.form_hub.footer = [];
         this.responseForm = {};
     }
