@@ -59,7 +59,7 @@
   box-sizing: border-box;
 }
 
-body {
+.y {
   display: flex;
   align-items: center;
   background: #E3F2FD;
