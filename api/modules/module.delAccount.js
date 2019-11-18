@@ -1,5 +1,5 @@
-let models = require("../db.model");
-module.exports = function (reqBody,res) {
+let models = require("../model/db.model");
+module.exports = function(reqBody, res) {
     models.Staffs.findOneAndRemove(
         reqBody, { password: 0, admin: 0 },
         (err, account) => {

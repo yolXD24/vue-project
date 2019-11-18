@@ -4,8 +4,8 @@ const bodyParser = require("body-parser");
 const PORT = 4000;
 const cors = require("cors");
 const mongoose = require("mongoose");
-const config = require("./DB.js");
-const routes = require("./db.route");
+const config = require("./config/DB");
+const routes = require("./router");
 
 mongoose.Promise = global.Promise;
 console.log("connecting....");

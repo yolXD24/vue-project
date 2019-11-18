@@ -1,4 +1,4 @@
-let models = require("../db.model");
+let models = require("../model/db.model");
 let response = null
 let errorResponse = require("../helpers/setErrorResponse");
 let successResponse = require("../helpers/setSuccessResponse");

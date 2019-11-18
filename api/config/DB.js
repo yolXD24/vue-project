@@ -1,4 +1,4 @@
-const encrypt = require("./encrypt.js");
+const encrypt = require("../helpers/encrypt.js");
 module.exports = {
     DB: "mongodb://localhost:27017/docxpress"
         // DB: "mongodb+srv://Yol-24:" +
