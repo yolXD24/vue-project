@@ -7,14 +7,13 @@ module.exports = function(reqUsername, reqEmail, reqBody, res) {
     reqBody.lastname = reqBody.lname
     delete reqBody.fname;
     delete reqBody.lname;
-    models.Staffs.find({ username: reqUsername, email: reqEmail },
+    models.Staffs.find({ $or: [{ username: reqUsername }, { email: reqEmail }] },
         (err, account) => {
             if (err) {
                 response = errorResponse(503, err, "Service Unavailable!")
                 res.status(response.status).send(response);
-
             } else if (account.length) {
-                response = successResponse(200, { exist: true }, "Service Unavailable!")
+                response = errorResponse(406, { exist: true }, " Account already exist!")
                 res.status(response.status).send(response);
 
             } else {

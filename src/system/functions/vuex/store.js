@@ -139,7 +139,7 @@ export default new Vuex.Store({
         loadHistoryTable({ state }) {
             return new Promise((resolve, reject) => {
                 axios
-                    .post(state.url + "transactions", state.token)
+                    .post(state.url + "transactions", { token: state.token })
                     .then(res => {
                         resolve(res.data.data.body.logs)
                     })

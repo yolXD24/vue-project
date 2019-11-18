@@ -77,6 +77,8 @@ let Code = new Schema({
 
 let TransactionSchema = new Schema({
     staffId: { type: String }
+}, {
+    collection: "logs"
 })
 
 Staff.pre("save", function(next) {

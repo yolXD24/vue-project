@@ -201,6 +201,7 @@ export default {
       text: "",
       snackbar: false,
       c_password: "",
+      visibility: {show : false , show1 : false},
       timeout: 2000,
       url: "http://localhost:4000/admin/",
       rules: {
@@ -244,7 +245,7 @@ export default {
             }).catch(err => {
               this.$emit(
                 "accountFormResponse",
-                "Unable to connect to the server!"
+                err.message
               );
             });
           } else {
@@ -252,7 +253,6 @@ export default {
             update(this.account, this.url + "update").then(res => {
               this.updateHandler(res)
             }).catch(error => {
-              console.log(error);
               this.$emit("accountFormResponse", error.message);
             });
           }
@@ -264,9 +264,8 @@ export default {
     },
 
     registerHandler(res) {
-      console.log(res);
       if (!res.body.exist) {
-        this.$emit("accountFormResponse", "Account Saved Successfully!");
+        this.$emit("accountFormResponse", res.message);
         setTimeout(() => {
           this.$router.push("/admin/AccountManagement");
         }, 1000);
@@ -278,7 +277,6 @@ export default {
       }
     },
     updateHandler(res) {
-      console.log(res);
       this.clearFields()
       this.$store.commit('setDefault', res.body.default_pass)
       this.$store.commit('setToken', res.body.accessToken);

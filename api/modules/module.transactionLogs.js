@@ -22,9 +22,23 @@ const privateTransactions = (user, res) => {
             response = errorResponse(503, { body: err, message: "Service unavailable" }, null)
             res.status(response.status).send(response);
         } else {
-            response = successResponse(200, { logs: logs }, "Accounts retrieve successfully ! ")
+            response = successResponse(200, { logs: logs }, "Logs retrieve successfully ! ")
             res.status(response.status).send(response);
         }
     })
 }
-module.exports = { allTransactions, privateTransactions }
+module.exports = (token, res) => {
+    try {
+        var user = jwt.verify(token, 'docxpress').user
+        console.log(user);;
+        if (user.admin) {
+            allTransactions(res)
+        } else {
+            privateTransactions(user, res)
+        }
+    } catch (err) {
+        response = errorResponse(503, { body: err, message: "invalid token" }, null)
+        res.status(response.status).send(response);
+    }
+
+}

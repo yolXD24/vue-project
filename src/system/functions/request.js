@@ -5,8 +5,7 @@ var register = (account, _url) => {
         store.state.axios
             .post(_url, account)
             .then(res => {
-                console.log(res);
-                resolve(res)
+                resolve(res.data.data)
             })
             .catch(error => {
                 let errors = {}
@@ -15,7 +14,6 @@ var register = (account, _url) => {
                 } else {
                     errors = error.response.data.error
                 }
-
                 reject(errors)
             });
     })
