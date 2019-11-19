@@ -1,83 +1,25 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "@/views/Home.vue";
-import Login from "@/views/Login.vue";
-import About from "@/views/About.vue";
-import Register from "@/views/Register.vue";
-import NOTFOUND from "@/views/404.vue";
-import TransactionHistory from "@/views/History.vue";
-import AccountManagement from "@/views/AccountManagement.vue";
 import store from '../functions/vuex/store.js'
+import { userRoutes } from "./userRoutes";
+import { adminRoutes } from "./adminRoutes";
 
+
+
+var allRoutes = adminRoutes().concat(userRoutes())
 Vue.use(Router);
 
 var router = new Router({
     mode: "history",
     base: process.env.BASE_URL,
-    routes: [{
-            path: "/",
-            redirect: {
-                path: "/home"
-            }
-        },
-        {
-            path: "/home",
-            name: "home",
-            component: Home,
-            meta: {
-                tokenRequired: true
-            }
-        },
-        {
-            path: "/admin/settings",
-            name: 'settings',
-            component: About,
-            meta: {
-                tokenRequired: true
-            }
-        },
-        {
-            path: "/admin/history",
-            component: TransactionHistory,
-            meta: {
-                tokenRequired: true
-            }
-        },
-        {
-            path: "/admin/register",
-            component: Register,
-            meta: {
-                tokenRequired: true
-            }
-        },
-        {
-            path: "/admin/AccountManagement",
-            component: AccountManagement,
-            meta: {
-                tokenRequired: true
-            }
-        },
-
-        {
-            path: "/login",
-            name: "login",
-            component: Login,
-            meta: {
-                tokenRequired: false
-            }
-        },
-        {
-            path: "*",
-            name: 'notFound',
-            component: NOTFOUND
-        }
-    ]
+    routes: allRoutes
 });
 
+// console.log(router);
 
 router.beforeEach((to, from, next) => {
     if (!to.meta.tokenRequired) {
-        if (store.getters.status && to.name !== 'notFound') {
+        if (store.getters.status && to.name !== 'notFound' && !to.meta.user) {
             next("/home");
         } else {
             next();

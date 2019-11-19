@@ -5,36 +5,28 @@
     :style="'background :linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('+background+')'"
   >
     <Sidebar v-if="$store.state.status  && $route.name != 'notFound' " />
-    <v-content
-      dark
-      id="content"
-    >
+    <v-content dark id="content">
       <router-view v-on:notify="app_notify" />
-      <v-snackbar
-        v-model="snackbar"
-        :timeout="timeout"
-        absolute
-      >
+      <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
         {{ text }}
-        <v-btn
-          color="blue"
-          text
-          @click="snackbar = false"
-        >Close</v-btn>
+        <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
       </v-snackbar>
-      <br><br>
+      <br />
+      <br />
       <Footer v-if="is_default_password && $route.name != 'login' " />
     </v-content>
-
   </v-app>
 </template>
+<style lang="css">
+@import "./assets/style.css";
+</style>
 <script>
 /* eslint-disable */
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
-import axios from 'axios'
-import { verifyToken } from "@/helpers/verifyToken"
-import { isNull } from 'util';
+import axios from "axios";
+import { verifyToken } from "@/helpers/verifyToken";
+import { isNull } from "util";
 export default {
   name: "App",
   components: {
@@ -46,7 +38,7 @@ export default {
       snackbar: false,
       background: require("@/assets/bg.jpg"),
       text: "",
-      timeout: 2000,
+      timeout: 2000
     };
   },
   computed: {
@@ -60,17 +52,19 @@ export default {
       this.snackbar = true;
     },
     checkLogin() {
-      verifyToken().then(valid => {
-        if (!valid) {
-          this.app_notify("Session Expired")
-          this.$store.commit('logout');
-          this.$router.push("/login")
-        }
-      }).catch(err => {
-        this.$store.commit('logout');
-        this.$router.push("/login")
-        this.app_notify("Session Expired")
-      })
+      verifyToken()
+        .then(valid => {
+          if (!valid) {
+            this.app_notify("Session Expired");
+            this.$store.commit("logout");
+            this.$router.push("/login");
+          }
+        })
+        .catch(err => {
+          this.$store.commit("logout");
+          this.$router.push("/login");
+          this.app_notify("Session Expired");
+        });
     }
   },
 
@@ -78,12 +72,14 @@ export default {
     if (!isNull(this.$store.state.status)) {
       this.checkLogin();
     }
-    this.$store.state.axios.get("https://source.unsplash.com/user/cinquantesix").then(res => {
-      this.background = res.request.responseURL
-    }).catch(err => {
-      this.app_notify("Failed to load some images...")
-    })
+    this.$store.state.axios
+      .get("https://source.unsplash.com/user/cinquantesix")
+      .then(res => {
+        this.background = res.request.responseURL;
+      })
+      .catch(err => {
+        this.app_notify("Failed to load some images...");
+      });
   }
-
 };
 </script>
