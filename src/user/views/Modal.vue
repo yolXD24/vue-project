@@ -43,6 +43,7 @@
   </div>
 </template>
 <script>
+//import Swal from "sweetalert2";
 export default {
   props: {
     kindOfBusiness: String,
@@ -84,14 +85,14 @@ export default {
               municipality: this.address.municipality,
               province: this.address.province
             },
-          dateStarted: this.dateStarted
+          dateStarted: this.dateStarted,
+          docType: "Business Clearance"
         })
         .then(function(response) {
           currentObj = response.data
           // Swal.fire({
           // icon: "success",
           // title: "Sent!"})
-          alert("sent")
         })
         .catch(function(error) {
           currentObj = error
@@ -101,7 +102,6 @@ export default {
       //     icon: "error",
       //     title: "Fields not completed!"
       //   });
-      alert("error!")
     }}
   }
 };

@@ -40,6 +40,7 @@
   </div>
 </template>
 <script>
+//import Swal from "sweetalert2";
 export default {
   props: {
     name: {
@@ -81,17 +82,23 @@ export default {
               barangay: this.address.barangay,
               municipality: this.address.municipality,
               province: this.address.province
-            }
+            },
+            docType: "Barangay Indigency"
           })
           .then(function(response) {
             currentObj = response.data;
-            alert("sent");
+          //   Swal.fire({
+          // icon: "success",
+          // title: "Sent!"})
           })
           .catch(function(error) {
             currentObj = error;
           });
       } else {
-        alert("sent");
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Fields not completed!"
+        // });
       }
     }
   }

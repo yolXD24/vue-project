@@ -14,44 +14,22 @@
             <br />
             <br />
             <h1 class="text-center">Business Clearance</h1>
-            <h2 class="text-center">Office of the Punong Barangay</h2>
+            <h2 class="text-center font-italic headline">Office of the Punong Barangay</h2>
             <h2 class="text-center">Required under RA 7160 Sec. 125</h2>
             <div class="flex-grow-1"></div>
             <br />
             <v-card-text>
               <br />
+              <Name :name="name"/>
               <v-row>
-                <v-col class="px-10" cols="12" sm="6" md="6">
-                  <v-text-field v-model="name.firstName" label="First Name"></v-text-field>
-                </v-col>
-                <v-col class="px-10" cols="12" sm="6" md="6">
-                  <v-text-field v-model="name.middleName" label="Middle Name"></v-text-field>
-                </v-col>
-                <v-col class="px-10" cols="12" sm="6" md="6">
-                  <v-text-field v-model="name.lastName" label="Last Name"></v-text-field>
-                </v-col>
-                <v-col class="px-10" cols="12" sm="6" md="6">
-                  <v-text-field v-model="name.suffix" label="Suffix"></v-text-field>
-                </v-col>
                 <v-col class="px-10" cols="12" sm="6" md="6">
                   <v-text-field v-model="kindOfBusiness" label="Kind Of Business"></v-text-field>
                 </v-col>
                 <v-col class="px-10" cols="12" sm="6" md="6">
                   <v-text-field v-model="dateStarted" label="Date Started"></v-text-field>
                 </v-col>
-                <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="address.sitio" label="Sitio"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="address.barangay" label="Barangay"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="address.municipality" label="Municipality"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="address.province" label="Province"></v-text-field>
-                  </v-col>
               </v-row>
+              <Address :address="address"/>
             </v-card-text>
             <v-card-actions>
               <div class="flex-grow-1"></div>
@@ -73,14 +51,18 @@
   </v-app>
 </template>
 <script>
+import Name from "../components/Name.vue";
+import Address from "../components/Address.vue";
 import Modal from "./Modal.vue";
-import NavBar from "@/user/components/NavBar";
-import Footer from "@/user/components/Footer";
+import NavBar from "../components/NavBar.vue";
+import Footer from "../components/Footer.vue";
 export default {
   components: {
     NavBar,
     Footer,
-    Modal
+    Modal,
+    Name,
+    Address
   },
   data() {
     return {

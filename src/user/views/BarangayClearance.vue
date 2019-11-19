@@ -11,30 +11,19 @@
       >
         <v-content>
           <div id="app">
-            <NavBar />
+            <NavBar/>
             <v-card max-width="900" class="col-sm-7 border mx-auto" color="white darken-3" light>
-              <br />
-              <br />
+              <br>
+              <br>
               <h1 class="text-center">Barangay Clearance</h1>
               <p class="text-center font-italic headline">Office of the Punong Barangay</p>
               <h2 class="text-center">Local Government Code of 1991</h2>
               <div class="flex-grow-1"></div>
-              <br />
+              <br>
               <v-card-text>
-                <br />
+                <br>
+                <Name :name="name"/>
                 <v-row justify="space-between">
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="name.firstName" label="First Name"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="name.middleName" label="Middle Name"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="name.lastName" label="Last Name"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="name.suffix" label="Suffix"></v-text-field>
-                  </v-col>
                   <v-col class="px-10" cols="12" sm="6" md="6">
                     <v-text-field v-model="citizenship" label="Citizenship"></v-text-field>
                   </v-col>
@@ -47,19 +36,8 @@
                   <v-col class="px-10" cols="12" sm="6" md="6">
                     <v-text-field v-model="status" label="Civil Status"></v-text-field>
                   </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="address.sitio" label="Sitio"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="address.barangay" label="Barangay"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="address.municipality" label="Municipality"></v-text-field>
-                  </v-col>
-                  <v-col class="px-10" cols="12" sm="6" md="6">
-                    <v-text-field v-model="address.province" label="Province"></v-text-field>
-                  </v-col>
                 </v-row>
+                <Address :address="address"/>
               </v-card-text>
               <v-card-actions>
                 <div class="flex-grow-1"></div>
@@ -77,18 +55,22 @@
         </v-content>
       </v-img>
     </v-flex>
-    <Footer />
+    <Footer/>
   </v-app>
 </template>
 <script>
-import NavBar from "@/src/user/components/Navbar";
-import Footer from "@/src/user/components/Footer";
-import ModalBarangay from "./ModalBarangay";
+import NavBar from "../components/NavBar.vue";
+import Footer from "../components/Footer.vue";
+import Name from "../components/Name.vue";
+import Address from "../components/Address.vue";
+import ModalBarangay from "./ModalBarangay.vue";
 export default {
   components: {
     NavBar,
     Footer,
-    ModalBarangay
+    ModalBarangay,
+    Name,
+    Address
   },
   data() {
     return {
