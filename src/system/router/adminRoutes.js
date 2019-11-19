@@ -2,7 +2,7 @@ var routes = [
     {
         path: "/admin/",
         redirect: {
-            path: "/home"
+            name: "home"
         }
     },
     {

@@ -17,10 +17,10 @@ import Vue from "vue";
 export default {
   data: () => ({
     items: [
-      { title: "Barangay Clearance", icon: "mdi-home", link:'/barangay-clearance'},
-      { title: "Barangay Indigency", icon: "mdi-home", link:'/barangay-indigency'},
-      { title: "Business Clearance", icon: "mdi-home", link:'/business-clearance'},
-      { title: "Home", icon: "mdi-home", link:'/home'}
+      { title: "Barangay Clearance", icon: "mdi-home", link:'/user/get/barangay-clearance'},
+      { title: "Barangay Indigency", icon: "mdi-home", link:'/user/get/barangay-indigency'},
+      { title: "Business Clearance", icon: "mdi-home", link:'/user/get/business-clearance'},
+      { title: "Home", icon: "mdi-home", link:'/user/home'}
     ]
   })
 };

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-flex justify-center>
       <v-img
         :src="image"
@@ -10,8 +10,7 @@
         max-height="1100"
       >
         <v-content>
-          <div id="app">
-            <NavBar />
+          <div>
             <v-card max-width="900" class="col-sm-7 border mx-auto" color="white darken-3" light>
               <br />
               <br />
@@ -77,17 +76,13 @@
         </v-content>
       </v-img>
     </v-flex>
-    <Footer />
-  </v-app>
+  </div>
 </template>
 <script>
-import NavBar from "@/src/user/components/Navbar";
-import Footer from "@/src/user/components/Footer";
 import ModalBarangay from "./ModalBarangay";
 export default {
   components: {
-    NavBar,
-    Footer,
+
     ModalBarangay
   },
   data() {

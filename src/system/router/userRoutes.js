@@ -9,7 +9,7 @@ var routes = [
         }
     },
     {
-        path: "/home",
+        path: "/user/home",
         name: "Home",
         component: ()=>import("@/user/views/Home.vue"),
         meta: {
@@ -17,7 +17,7 @@ var routes = [
         }
     },
     {
-        path: "/get/business-clearance",
+        path: "/user/get/business-clearance",
         name: "business-clearance",
         component: ()=>import("@/user/views/BusinessClearance.vue"),
         meta: {
@@ -25,15 +25,15 @@ var routes = [
         }
     },
     {
-        path: "/get/barangay-clearance",
+        path: "/user/get/barangay-clearance",
         name: "barangay-clearance",
-        component: ()=>import("@/user/views/BarangayIndigency.vue"),
+        component: ()=>import("@/user/views/BarangayClearance.vue"),
         meta: {
             user: true
         }
     },
     {
-        path: "/get/barangay-indigency",
+        path: "/user/get/barangay-indigency",
         name: "barangay-indigency",
         component: ()=>import("@/user/views/BarangayIndigency.vue"),
         meta: {

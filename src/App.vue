@@ -4,7 +4,7 @@
     id="body"
     :style="'background :linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('+background+')'"
   >
-    <Sidebar v-if="$store.state.status  && $route.name != 'notFound' " />
+    <Sidebar v-if="$store.state.status  && $route.name != 'notFound' && !route.meta.user" />
     <v-content dark id="content">
       <router-view v-on:notify="app_notify" />
       <v-snackbar v-model="snackbar" :timeout="timeout" absolute>

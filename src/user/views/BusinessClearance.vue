@@ -9,7 +9,6 @@
       max-height="1000">
       <v-content>
         <div id="app">
-          <NavBar />
           <v-card max-width="900" class="col-sm-7 border mx-auto" color="white darken-3" light>
             <br />
             <br />
@@ -28,7 +27,7 @@
                   <v-text-field v-model="name.middleName" label="Middle Name"></v-text-field>
                 </v-col>
                 <v-col class="px-10" cols="12" sm="6" md="6">
-                  <v-text-field v-model="name.lastName" label="Last Name"></v-text-field>
+                  <v-text-field v-model="name.lastName" label="Last Name" ></v-text-field>
                 </v-col>
                 <v-col class="px-10" cols="12" sm="6" md="6">
                   <v-text-field v-model="name.suffix" label="Suffix"></v-text-field>
@@ -69,7 +68,6 @@
       </v-content>
       </v-img>
     </v-flex>
-    <Footer />
   </v-app>
 </template>
 <script>

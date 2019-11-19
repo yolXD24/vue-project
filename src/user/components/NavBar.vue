@@ -2,11 +2,13 @@
   <v-container>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Express</span>
-        <span class="font-weight-light">_docx</span>
+        <v-btn text x-large @click="$router.push('/user/home')">
+          <span>Express</span>
+          <span class="font-weight-light">_docx</span>
+        </v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <Menu/>
+      <Menu />
     </v-app-bar>
   </v-container>
 </template>
@@ -17,5 +19,5 @@ export default {
   components: {
     Menu
   }
-}
+};
 </script>
