@@ -18,13 +18,13 @@ var router = new Router({
         {
             path: "/admin",
             component: () =>
-                import ("@/admin/AdminView.vue"),
+                import ("@/pages/admin/AdminView.vue"),
             children: adminRoutes()
         },
         {
             path: "/user",
             component: () =>
-                import ("@/user/UserView.vue"),
+                import ("@/pages/user/UserView.vue"),
             children: userRoutes()
         },
         {

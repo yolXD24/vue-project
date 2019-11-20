@@ -19,7 +19,7 @@
   </v-container>
 </template>
 <style lang="scss">
-@import "../../assets/style.css";
+@import "/assets/style.css";
 </style>
 <script>
 import jwt_decode from "jwt-decode";

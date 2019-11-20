@@ -18,7 +18,7 @@
   </v-app>
 </template>
 <style lang="css">
-@import "../assets/style.css";
+@import "/assets/style.css";
 </style>
 <script>
 /* eslint-disable */
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       snackbar: false,
-      background: require("../assets/bg.jpg"),
+      background: require("./assets/bg.jpg"),
       text: "",
       timeout: 2000
     };
