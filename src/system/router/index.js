@@ -3,9 +3,6 @@ import Router from "vue-router";
 import store from '../functions/vuex/store.js'
 import { userRoutes } from "./userRoutes";
 import { adminRoutes } from "./adminRoutes.js";
-import { isNull } from "util";
-
-
 
 Vue.use(Router);
 
@@ -22,14 +19,7 @@ var router = new Router({
             path: "/admin",
             component: () =>
                 import ("@/admin/AdminView.vue"),
-            children: adminRoutes(),
-            beforeEnter: (to, form, next) => {
-                if (!isNull(store.getters.user)) {
-                    next()
-                } else {
-                    next('/user')
-                }
-            }
+            children: adminRoutes()
         },
         {
             path: "/user",
