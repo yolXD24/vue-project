@@ -47,7 +47,7 @@
   </v-row>
 </template>
 <script>
-import AccountForm from "@/components/AccountForm.vue";
+import AccountForm from "@/admin/components/AccountForm.vue";
 
 export default {
   components: {

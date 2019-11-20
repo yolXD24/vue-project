@@ -1,6 +1,5 @@
-var routes = [
-    {
-        path: "/admin/",
+var routes = [{
+        path: "/",
         redirect: {
             name: "home"
         }
@@ -8,7 +7,8 @@ var routes = [
     {
         path: "/admin/home",
         name: "home",
-        component: ()=>import('@/views/Home.vue'),
+        component: () =>
+            import ('@/pages/admin/views/Home.vue'),
         meta: {
             tokenRequired: true
         }
@@ -16,28 +16,32 @@ var routes = [
     {
         path: "/admin/settings",
         name: 'settings',
-        component: ()=>import("@/views/About.vue"),
+        component: () =>
+            import ("@/pages/admin/views/About.vue"),
         meta: {
             tokenRequired: true
         }
     },
     {
         path: "/admin/history",
-        component: ()=>import("@/views/History.vue"),
+        component: () =>
+            import ("@/pages/admin/views/History.vue"),
         meta: {
             tokenRequired: true
         }
     },
     {
         path: "/admin/register",
-        component: ()=>import("@/views/Register.vue"),
+        component: () =>
+            import ("@/pages/admin/views/Register.vue"),
         meta: {
             tokenRequired: true
         }
     },
     {
         path: "/admin/AccountManagement",
-        component: ()=>import("@/views/AccountManagement.vue"),
+        component: () =>
+            import ("@/pages/admin/views/AccountManagement.vue"),
         meta: {
             tokenRequired: true
         }
@@ -46,19 +50,14 @@ var routes = [
     {
         path: "/admin/login",
         name: "login",
-        component: ()=>import("@/views/Login.vue"),
+        component: () =>
+            import ("@/pages/admin/views/Login.vue"),
         meta: {
             tokenRequired: false
         }
-    },
-    {
-        path: "*",
-        name: 'notFound',
-        component: ()=>import("@/views/404.vue")
     }
 ]
-
-let adminRoutes = ()=>{
+let adminRoutes = () => {
     return routes
 }
 

@@ -2,6 +2,8 @@ import Vue from "vue";
 import Router from "vue-router";
 import store from '../functions/vuex/store.js'
 import { userRoutes } from "./userRoutes";
+import { adminRoutes } from "./adminRoutes.js";
+import { isNull } from "util";
 
 
 
@@ -10,78 +12,39 @@ Vue.use(Router);
 var router = new Router({
     mode: "history",
     base: process.env.BASE_URL,
-    routes: [
-        {
+    routes: [{
             path: "/",
-            redirect: { path: "/user" }
-        },
-        {
-            path: "/admin/",
             redirect: {
-                name: "home"
+                path: "/user"
             }
         },
         {
-            path: "/admin/home",
-            name: "home",
-            component: () => import('@/views/Home.vue'),
-            meta: {
-                tokenRequired: true
+            path: "/admin",
+            component: () =>
+                import ("@/admin/AdminView.vue"),
+            children: adminRoutes(),
+            beforeEnter: (to, form, next) => {
+                if (!isNull(store.getters.user)) {
+                    next()
+                } else {
+                    next('/user')
+                }
             }
         },
         {
-            path: "/admin/settings",
-            name: 'settings',
-            component: () => import("@/views/About.vue"),
-            meta: {
-                tokenRequired: true
-            }
-        },
-        {
-            path: "/admin/history",
-            component: () => import("@/views/History.vue"),
-            meta: {
-                tokenRequired: true
-            }
-        },
-        {
-            path: "/admin/register",
-            component: () => import("@/views/Register.vue"),
-            meta: {
-                tokenRequired: true
-            }
-        },
-        {
-            path: "/admin/AccountManagement",
-            component: () => import("@/views/AccountManagement.vue"),
-            meta: {
-                tokenRequired: true
-            }
-        },
-
-        {
-            path: "/admin/login",
-            name: "login",
-            component: () => import("@/views/Login.vue"),
-            meta: {
-                tokenRequired: false
-            }
+            path: "/user",
+            component: () =>
+                import ("@/user/UserView.vue"),
+            children: userRoutes()
         },
         {
             path: "*",
             name: 'notFound',
-            component: () => import("@/views/404.vue")
+            component: () =>
+                import ("@/pages/admin/views/404.vue")
         },
-        {
-            path: "/user",
-            // name: "user",
-            component: () => import("@/user/UserView.vue"),
-            children: userRoutes()
-        }
     ]
 });
-
-// console.log(router);
 
 router.beforeEach((to, from, next) => {
     if (!to.meta.tokenRequired) {

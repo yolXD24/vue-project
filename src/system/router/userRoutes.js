@@ -1,5 +1,4 @@
-var routes = [
-    {
+var routes = [{
         path: "/",
         redirect: {
             name: "Home",
@@ -11,7 +10,8 @@ var routes = [
     {
         path: "/user/home",
         name: "Home",
-        component: ()=>import("@/user/views/Home.vue"),
+        component: () =>
+            import ("@/pages/user/views/Home.vue"),
         meta: {
             user: true
         }
@@ -19,7 +19,8 @@ var routes = [
     {
         path: "/user/get/business-clearance",
         name: "business-clearance",
-        component: ()=>import("@/user/views/BusinessClearance.vue"),
+        component: () =>
+            import ("@/pages/user/views/BusinessClearance.vue"),
         meta: {
             user: true
         }
@@ -27,7 +28,8 @@ var routes = [
     {
         path: "/user/get/barangay-clearance",
         name: "barangay-clearance",
-        component: ()=>import("@/user/views/BarangayClearance.vue"),
+        component: () =>
+            import ("@/pages/user/views/BarangayClearance.vue"),
         meta: {
             user: true
         }
@@ -35,13 +37,14 @@ var routes = [
     {
         path: "/user/get/barangay-indigency",
         name: "barangay-indigency",
-        component: ()=>import("@/user/views/BarangayIndigency.vue"),
+        component: () =>
+            import ("@/pages/user/views/BarangayIndigency.vue"),
         meta: {
             user: true
         }
     }
 ]
-let userRoutes = ()=>{
+let userRoutes = () => {
     return routes
 }
 

@@ -73,7 +73,7 @@
 <script>
 import pdf from 'vue-pdf'
 import jwt_decode from "jwt-decode";
-import generatePDF from "../system/functions/generatePDF";
+import generatePDF from "@/system/functions/generatePDF";
 import printJS from 'print-js';
 
 export default {

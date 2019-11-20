@@ -60,14 +60,14 @@
 
 <script>
 import jwt_decode from "jwt-decode";
-import AccountSettings from "./AccountSettings.vue";
-import ConfirmPassword from "./ConfirmPassword.vue";
+// import AccountSettings from "./AccountSettings.vue";
+// import ConfirmPassword from "./ConfirmPassword.vue";
 import { isNullOrUndefined } from "util";
 export default {
 
   components: {
-    AccountSettings,
-    ConfirmPassword
+    AccountSettings: () => import("./AccountSettings.vue"),
+    ConfirmPassword: () => import("./ConfirmPassword.vue")
   },
   data() {
     return {
