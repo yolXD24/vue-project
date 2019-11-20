@@ -3,7 +3,7 @@
 <div id="html">
   <div id="body">
     <img
-      :src="require('@/assets/404.png')"
+      :src="require('../assets/404.png')"
       alt="404"
     >
     <h1>Page Not Found</h1>

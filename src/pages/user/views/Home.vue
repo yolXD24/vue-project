@@ -1,7 +1,6 @@
 <template >
   <div>
-    <v-row id="head">
-      <v-col cols="12" md>
+    <div id="head">
         <v-carousel
           interval="4200"
           id="carousel"
@@ -24,8 +23,7 @@
             </v-container>
           </v-carousel-item>
         </v-carousel>
-      </v-col>
-    </v-row>
+    </div>
     <v-container id="docs">
       <v-item-group multiple>
         <v-row no-gutters>
@@ -43,7 +41,7 @@
                         :class="{ 'on-hover': hover }"
                       >
                         <v-img
-                          src="~@/user/assets/docx.jpg"
+                          src="~../assets/docx.jpg"
                           height="200px"
                           @click="$router.push(item.link)"
                         ></v-img>
@@ -79,18 +77,16 @@
         </v-row>
       </v-item-group>
     </v-container>
-    <!-- <Footer/> -->
   </div>
 </template>
 <style scoped>
 #head {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("~@/user/assets/headerbackground.jpg");
+    url("~../assets/headerbackground.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 500px;
-  top: 0;
   padding: 0px;
 }
 .btnTrans {
@@ -121,11 +117,7 @@
 }
 </style>
 <script>
-import Footer from "@/user/components/Footer";
 export default {
-  components: {
-    Footer
-  },
   data() {
     return {
       show: false,

@@ -1,16 +1,18 @@
 <template>
-  <v-app id="body" style="'background :white'">
-      <NavBar  />
+  <v-app id="inspire">
+    <Toolbar />
     <v-content>
       <router-view />
+      <br>
     </v-content>
   </v-app>
 </template>
+
 <script>
-import NavBar from "./components/NavBar";
+import Toolbar from "./components/Toolbar";
 export default {
   components: {
-    NavBar
+    Toolbar
   }
 };
 </script>

@@ -20,7 +20,7 @@
               <v-avatar size="100">
                 <img
                   position="center"
-                   :src="require('@/assets/logo.png')"
+                   :src="require('../assets/logo.png')"
                   alt="logo"
                 />
               </v-avatar>
@@ -40,7 +40,7 @@
                 <v-text-field
                   label="Username / Email"
                   v-model="credentials.username"
-                  :rules="[v=>!!v||'required']"
+                  :rules="[$rules.required]"
                   name="login"
                   prepend-icon="mdi-account"
                   clearable
@@ -52,7 +52,7 @@
                   v-model="credentials.password"
                   label="Password"
                   name="password"
-                  :rules="[v=>!!v||'required']"
+                  :rules="[$rules.required]"
                   prepend-icon="mdi-lock"
                   :type="show ? 'text' : 'password'"
                   :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -120,7 +120,7 @@ export default {
         .then(res => {
           this.loader(false);
           this.$emit("notify", "Welcome " + this.$store.state.user.username + " !");
-          this.$router.replace("/");
+          this.$router.replace("/admin/");
         })
         .catch(err => {
           this.$store.dispatch('logout')

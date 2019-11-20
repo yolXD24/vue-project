@@ -18,6 +18,10 @@ html {
     opacity: 1!important;
 }
 
+.v-content {
+    /* padding: 0px 0px 0px 0!importan; */
+}
+
 .v-card-plain {
     opacity: 1!important;
 }

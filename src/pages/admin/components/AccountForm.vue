@@ -32,7 +32,7 @@
                     class="purple-input"
                     v-model="account.username"
                     :counter="10"
-                    :rules="[rules.required ,rules.max,rules.usernameRules]"
+                    :rules="[$rules.required ,$rules.max,$rules.usernameRules]"
                     label="Username"
                     hint="usernames are unique..."
                     prepend-icon="mdi-chart-bubble"
@@ -49,7 +49,7 @@
                     hint="emails are unique..."
                     class="purple-input"
                     v-model="account.email"
-                    :rules="[rules.required,rules.emailRules]"
+                    :rules="[$rules.required,$rules.emailRules]"
                     prepend-icon="mdi-at"
                     required
                   />
@@ -67,7 +67,7 @@
                     v-model="account.fname"
                     :counter="20"
                     :disabled="input_disable"
-                    :rules="[rules.required,rules.nameRules]"
+                    :rules="[$rules.required,$rules.nameRules]"
                     prepend-icon="mdi-rename-box"
                     required
                   />
@@ -83,7 +83,7 @@
                     placeholder="Default upon selecting position"
                     hint="numbers and symbols are not allowed!"
                     :counter="20"
-                    :rules="[rules.required,rules.nameRules]"
+                    :rules="[$rules.required,$rules.nameRules]"
                     label="Lastname"
                     prepend-icon="mdi-rename-box"
                     required
@@ -99,7 +99,7 @@
                     class="purple-input"
                     v-model="account.password"
                     placeholder="Password should be greater than 8 characters"
-                    :rules="[rules.required,rules.passwordRules , rules.min ]"
+                    :rules="[$rules.required,$rules.passwordRules , $rules.min ]"
                     prepend-icon="mdi-lock"
                     :type="visibility.show ? 'text' : 'password'"
                     :append-icon="visibility.show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -116,7 +116,7 @@
                 >
                   <v-text-field
                     v-model="c_password"
-                    :rules="[rules.required,rules.passwordRules , rules.min , rules.matchPassword]"
+                    :rules="[$rules.required,$rules.passwordRules , $rules.min , rules.matchPassword]"
                     :type="visibility.show1 ? 'text' : 'password'"
                     :append-icon="visibility.show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="visibility.show1 = !visibility.show1"
@@ -134,7 +134,7 @@
                     :items="positions"
                     :disabled="!MyDisabled"
                     prepend-icon="mdi-account-child-outline "
-                    :rules="[rules.required]"
+                    :rules="[$rules.required]"
                     label="Position"
                     required
                   ></v-select>
@@ -209,14 +209,7 @@ export default {
       timeout: 2000,
       url: "http://localhost:4000/admin/",
       rules: {
-        required: value => !!value || "Required.",
-        usernameRules: v => (v && v.length <= 10) || "Name must be less than 10 characters",
-        min: v => (v && v.length >= 8) || "Min 8 characters",
-        max: v => (v && v.length <= 20) || "Name must be less than 20 characters",
-        nameRules: v => /^[A-Z a-z]+$/.test(v) || "Name must be valid",
-        emailRules: v => /.+@.+\..+/.test(v) || "E-mail must be valid",
-        passwordRules: v => (v && v.length >= 8) || "Password must be more than 8 characters",
-        matchPassword: () => this.account.password === this.c_password || "Passwords don't match !"
+        matchPassword: (a ,b) => this.account.password === this.c_password || "Passwords don't match !"
       },
       positions: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
     };

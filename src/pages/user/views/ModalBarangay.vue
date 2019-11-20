@@ -7,7 +7,7 @@
       <v-card max-width="900" class="col-sm-7 border mx-auto">
         <br />
         <center>
-          <img height="200" width="200" :src="require('@/user/assets/final.png')" />
+          <img height="200" width="200" :src="require('../assets/final.png')" />
         </center>
         <h1 class="text-center">Barangay Clearance</h1>
         <h2 class="text-center font-italic headline">Office of the Punong Barangay</h2>

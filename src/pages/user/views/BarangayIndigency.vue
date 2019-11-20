@@ -65,18 +65,14 @@
 </template>
 <script>
 import ModalIndigency from "./ModalIndigency";
-import NavBar from "@/user/components/NavBar";
-import Footer from "@/user/components/Footer";
 // import { isNull } from "util";
 export default {
   components: {
-    NavBar,
-    Footer,
     ModalIndigency
   },
   data() {
     return {
-      image: require("@/user/assets/2.jpg"),
+      image: require("../assets/2.jpg"),
       name: {
         firstName: "",
         middleName: "",

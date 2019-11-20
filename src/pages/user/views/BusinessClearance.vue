@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-flex justify-center>
       <v-img :src="image"
       lazy-src="https://picsum.photos/id/11/10/6"
@@ -8,7 +8,6 @@
       max-width="auto"
       max-height="1000">
       <v-content>
-        <div id="app">
           <v-card max-width="900" class="col-sm-7 border mx-auto" color="white darken-3" light>
             <br />
             <br />
@@ -64,25 +63,20 @@
               />
             </v-card-actions>
           </v-card>
-        </div>
       </v-content>
       </v-img>
     </v-flex>
-  </v-app>
+  </div>
 </template>
 <script>
 import Modal from "./Modal.vue";
-import NavBar from "@/user/components/NavBar";
-import Footer from "@/user/components/Footer";
 export default {
   components: {
-    NavBar,
-    Footer,
     Modal
   },
   data() {
     return {
-      image: require("@/user/assets/3.jpg"),
+      image: require("../assets/3.jpg"),
       kindOfBusiness: "",
       name: {
         firstName: "",

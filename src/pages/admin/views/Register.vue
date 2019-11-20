@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import AccountForm from "@/admin/components/AccountForm.vue";
+import AccountForm from "@/pages/admin/components/AccountForm.vue";
 export default {
   components: {
     AccountForm

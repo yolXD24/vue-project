@@ -1,29 +1,35 @@
 <template>
-  <v-app
-    app
+
+  <div
     id="body"
     :style="'background :linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('+background+')'"
   >
-    <Sidebar v-if="$store.state.status  && $route.name != 'notFound' && !route.meta.user" />
-    <v-content dark id="content">
-      <router-view v-on:notify="app_notify" />
-      <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
-        {{ text }}
-        <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
-      </v-snackbar>
-      <br />
-      <br />
-      <Footer v-if="is_default_password && $route.name != 'login' " />
-    </v-content>
-  </v-app>
+    <router-view v-on:notify="app_notify" />
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
+      {{ text }}
+      <v-btn
+        color="blue"
+        text
+        @click="snackbar = false"
+      >Close</v-btn>
+    </v-snackbar>
+    <br />
+    <br />
+    <Footer v-if="is_default_password && $route.name != 'login' " />
+  </div>
+  <!-- </v-app> -->
 </template>
 <style lang="css">
-@import "/assets/style.css";
+@import "./assets/style.css";
 </style>
 <script>
 /* eslint-disable */
-import Sidebar from "@/admin/components/Sidebar";
-import Footer from "@/admin/components/Footer";
+import Sidebar from "./components/Sidebar";
+import Footer from "./components/Footer";
 import { verifyToken } from "@/helpers/verifyToken";
 import { isNull } from "util";
 export default {

@@ -1,11 +1,15 @@
 <template>
-    <v-tabs
-      id="tabs"
-      color="blue accent-4" right
-    >
-      <v-tab v-for="item in items" :key="item.title" :to="item.link">{{item.title}}</v-tab>
-
-    </v-tabs>
+  <v-tabs
+    id="tabs"
+    color="blue accent-4"
+    right
+  >
+    <v-tab
+      v-for="item in items"
+      :key="item.title"
+      :to="item.link"
+    >{{item.title}}</v-tab>
+  </v-tabs>
 </template>
 <style scoped>
 #tabs{
@@ -17,10 +21,10 @@ import Vue from "vue";
 export default {
   data: () => ({
     items: [
-      { title: "Barangay Clearance", icon: "mdi-home", link:'/user/get/barangay-clearance'},
-      { title: "Barangay Indigency", icon: "mdi-home", link:'/user/get/barangay-indigency'},
-      { title: "Business Clearance", icon: "mdi-home", link:'/user/get/business-clearance'},
-      { title: "Home", icon: "mdi-home", link:'/user/home'}
+      { title: "Barangay Clearance", icon: "mdi-home", link: '/user/get/barangay-clearance' },
+      { title: "Barangay Indigency", icon: "mdi-home", link: '/user/get/barangay-indigency' },
+      { title: "Business Clearance", icon: "mdi-home", link: '/user/get/business-clearance' },
+      { title: "Home", icon: "mdi-home", link: '/user/home' }
     ]
   })
 };
