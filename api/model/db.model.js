@@ -48,6 +48,8 @@ let Code = new Schema({
 }, {
     collection: "codes"
 });
+
+
 /**
  * Need object model for transaction
  *  {
@@ -76,12 +78,82 @@ let Code = new Schema({
  */
 
 let TransactionSchema = new Schema({
-    staffId: { type: String }
+    name: [],
+    request: String,
+    officer: String,
+    date: String
 }, {
     collection: "logs"
 })
 
-Staff.pre("save", function(next) {
+
+//USER MODELS
+let brgyClearanceSchema = new Schema({
+    name: {
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
+        middleName: { type: String, required: false },
+        suffix: { type: String, required: false }
+    },
+    age: Number,
+    sex: String,
+    citizenship: String,
+    civilStatus: String,
+    address: {
+        sitio: String,
+        barangay: String,
+        municipality: String,
+        province: String
+    },
+    docType: String,
+    accessCode: String
+}, {
+    collection: "barangay_clearance"
+});
+
+let brgyIndigencySchema = new Schema({
+    name: {
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
+        middleName: { type: String, required: false },
+        suffix: { type: String, required: false }
+    },
+    age: Number,
+    sex: String,
+    address: {
+        sitio: String,
+        barangay: String,
+        municipality: String,
+        province: String
+    },
+    docType: String,
+    accessCode: String
+}, {
+    collection: "barangay_indigency"
+});
+
+let businessClearanceSchema = new Schema({
+    name: {
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
+        middleName: { type: String, required: false },
+        suffix: { type: String, required: false }
+    },
+    businessType: String,
+    dateStarted: String,
+    address: {
+        sitio: String,
+        barangay: String,
+        municipality: String,
+        province: String
+    },
+    docType: String,
+    accessCode: String
+}, {
+    collection: "business_clearance"
+});
+
+Staff.pre("save", function (next) {
     if (!this.isModified("password")) {
         return next();
     }
@@ -89,8 +161,14 @@ Staff.pre("save", function(next) {
     next();
 });
 
+const brgyClearance = mongoose.model("brgyClearance", brgyClearanceSchema);
+const brgyIndigency = mongoose.model("brgyIndigency", brgyIndigencySchema);
+const businessClearance = mongoose.model("businessClearance", businessClearanceSchema);
 const Admins = mongoose.model("Admin", Admin);
 const Staffs = mongoose.model("Staff", Staff);
 const Codes = mongoose.model("Code", Code);
 const Transactions = mongoose.model("Transaction", TransactionSchema);
-module.exports = { Admins, Staffs, Codes, Transactions };
+module.exports = {
+    Admins, Staffs, Codes, Transactions,
+    brgyClearance, brgyIndigency, businessClearance
+};
