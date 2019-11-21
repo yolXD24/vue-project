@@ -1,9 +1,16 @@
 <template>
   <v-app id="inspire">
+<<<<<<< HEAD
     <Toolbar v-on:update="update" />
     <v-content>
       <router-view :doc="doc" />
       <br />
+=======
+    <Toolbar />
+    <v-content>
+      <router-view />
+      <br>
+>>>>>>> 8fae224bc82887c2ec04862bded05aaa394576fb
     </v-content>
   </v-app>
 </template>
@@ -13,6 +20,7 @@ import Toolbar from "./components/Toolbar";
 export default {
   components: {
     Toolbar
+<<<<<<< HEAD
   },
   data() {
     return {
@@ -28,6 +36,8 @@ export default {
     update(doc) {
       this.doc = doc;
     }
+=======
+>>>>>>> 8fae224bc82887c2ec04862bded05aaa394576fb
   }
 };
 </script>
