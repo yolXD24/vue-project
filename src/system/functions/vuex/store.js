@@ -89,7 +89,6 @@ export default new Vuex.Store({
                             errors = error.response.data.error
                         }
                         reject(errors)
-
                     });
             })
         },

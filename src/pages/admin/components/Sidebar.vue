@@ -64,9 +64,7 @@
   opacity: 0.8 !important;
 }
 </style>
-
 <script>
-import jwt_decode from "jwt-decode";
 export default {
   data() {
     return {
@@ -74,7 +72,7 @@ export default {
         {
           title: "Home",
           icon: "mdi-chart-bubble",
-          link: "/home"
+          link: "/admin/home"
         },
         {
           title: "Transaction History",
@@ -113,7 +111,7 @@ export default {
     logout() {
       this.$store.dispatch('logout')
       this.$emit("loggedIn", null);
-      this.$router.push({ name: "login", })
+      this.$router.push({ path: "/admin/login", })
     }
   },
   watch: {

@@ -1,4 +1,3 @@
-// decryt password ,this will be d used for safety purposes
 const crypto = require("crypto");
 exports.secret_key = () => {
     const algorithm = "aes-192-cbc";

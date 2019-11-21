@@ -77,7 +77,6 @@ export default {
                 style: "text_center"
             }
         ];
-
         return form_hub;
     }
 };

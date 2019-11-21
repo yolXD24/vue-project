@@ -1,19 +1,9 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
-  >
-    <v-row
-      v-if="!preview"
-      align="center"
-      justify="center"
-    >
+  <v-container fluid grid-list-xl>
+    <v-row v-if="!preview" align="center" justify="center">
       <v-col cols="11">
         <v-card :loading="loading">
-          <v-toolbar
-            class="elevation-1"
-            color="grey lighten-3"
-          >
+          <v-toolbar class="elevation-1" color="grey lighten-3">
             <v-toolbar-title>Claim Form</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
@@ -52,35 +42,30 @@
               ref="pdf_preview"
               :src="createdPDF"
               @page-loaded="preview = true"
-              style="width: 70%"
+              style="width: 45%; height :100%"
             ></pdf>
-            <br>
-            <br>
-            <v-btn
-              v-if="preview"
-              @click="printPDF()"
-            >
-              print
-            </v-btn>
+            <br />
+            <br />
+          </div>
+          <div class="text-center">
+            <v-btn class="ma-2"  v-if="preview">Edit</v-btn>
+            <v-btn class="ma-2"  v-if="preview" @click="printPDF()">print</v-btn>
           </div>
         </center>
-
       </v-container>
     </v-row>
   </v-container>
 </template>
-
 <script>
-import pdf from 'vue-pdf'
+import pdf from "vue-pdf";
 import jwt_decode from "jwt-decode";
-import generatePDF from "../system/functions/generatePDF";
-import printJS from 'print-js';
+import generatePDF from "@/system/functions/generatePDF";
+import printJS from "print-js";
 
 export default {
   data() {
     return {
       code: "",
-      preview: false,
       file: "",
       loading: false,
       createdPDF: ""
@@ -89,19 +74,25 @@ export default {
   components: {
     pdf
   },
+  computed: {
+    preview() {
+      return this.createdPDF !== "";
+    }
+  },
   methods: {
     checkCode() {
       this.loading = true;
-      generatePDF.generatePDF(this.code, this.$store.getters.user)
+      generatePDF
+        .generatePDF(this.code, this.$store.getters.user)
         .then(generated_pdf => {
-          this.preview = true
           this.loading = false;
           this.createdPDF = generated_pdf;
           this.code = "";
-        }).catch(err => {
-          this.preview = false;
-          this.loading = false;
         })
+        .catch(err => {
+          this.createdPDF = "";
+          this.loading = false;
+        });
     },
     printPDF() {
       var pdfFile = new Blob([this.createdPDF], {
@@ -110,17 +101,14 @@ export default {
       var pdfUrl = URL.createObjectURL(pdfFile);
       printJS({
         printable: pdfUrl,
-        type: 'pdf',
+        type: "pdf",
         showModal: true,
         modalMessage: "ExpressDocX is generating preview...",
-        onPdfOpen: () => {
-          console.log("ok")
-        },
+        onPdfOpen: () => {},
         onPrintDialogClose: () => {
-          this.preview = false
+          this.preview = false;
         }
       });
-
     }
   }
 };

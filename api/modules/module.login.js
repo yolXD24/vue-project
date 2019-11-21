@@ -5,7 +5,7 @@ let response = null
 let errorResponse = require("../helpers/setErrorResponse");
 let successResponse = require("../helpers/setSuccessResponse");
 
-module.exports = function(reqUsername, reqPassword, res) {
+module.exports = (reqUsername, reqPassword, res) =>{
     models.Admins.findOne({ username: reqUsername }, (err, admin) => {
         if (err) {
             response = errorResponse(503, err, "Service Unavailable!")
