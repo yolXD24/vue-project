@@ -34,8 +34,6 @@
     <v-row>
       <v-container class="justify-center">
         <center>
-          <!-- <div class="preview"></div> -->
-
           <div>
             <pdf
               v-if="preview"
@@ -48,8 +46,8 @@
             <br />
           </div>
           <div class="text-center">
-            <v-btn class="ma-2"  v-if="preview">Edit</v-btn>
-            <v-btn class="ma-2"  v-if="preview" @click="printPDF()">print</v-btn>
+            <EditForm v-if="preview"/>
+            <v-btn class="ma-2" v-if="preview" @click="printPDF()">print</v-btn>
           </div>
         </center>
       </v-container>
@@ -58,10 +56,9 @@
 </template>
 <script>
 import pdf from "vue-pdf";
-import jwt_decode from "jwt-decode";
 import generatePDF from "@/system/functions/generatePDF";
 import printJS from "print-js";
-
+import EditForm from "./EditForm";
 export default {
   data() {
     return {
@@ -72,7 +69,8 @@ export default {
     };
   },
   components: {
-    pdf
+    pdf,
+    EditForm
   },
   computed: {
     preview() {

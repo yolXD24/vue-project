@@ -6,7 +6,6 @@
       <p class="text-center display-1">{{doc.title}}</p>
       <p class="text-center subtitle-1 font-italic">Office of the Punong Barangay</p>
       <h4 class="text-center">{{doc.actNo}}</h4>
-      <div class="flex-grow-1"></div>
       <v-card-text>
         <br />
         <v-form ref="form">
