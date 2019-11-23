@@ -10,6 +10,7 @@ const allTransactions = (res) => {
             response = errorResponse(503, { body: err, message: "Service unavailable" }, null)
             res.status(response.status).send(response);
         } else {
+            console.log(logs)
             response = successResponse(200, { logs: logs }, "Accounts retrieve successfully ! ")
             res.status(response.status).send(response);
         }

@@ -10,7 +10,7 @@ var accounts = require("../modules/module.accounts");
 var deleteAccount = require("../modules/module.delAccount");
 var verifytoken = require("../modules/module.verifytoken")
 var transactions = require("../modules/module.transactionLogs")
-
+var checkDocument = require("../modules/module.check_doc")
 //account login
 routes.route("/login").post((req, res) => {
     login(req.body.account.username, req.body.account.password, res);
@@ -44,69 +44,34 @@ routes.route('/verifytoken').post((req, res) => {
 // admin retrieve all transactions
 routes.route("/transactions").post((req, res) => {
     transactions(req.body.token, res)
-        /*  NOTE!!
-             1.I send my id of the staff , if admin all transaction will be retrieve
-             2.if not admin retrieve transaction for that staff only
-             3.this is the transaction object
-                    {
-                      name:name of user,
-                      request:type of document request by the user,
-                      officer:officer in charge,
-                      date:date of transaction
-                    },
-            4.response should be array of transaction objects
-            thanks 
-            ^__^
-            */
+    /*  NOTE!!
+         1.I send my id of the staff , if admin all transaction will be retrieve
+         2.if not admin retrieve transaction for that staff only
+         3.this is the transaction object
+                {
+                  name:name of user,
+                  request:type of document request by the user,
+                  officer:officer in charge,
+                  date:date of transaction
+                },
+        4.response should be array of transaction objects
+        thanks 
+        ^__^
+        */
 });
 
 routes.route("/files/code/:code").get((req, res) => {
-    console.log(req.params.code);
+    checkDocument(req.params.code,res)
+})
 
 
-    /*NOTE!!
-        1. FIND THE DOCUMENT HAVING THE CODE
-    */
-    res.status(200).send({
-        firstname: "Yol",
-        lastname: "Torres"
-    });
-
-    /*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
-      IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */
-});
-// routes.route('/code').post((req, res) => {
-/*THE USE FOR THIS ONE IS TO GENERATE RANDOM CODE FOR CREATING A DOCUMENT //IT DOES NOT INCLUDE HERE IT
-IS ONLY FOR THE USER SIDE UPON SENDING HIS/HER DOCUMENT :) */
-// function makeid(length) {
-//     var result = '';
-//     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-//     var charactersLength = characters.length;
-//     for (var i = 0; i < length; i++) {
-//         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-//     }
-//     return result;
-// }
-// console.log(makeid(8));
-// let staff = new models.Codes({
-//     _id: makeid(8),
-//     type: "asdfsdssd"
+// res.status(200).send({
+//     firstname: "Yol",
+//     lastname: "Torres"
 // });
-// staff
-//     .save()
-//     .then(() => {
-//         res.status(201).json({ exist: false });
-//         console.log(staff)
-//     })
-//     .catch(err => {
-//         res.status(200).json({ exist: true });
-//     });
-//END HERE
-// models.Codes.findById("6SZ7US9C",(err,user)=>{
-//     if(!user.length){
-//         console.log("Generating new code")
-//     }
-// })
-// });
+
+
+
+
 
 module.exports = routes;
