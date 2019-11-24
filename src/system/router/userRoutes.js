@@ -17,28 +17,11 @@ var routes = [{
         }
     },
     {
-        path: "/user/get/business-clearance",
-        name: "business-clearance",
-        component: () =>
-            import ("@/pages/user/views/BusinessClearance.vue"),
-        meta: {
-            user: true
-        }
-    },
-    {
         path: "/user/get/request-form/:type",
         name: "barangay-clearance",
+        props: { editMode: false },
         component: () =>
             import ("@/pages/user/views/RequestForm.vue"),
-        meta: {
-            user: true
-        }
-    },
-    {
-        path: "/user/get/barangay-indigency",
-        name: "barangay-indigency",
-        component: () =>
-            import ("@/pages/user/views/BarangayIndigency.vue"),
         meta: {
             user: true
         }

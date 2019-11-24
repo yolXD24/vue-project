@@ -1,9 +1,19 @@
 <template>
-  <v-container fluid grid-list-xl>
-    <v-row v-if="!preview" align="center" justify="center">
+  <v-container
+    fluid
+    grid-list-xl
+  >
+    <v-row
+      v-if="!preview"
+      align="center"
+      justify="center"
+    >
       <v-col cols="11">
         <v-card :loading="loading">
-          <v-toolbar class="elevation-1" color="grey lighten-3">
+          <v-toolbar
+            class="elevation-1"
+            color="grey lighten-3"
+          >
             <v-toolbar-title>Claim Form</v-toolbar-title>
             <div class="flex-grow-1"></div>
           </v-toolbar>
@@ -24,7 +34,7 @@
               rounded
               with="500"
               dark
-              @click="checkCode"
+              @click="validate"
             >Check Document</v-btn>
           </center>
           <br />
@@ -46,8 +56,15 @@
             <br />
           </div>
           <div class="text-center">
-            <EditForm v-if="preview"/>
-            <v-btn class="ma-2" v-if="preview" @click="printPDF()">print</v-btn>
+            <EditForm
+              v-if="preview"
+              :ClientInfo="details"
+            />
+            <v-btn
+              class="ma-2"
+              v-if="preview"
+              @click="printPDF()"
+            >print</v-btn>
           </div>
         </center>
       </v-container>
@@ -62,6 +79,7 @@ import EditForm from "./EditForm";
 export default {
   data() {
     return {
+      details: null,
       code: "",
       file: "",
       loading: false,
@@ -78,16 +96,25 @@ export default {
     }
   },
   methods: {
+    validate() {
+      if (this.code.length) {
+        this.checkCode();
+      } else {
+        this.$emit("notify", "Claim code is empty!")
+      }
+    },
     checkCode() {
       this.loading = true;
       generatePDF
         .generatePDF(this.code, this.$store.getters.user)
-        .then(generated_pdf => {
+        .then(result => {
+          this.details = result.details;
           this.loading = false;
-          this.createdPDF = generated_pdf;
+          this.createdPDF = result.pdf;
           this.code = "";
         })
-        .catch(err => {
+        .catch(message => {
+          this.$emit("notify", message)
           this.createdPDF = "";
           this.loading = false;
         });
@@ -102,7 +129,7 @@ export default {
         type: "pdf",
         showModal: true,
         modalMessage: "ExpressDocX is generating preview...",
-        onPdfOpen: () => {},
+        onPdfOpen: () => { },
         onPrintDialogClose: () => {
           this.preview = false;
         }

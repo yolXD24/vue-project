@@ -4,7 +4,7 @@ module.exports = function(reqBody, res) {
         reqBody, { password: 0, admin: 0 },
         (err, account) => {
             if (!err) {
-                res_layout.data.body.success=true
+                res_layout.data.body.success = true
                 return res.send(res_layout);
             } else {
                 return res.send(res_layout);
@@ -12,9 +12,9 @@ module.exports = function(reqBody, res) {
         }
     ).catch(err => {
         if (err) {
-            res_layout.status=503
-            res_layout.error.message="Service unavailable"
-            res_layout.error.body=err
+            res_layout.status = 503
+            res_layout.error.message = "Service unavailable"
+            res_layout.error.body = err
             res.send(res_layout);
         }
     });

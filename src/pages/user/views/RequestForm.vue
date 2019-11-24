@@ -27,7 +27,7 @@
                 :rules="[$rules.required, $rules.nameRules]"
                 label="First Name"
                 dense
-                 height="20"                
+                height="20"
               ></v-text-field>
             </v-col>
             <v-col
@@ -38,7 +38,7 @@
               <v-text-field
                 v-model="name.middleName"
                 dense
-                 height="20"                
+                height="20"
                 :rules="[$rules.required, $rules.nameRules]"
                 label="Middle Name"
               ></v-text-field>
@@ -48,14 +48,14 @@
               sm="6"
               md="6"
               dense
-               height="20"                
+              height="20"
             >
               <v-text-field
                 v-model="name.lastName"
                 :rules="[$rules.required, $rules.nameRules]"
                 label="Last Name"
                 dense
-                 height="20"                
+                height="20"
               ></v-text-field>
             </v-col>
             <v-col
@@ -69,7 +69,7 @@
                 :rules="[$rules.ageRules, $rules.required]"
                 label="Age"
                 dense
-                 height="20"                
+                height="20"
               ></v-text-field>
             </v-col>
             <v-col
@@ -82,7 +82,7 @@
                 :rules="[$rules.required]"
                 label="Sex"
                 dense
-                 height="20"                
+                height="20"
                 v-model="sex"
               ></v-select>
             </v-col>
@@ -97,7 +97,7 @@
                 label="Civil Status"
                 :rules="[$rules.required]"
                 dense
-                 height="20"                
+                height="20"
               ></v-select>
             </v-col>
             <!-- business -->
@@ -112,7 +112,7 @@
                 :rules="[$rules.required]"
                 label="Business name"
                 dense
-                 height="20"                
+                height="20"
               ></v-text-field>
             </v-col>
             <v-col
@@ -127,7 +127,7 @@
                 :rules="[$rules.required]"
                 label="Date Started"
                 dense
-                 height="20"                
+                height="20"
               ></v-text-field>
             </v-col>
             <!--end business -->
@@ -141,7 +141,7 @@
                 v-model="address.sitio"
                 :rules="[$rules.nameRules]"
                 dense
-                 height="20"                
+                height="20"
                 label="Sitio"
               ></v-text-field>
             </v-col>
@@ -154,7 +154,7 @@
                 :rules="[$rules.required,$rules.nameRules]"
                 v-model="address.barangay"
                 dense
-                 height="20"                
+                height="20"
                 disabled
                 label="Barangay"
               ></v-text-field>
@@ -169,7 +169,7 @@
                 disabled
                 label="City"
                 dense
-                 height="20"                
+                height="20"
               ></v-text-field>
             </v-col>
             <v-col
@@ -182,7 +182,7 @@
                 label="Province"
                 disabled
                 dense
-                 height="20"                
+                height="20"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -195,6 +195,10 @@
 <script>
 // import ModalBarangay from "./ModalBarangay";
 export default {
+  props: {
+    toBeEdit: Object,
+    editMode: Boolean
+  },
   components: {
     // ModalBarangay
   },
@@ -235,6 +239,12 @@ export default {
       }
     }
   },
+
+  mounted(){
+    if (this.editMode) {
+      
+    }
+  }
 
 
 };

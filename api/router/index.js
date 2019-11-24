@@ -11,7 +11,7 @@ var deleteAccount = require("../modules/module.delAccount");
 var verifytoken = require("../modules/module.verifytoken")
 var transactions = require("../modules/module.transactionLogs")
 var checkDocument = require("../modules/module.check_doc")
-//account login
+    //account login
 routes.route("/login").post((req, res) => {
     login(req.body.account.username, req.body.account.password, res);
 });
@@ -44,33 +44,34 @@ routes.route('/verifytoken').post((req, res) => {
 // admin retrieve all transactions
 routes.route("/transactions").post((req, res) => {
     transactions(req.body.token, res)
-    /*  NOTE!!
-         1.I send my id of the staff , if admin all transaction will be retrieve
-         2.if not admin retrieve transaction for that staff only
-         3.this is the transaction object
-                {
-                  name:name of user,
-                  request:type of document request by the user,
-                  officer:officer in charge,
-                  date:date of transaction
-                },
-        4.response should be array of transaction objects
-        thanks 
-        ^__^
-        */
+        /*  NOTE!!
+             1.I send my id of the staff , if admin all transaction will be retrieve
+             2.if not admin retrieve transaction for that staff only
+             3.this is the transaction object
+                    {
+                      name:name of user,
+                      request:type of document request by the user,
+                      officer:officer in charge,
+                      date:date of transaction
+                    },
+            4.response should be array of transaction objects
+            thanks 
+            ^__^
+            */
 });
 
 routes.route("/files/code/:code").get((req, res) => {
-    checkDocument(req.params.code,res)
+
+    checkDocument(req.params.code, res)
 })
 
 
-// res.status(200).send({
-//     firstname: "Yol",
-//     lastname: "Torres"
-// });
+//     res.status(200).send({
+//         firstname: "Yol",
+//         lastname: "Torres"
+//     });
 
-
+// })
 
 
 

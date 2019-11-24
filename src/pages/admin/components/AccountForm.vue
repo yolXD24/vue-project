@@ -8,7 +8,7 @@
         <v-card
           title="Edit Profile"
           text="Complete your profile"
-          class="elevation-4"
+          class="elevation-4 "
         >
           <v-toolbar
             class="elevation-1"
@@ -21,6 +21,7 @@
             ref="form"
             v-model="valid"
             lazy-validation
+            class="px-10"
           >
             <v-container class="py-0">
               <v-row>

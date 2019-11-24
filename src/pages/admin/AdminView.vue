@@ -8,9 +8,18 @@
     <v-content>
       <router-view v-on:notify="app_notify" />
     </v-content>
-    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+    <v-snackbar
+      id="snackbar"
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
       {{ text }}
-      <v-btn color="blue" text @click="snackbar = false">Close</v-btn>
+      <v-btn
+        color="blue"
+        text
+        @click="snackbar = false"
+      >Close</v-btn>
     </v-snackbar>
     <br />
     <br />
@@ -20,6 +29,9 @@
 </template>
 <style lang="css">
 @import "./assets/style.css";
+#snackbar{
+margin-left:250px!important;
+}
 </style>
 <script>
 /* eslint-disable */
@@ -57,12 +69,12 @@ export default {
           if (!valid) {
             this.app_notify("Session Expired");
             this.$store.commit("logout");
-            this.$router.push("/login");
+            this.$router.push("/admin/login");
           }
         })
         .catch(err => {
           this.$store.commit("logout");
-          this.$router.push("/login");
+          this.$router.push("/admin/login");
           this.app_notify("Session Expired");
         });
     }

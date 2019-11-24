@@ -4,7 +4,7 @@ let response = null
 let errorResponse = require("../helpers/setErrorResponse");
 let successResponse = require("../helpers/setSuccessResponse");
 
-module.exports = function(reqId, reqPass, res) {
+module.exports = (reqId, reqPass, res) => {
     models.Staffs.findById(reqId, (err, account) => {
         if (account !== null) {
             bcrypt.compare(reqPass, account.password)
@@ -13,10 +13,12 @@ module.exports = function(reqId, reqPass, res) {
                         response = successResponse(200, {
                             confirm: true
                         }, "Password Confirmed!")
+                        res.status(response.status).send(response)
                     } else {
                         response = errorResponse(404, null, "Password is incorrect!")
+                        res.status(response.status).send(response)
                     }
-                    res.status(response.status).send(response)
+
                 }).catch(err => {
                     response = errorResponse(503, err, "Cannot find requested credentials!")
                     res.status(response.status).send(response)

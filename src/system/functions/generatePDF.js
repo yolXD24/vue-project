@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import GenerateForm from "./generatePDF.js";
+import GenerateForm from "./generateForm";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import axios from "axios";
 export default {
@@ -13,7 +13,6 @@ export default {
         return new Promise((resolve, reject) => {
             axios.get("http://localhost:4000/admin/files/code/" + code)
                 .then(res => {
-                    this.loading = false;
                     var today = new Date();
                     const monthNames = [
                         "January",
@@ -31,8 +30,8 @@ export default {
                     ];
 
                     var details = {
-                        business: "Internet Shop",
-                        location: "Nasipit , Talamban",
+                        business: res.data.body.info.business,
+                        location: res.data.body.info.location,
                         date: {
                             year: today.getFullYear(),
                             month: monthNames[today.getMonth()],
@@ -45,9 +44,9 @@ export default {
                         }
                     };
                     var fullname =
-                        this.toCapital(res.data.firstname) +
+                        this.toCapital(res.data.body.info.firstname) +
                         " " +
-                        this.toCapital(res.data.lastname);
+                        this.toCapital(res.data.body.info.lastname);
                     var incharge =
                         this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
                     pdfMake.createPdf(
@@ -56,10 +55,10 @@ export default {
                         this.createdPDF = buffer;
                     })
                     GenerateForm.clear();
-                    resolve(this.createdPDF)
+                    resolve({ details: res.data.body.info, pdf: this.createdPDF })
                 })
                 .catch((err) => {
-                    reject(err)
+                    reject(err.response.data.error.message)
                 });
         })
 
