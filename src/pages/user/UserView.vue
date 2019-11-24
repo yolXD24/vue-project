@@ -1,8 +1,8 @@
 <template>
   <v-app id="inspire">
-    <Toolbar v-on:update="update" />
+    <Toolbar/>
     <v-content>
-      <router-view :doc="doc" />
+      <router-view />
       <br />
     </v-content>
   </v-app>
@@ -12,21 +12,6 @@ import Toolbar from "./components/Toolbar";
 export default {
   components: {
     Toolbar
-  },
-  data() {
-    return {
-      doc: {
-        title: "Barangay Clearance",
-        businessMode: false,
-        actNo: "Local Government Code of 1991",
-        type: "barangay-clearance"
-      }
-    };
-  },
-  methods: {
-    update(doc) {
-      this.doc = doc;
-    }
   }
 };
 </script>

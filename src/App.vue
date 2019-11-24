@@ -11,11 +11,11 @@
   </v-app>-->
 </template>
 <script>
-import Sidebar from "./pages/admin/components/Sidebar";
+// import Sidebar from "./pages/admin/components/Sidebar";
 
 export default {
-  components: {
-    Sidebar
-  }
+  // components: {
+  //   Sidebar
+  // }
 };
 </script>

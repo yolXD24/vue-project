@@ -26,7 +26,7 @@ var routes = [{
         }
     },
     {
-        path: "/user/get/request-form",
+        path: "/user/get/request-form/:type",
         name: "barangay-clearance",
         component: () =>
             import ("@/pages/user/views/RequestForm.vue"),

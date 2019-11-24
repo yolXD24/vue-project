@@ -49,7 +49,7 @@ export default {
             style: ["text_center"]
         }, {
             columns: [
-                { text: incharge, style: "text_justify" },
+                { text: "Yol Torres", style: "text_justify" },
                 { text: "Kapitan name", style: "text_right" }
             ],
             style: "text_center"

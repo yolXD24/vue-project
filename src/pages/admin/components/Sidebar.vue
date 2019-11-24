@@ -113,11 +113,6 @@ export default {
       this.$emit("loggedIn", null);
       this.$router.push({ path: "/admin/login", })
     }
-  },
-  watch: {
-    group() {
-      this.drawer = false;
-    }
   }
 };
 </script>

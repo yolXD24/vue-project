@@ -131,7 +131,7 @@ export default {
             "Recent Community Tax Certificate or Cedula."
           ],
           icon: "mdi-home",
-          link: "/barangay-clearance"
+          link: "/user/get/request-form/barangay-clearance"
         },
         {
           title: "Barangay Indigency",
@@ -141,7 +141,7 @@ export default {
             "Recent Community Tax Certificate or Cedula"
           ],
           icon: "mdi-home",
-          link: "/barangay-indigency"
+          link: "/user/get/request-form/barangay-indigency"
         },
         {
           title: "Business Clearance",
@@ -151,7 +151,7 @@ export default {
             "Barangay Business Permit Fee"
           ],
           icon: "mdi-home",
-          link: "/business-clearance"
+          link: "/user/get/request-form/business-clearance"
         }
       ],
       drawer: false,
