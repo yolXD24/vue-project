@@ -18,6 +18,7 @@
             >
               <template v-slot:item.action="{ item }">
                 <v-btn
+                  :disabled="item.admin"
                   @click="deleteItem(item)"
                   text
                   small
@@ -25,8 +26,9 @@
                   <v-icon small>
                     mdi-delete
                   </v-icon>
-                  Delete
+                  Delete<span v-if="item.admin">(ADMIN)</span>
                 </v-btn>
+
               </template>
             </v-data-table>
           </template>

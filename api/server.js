@@ -23,6 +23,6 @@ app.use(bodyParser.json());
 
 app.use("/admin", routes);
 app.use("/user", userRoutes);
-app.listen(PORT, function() {
+app.listen(PORT, () => {
     console.log("Server is running on Port:", PORT);
 });

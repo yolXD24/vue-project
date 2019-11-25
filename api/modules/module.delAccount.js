@@ -1,22 +1,23 @@
 let models = require("../model/db.model");
-module.exports = function(reqBody, res) {
+let response = null
+let errorResponse = require("../helpers/setErrorResponse");
+let successResponse = require("../helpers/setSuccessResponse");
+
+module.exports = (reqBody, res) => {
     models.Staffs.findOneAndRemove(
         reqBody, { password: 0, admin: 0 },
         (err, account) => {
             if (!err) {
-                res_layout.data.body.success = true
-                return res.send(res_layout);
+                response = successResponse(200, { success: true }, "Deleted Successfully!")
+                return res.status(response.status).send(response);
             } else {
-                return res.send(res_layout);
+                response = errorResponse(503, err, null)
+                return res.status(response.status).send(response);
             }
         }
     ).catch(err => {
-        if (err) {
-            res_layout.status = 503
-            res_layout.error.message = "Service unavailable"
-            res_layout.error.body = err
-            res.send(res_layout);
-        }
+        response = errorResponse(503, err, null)
+        return res.status(response.status).send(response);
     });
 
 }

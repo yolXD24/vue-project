@@ -286,7 +286,7 @@ export default {
       setTimeout(() => { this.$emit("updated_response") }, 1200);
     },
     checkUpdate() {
-      if (this.MyUpdate) {
+      if (this.MyUpdate) {        
         this.account = this.Info;
         this.account.fname = this.Info.firstname;
         this.account.lname = this.Info.lastname
