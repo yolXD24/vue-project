@@ -10,7 +10,7 @@ module.exports = function(reqUsername, reqEmail, reqBody, res) {
     models.Staffs.find({ $or: [{ username: reqUsername }, { email: reqEmail }] },
         (err, account) => {
             if (err) {
-                response = errorResponse(503, err, "Service Unavailable!")
+                response = errorResponse(400, err, "Bad Request!")
                 res.status(response.status).send(response);
             } else if (account.length) {
                 response = errorResponse(406, { exist: true }, " Account already exist!")

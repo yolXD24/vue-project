@@ -78,8 +78,8 @@ let Code = new Schema({
  */
 
 let TransactionSchema = new Schema({
-    name: [],
-    request: String,
+    name: String,
+    docType: String,
     officer: String,
     date: String
 }, {
