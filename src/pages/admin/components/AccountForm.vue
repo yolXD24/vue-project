@@ -1,10 +1,9 @@
 <template>
   <v-container
     fluid
-    grid-list-xl
   >
-    <v-row justify="center">
-      <v-col cols="11">
+    <v-row justify="center" style="background:transparent;box-shadow:none!important" class="elevation-0">
+      <v-col cols="10" style="background:transparent;box-shadow:none!important">
         <v-card
           title="Edit Profile"
           text="Complete your profile"

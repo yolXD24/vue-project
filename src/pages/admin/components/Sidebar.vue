@@ -87,11 +87,6 @@ export default {
       ],
       admin_items: [
         {
-          title: "Add Staff",
-          icon: "mdi-account-plus",
-          link: "/admin/register"
-        },
-        {
           title: "Manage Accounts",
           icon: "mdi-account-key",
           link: "/admin/AccountManagement"

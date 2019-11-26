@@ -5,7 +5,7 @@ const PORT = 4000;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const config = require("./config/DB");
-const routes = require("./router");
+const adminRoutes = require("./router/admin.router");
 const userRoutes = require("./router/user.router");
 mongoose.Promise = global.Promise;
 console.log("connecting....");
@@ -21,8 +21,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: '110mb' }));
 app.use(bodyParser.json());
 
-app.use("/admin", routes);
+app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
+
 app.listen(PORT, () => {
-    console.log("Server is running on Port:", PORT);
+    console.log(`Server is running on Port:${PORT}`);
 });

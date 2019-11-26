@@ -31,14 +31,6 @@ var routes = [{
         }
     },
     {
-        path: "/admin/register",
-        component: () =>
-            import ("@/pages/admin/views/Register.vue"),
-        meta: {
-            tokenRequired: true
-        }
-    },
-    {
         path: "/admin/AccountManagement",
         component: () =>
             import ("@/pages/admin/views/AccountManagement.vue"),

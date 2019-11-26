@@ -1,44 +1,39 @@
 <template>
-  <v-container
-    fluid
-    grid-list-xl
-  >
+  <v-container fluid grid-list-xl>
     <v-row justify="center">
-      <v-col cols="11">
+      <v-col cols="10">
         <v-card class="elevation-4 v-card">
-          <v-card-text class="display-1 text-center font-weight-light">
-            Accounts Management
-          </v-card-text>
+          <v-data-table :headers="headers" :items="accounts" class="elevation-1 v-table">
+            <template v-slot:top>
+              <v-toolbar flat color="white">
+                <v-toolbar-title>Staff Account Management</v-toolbar-title>
+                <v-divider class="mx-4" inset vertical></v-divider>
+                <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
+                <Register />
+              </v-toolbar>
+              <hr>
+            </template>
+            <template v-slot:item.action="{ item }">
+              <v-btn :disabled="item.admin" @click="deleteItem(item)" text small>
+                <v-icon small>mdi-delete</v-icon>Delete
+                <span v-if="item.admin">(ADMIN)</span>
+              </v-btn>
+            </template>
+          </v-data-table>
           <hr />
-          <template>
-            <v-data-table
-              :headers="headers"
-              :items="accounts"
-              class="elevation-1 v-table"
-            >
-              <template v-slot:item.action="{ item }">
-                <v-btn
-                  :disabled="item.admin"
-                  @click="deleteItem(item)"
-                  text
-                  small
-                >
-                  <v-icon small>
-                    mdi-delete
-                  </v-icon>
-                  Delete<span v-if="item.admin">(ADMIN)</span>
-                </v-btn>
-
-              </template>
-            </v-data-table>
-          </template>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
+import Register from "./Register";
 export default {
+  components: {
+    Register
+  },
   data() {
     return {
       headers: [
@@ -77,24 +72,30 @@ export default {
 
   methods: {
     initialize() {
-      this.$store.dispatch('loadAccountTable').then(accounts => {
-        this.accounts = accounts
-      }).catch(err => {
-        this.$emit("notify", "Something went wrong!!");
-      });
+      this.$store
+        .dispatch("loadAccountTable")
+        .then(accounts => {
+          this.accounts = accounts;
+        })
+        .catch(err => {
+          this.$emit("notify", "Something went wrong!!");
+        });
     },
     deleteItem(account) {
       const index = this.accounts.indexOf(account);
       this.accounts.splice(index, 1);
-      this.$store.dispatch('deleteAccount', account).then(res => {
-        if (res) {
-          this.$emit("notify", "Deleted Successfully!");
-        } else {
-          this.$emit("notify", "Deleted Failed!");
-        }
-      }).catch(err => {
-        this.$emit("notify", "Something went wrong!!");
-      })
+      this.$store
+        .dispatch("deleteAccount", account)
+        .then(res => {
+          if (res) {
+            this.$emit("notify", "Deleted Successfully!");
+          } else {
+            this.$emit("notify", "Deleted Failed!");
+          }
+        })
+        .catch(err => {
+          this.$emit("notify", "Something went wrong!!");
+        });
     }
   }
 };

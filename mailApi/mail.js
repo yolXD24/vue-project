@@ -10,7 +10,7 @@ const sendMail = (to, content) => {
         to: to,
         from: 'XpressDocX@protonmail.com',
         subject: 'XpressDocX Claim Code!',
-        text: 'test',
+        text: '',
         html: content
     };
     if (sgMail.send(msg)) {
@@ -19,7 +19,3 @@ const sendMail = (to, content) => {
         console.log('error')
     };
 };
-sendMail('leonilojr.torres@student.passerellesnumeriques.org', template);
-// sendMail('renan.bargaso@student.passerellesnumeriques.org', template);
-// sendMail('chervin.tanilon@student.passerellesnumeriques.org', template);
-// sendMail('lalaine.garrido@student.passerellesnumeriques.org', template);
