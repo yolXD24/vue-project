@@ -31,7 +31,6 @@ const privateTransactions = (user, res) => {
 module.exports = (token, res) => {
     try {
         var user = jwt.verify(token, 'docxpress').user
-        console.log(user);;
         if (user.admin) {
             allTransactions(res)
         } else {

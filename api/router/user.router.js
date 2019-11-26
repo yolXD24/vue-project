@@ -3,9 +3,8 @@ const routes = express.Router();
 
 var doctype = require('../modules/module.doctype');
 
-routes.route('/:doctype').post((req,res)=>{
-    console.log(req)
-    doctype(req.params.doctype,req.body,res);
+routes.route('/:doctype').post((req, res) => {
+    doctype(req.params.doctype, req.body, res);
 });
 
 module.exports = routes

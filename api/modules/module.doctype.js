@@ -25,7 +25,7 @@ const store = (docType, document, res) => {
                 });
             break;
         case 'barangay-indigency':
-            document["accessCode"] = "BAI_"+code();
+            document["accessCode"] = "BAI_" + code();
             let brgyIndigency = new models.brgyIndigency(document);
             brgyIndigency
                 .save()
@@ -43,7 +43,7 @@ const store = (docType, document, res) => {
                 });
             break;
         case 'business-clearance':
-            document["accessCode"] = "BUC_"+code();
+            document["accessCode"] = "BUC_" + code();
             let clearance = new models.businessClearance(document);
             clearance
                 .save()
@@ -63,7 +63,7 @@ const store = (docType, document, res) => {
     }
 };
 
-code = () => {
+let code = () => {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     var charactersLength = characters.length;
