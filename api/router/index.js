@@ -60,7 +60,7 @@ routes.route('/saveTransaction').post((req, res) => {
 routes.route("/transactions").post((req, res) => {
     console.log(req.body)
 
-    // transactions(req.body.token, res)
+    transactions(req.body.token, res)
     /*  NOTE!!
          1.I send my id of the staff , if admin all transaction will be retrieve
          2.if not admin retrieve transaction for that staff only
