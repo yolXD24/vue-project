@@ -1,7 +1,7 @@
 const express = require("express");
 const routes = express.Router();
 
-//MODELS
+//MODULES
 var login = require("../modules/module.login");
 var register = require("../modules/module.register");
 var confirm_password = require("../modules/module.confirm_pass");

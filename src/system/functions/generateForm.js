@@ -1,13 +1,12 @@
 import INDIGENCY from "../forms/indigency.js";
 import CLEARANCE from "../forms/clearance.js";
 import PERMIT from "../forms/businessClearance.js";
+
 export default {
     responseForm: {},
     form_hub: {
-        // userPassword: "1234",
-        // ownerPassword: "1234", //+jwt_decode(localStorage.getItem('token')).id.username,
         permissions: {
-            printing: "highResolution", //'lowResolution'
+            printing: "highResolution",
             modifying: true,
             copying: true,
             annotating: true,
@@ -17,7 +16,7 @@ export default {
         },
         pageSize: "LETTER",
         pageMargins: [70, 70],
-        // background: this.background,
+        background: require("../forms/paper.png"),
         content: [],
         styles: {
             text_center: {

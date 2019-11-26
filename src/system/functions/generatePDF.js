@@ -2,6 +2,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import GenerateForm from "./generateForm";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { months } from '@/helpers/months';
 import axios from "axios";
 export default {
     name: "generatePDF",
@@ -13,49 +14,32 @@ export default {
         return new Promise((resolve, reject) => {
             axios.get("http://localhost:4000/admin/files/code/" + code)
                 .then(res => {
+                    var info = res.data.body.info;
                     var today = new Date();
-                    const monthNames = [
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "August",
-                        "September",
-                        "October",
-                        "November",
-                        "December"
-                    ];
-
                     var details = {
-                        business: res.data.body.info.business,
-                        location: res.data.body.info.location,
+                        business: info.business,
+                        location: info.location,
                         date: {
                             year: today.getFullYear(),
-                            month: monthNames[today.getMonth()],
+                            month: months()[today.getMonth()],
                             day: today.getDate()
                         },
                         exp_date: {
                             year: today.getFullYear(),
-                            month: monthNames[today.getMonth() + 3],
+                            month: months()[today.getMonth() + 3],
                             day: today.getDate() - 1
                         }
                     };
-                    var fullname =
-                        this.toCapital(res.data.body.info.firstname) +
-                        " " +
-                        this.toCapital(res.data.body.info.lastname);
-                    var incharge =
-                        this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
+                    var fullname = `${info.firstname} ${info.lastname}`
+                    var incharge = `${emp.firstname} ${emp.lastname}`
+                        // this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
                     pdfMake.createPdf(
                         GenerateForm.createForm(code, fullname, incharge, details)
                     ).getBuffer((buffer) => {
                         this.createdPDF = buffer;
                     })
                     GenerateForm.clear();
-                    resolve({ details: res.data.body.info, pdf: this.createdPDF })
+                    resolve({ details: info, pdf: this.createdPDF })
                 })
                 .catch((err) => {
                     reject(err.response.data.error.message)

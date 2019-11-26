@@ -2,14 +2,14 @@
   <v-app
     app
     id="body"
-    :style="'background :linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('+background+')'"
+    :style="`background :linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${background})`"
   >
     <Sidebar v-if="$store.state.status  && $route.name != 'notFound' && !$route.meta.user" />
     <v-content>
       <router-view v-on:notify="app_notify" />
     </v-content>
     <v-snackbar
-      id="snackbar"
+      :class="[$route.name === 'login'? '' : 'withSidebar']"
       v-model="snackbar"
       :timeout="timeout"
       absolute
@@ -29,7 +29,7 @@
 </template>
 <style lang="css">
 @import "./assets/style.css";
-#snackbar{
+.withSidebar{
 margin-left:250px!important;
 }
 </style>
