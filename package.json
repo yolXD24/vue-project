@@ -1,7 +1,10 @@
 {
-    "name": "my-new-project",
+    "name": "Xpress_DocX",
     "version": "0.1.0",
     "private": true,
+    "author": {
+        "name": [" Yol Torres ", "Renan Bargaso ", " Chervin Tanilon ", "Lalaine Garrido"]
+    },
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
