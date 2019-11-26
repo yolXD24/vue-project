@@ -41,6 +41,10 @@ routes.route('/verifytoken').post((req, res) => {
 
 })
 
+routes.route('/saveTransaction').post((req,res)=>{
+    console.log(req.body)
+})
+
 // admin retrieve all transactions
 routes.route("/transactions").post((req, res) => {
     transactions(req.body.token, res)
@@ -58,20 +62,53 @@ routes.route("/transactions").post((req, res) => {
             thanks 
             ^__^
             */
+        
 });
 
 routes.route("/files/code/:code").get((req, res) => {
-
     checkDocument(req.params.code, res)
+
+    //SAMPLE DATA FOR BUSINESS CLEARANCE 
+    
+    // "name": {
+    //     "firstName": "chervin",
+    //     "lastName": "taniloning",
+    //     "middleName": "pepito",
+    //     "suffix": "jr"
+    //   },
+    //   "businessType": "sari-sari",
+    //   "dateStarted": "June 1, 2019",
+    //   "address": {
+    //     "sitio": "San Jose",
+    //     "barangay": "Guizo",
+    //     "municipality": "Mandaue",
+    //     "province": "Cebu"
+    //   },
+    //   "docType": "Business Clearance",
+    //   "accessCode": "BUC_ABCD12"
+
+    // SAMPLE DATA FOR BRGY CLEARANCE
+
+    // "name": {
+    //     "firstName": "Cherivn",
+    //     "lastName": "Tanilon",
+    //     "middleName": "Pepito",
+    //     "suffix": "dfg"
+    //   },
+    //   "age": 21,
+    //   "sex": "Male",
+    //   "citizenship": "Filipino",
+    //   "civilStatus": "Single",
+    //   "address": {
+    //     "sitio": "San Jose",
+    //     "barangay": "Guizo",
+    //     "municipality": "Mandaue",
+    //     "province": "Cebu"
+    //   },
+    //   "docType": "barangay-clearance",
+    //   "accessCode": "BAC_ABCD34",
 })
 
-
-//     res.status(200).send({
-//         firstname: "Yol",
-//         lastname: "Torres"
-//     });
-
-// })
 
 
 
