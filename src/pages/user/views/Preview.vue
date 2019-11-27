@@ -9,7 +9,7 @@
 <script>
 import generatePDF from "@/system/functions/generatePDF";
 import pdf from "vue-pdf";
-
+import {userPreview} from "@/system/functions/userPreview"
 export default {  
   components: {
     pdf
