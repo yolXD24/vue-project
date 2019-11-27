@@ -14,10 +14,21 @@ export default {
   components: {
     pdf
   },
+  props :{
+ info:Object,
+ type:String
+ },
   data(){
     return{
       createdPDF = null
     }
+  },
+  mounted(){
+  userPreview(type,this.info).then(res=>{
+  this.createdPDF = res.pdfPreview;
+  }).catch(err=>{
+  console.log(err)
+  })
   }
 }
 </script>
