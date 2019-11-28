@@ -1,24 +1,28 @@
 <template>
-  <div>
-    <v-dialog width="900">
-      <template v-slot:activator="{ on }">
-        <v-btn v-on="on" color="white" fab large>Preview</v-btn>
-      </template>
-      <v-card max-width="900" class="px-10">
-        <Preview :type="type" :info="info"/>
-      </v-card>
-    </v-dialog>
-  </div>
+  <v-dialog fullscreen>
+    <template v-slot:activator="{ on }">
+      <v-btn v-on="on" color="white" @click="$emit('preview',true)" fab large>Preview</v-btn>
+    </template>
+    <v-card>
+      <center>
+        <Preview :type="type" :info="info" />
+      </center>
+    </v-card>
+  </v-dialog>
 </template>
 <script>
+import Preview from "./Preview";
 export default {
-  props: {
-  type:String,
-  info:Object
-    }
+  name: "Modal",
+  components: {
+    Preview
   },
-  methods: {
-   /* submit(e) {
+  props: {
+    type: String,
+    info: Object
+  }
+  //methods: {
+  /* submit(e) {
        if (
         this.kindOfBusiness &&
         this.name.firstName &&
@@ -60,6 +64,6 @@ export default {
       //   });
       alert("error!")
     }}*/
-  }
+  //}
 };
 </script>

@@ -6,12 +6,14 @@ import { months } from '@/helpers/months';
 
 
 var createdPDF = ""
-let generatePDF = (userInfo, empInfo) => {
+let userPreview = (type,userInfo, empInfo) => {
+    console.log(userInfo);
+    
     return new Promise((resolve) => {
         var today = new Date();
         var details = {
             business: userInfo.business ? userInfo.business : '',
-            location: userInfo.location ? userInfo.location : '',
+            location: userInfo.address ? userInfo.address : '',
             date: {
                 year: today.getFullYear(),
                 month: months()[today.getMonth()],
@@ -24,10 +26,10 @@ let generatePDF = (userInfo, empInfo) => {
             }
         };
         var fullname = `${userInfo.firstname} ${userInfo.lastname}`
-        var incharge = `${empInfo.firstname ? empInfo.firstname : 'John'} ${empInfo.lastname ? empInfo.lastname : 'Doe'}`
+        var incharge = `${empInfo ? empInfo.firstname : 'John'} ${empInfo ? empInfo.lastname : 'Doe'}`
         pdfMake.createPdf(
             GenerateForm.createForm(type, fullname, incharge, details)
-        ).getBuffer((buffer) => {
+        ).getBlob((buffer) => {
             createdPDF = buffer;
         })
         GenerateForm.clear();
@@ -35,4 +37,4 @@ let generatePDF = (userInfo, empInfo) => {
     })
 }
 
-export { generatePDF }
+export { userPreview }

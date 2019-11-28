@@ -16,7 +16,7 @@ export default {
         },
         pageSize: "LETTER",
         pageMargins: [70, 70],
-        background: require("../forms/paper.png"),
+        background: require("./paper.png"),
         content: [],
         styles: {
             text_center: {

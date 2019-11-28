@@ -35,7 +35,8 @@ export default {
                         // this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
                     pdfMake.createPdf(
                         GenerateForm.createForm(code, fullname, incharge, details)
-                    ).getBuffer((buffer) => {
+                    )
+                    .getBase64((buffer) => {
                         this.createdPDF = buffer;
                     })
                     GenerateForm.clear();

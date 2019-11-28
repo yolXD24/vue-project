@@ -1,34 +1,40 @@
 <template>
-  <pdf
-    v-if="preview"
-    :src="createdPDF"
-    @page-loaded="preview = true"
-    style="width: 45%; height :100%"
-  ></pdf>
+  <pdf :src="createdPDF" style="width: 100%; height :100%"></pdf>
 </template>
 <script>
 import generatePDF from "@/system/functions/generatePDF";
 import pdf from "vue-pdf";
-import {userPreview} from "@/system/functions/userPreview"
-export default {  
+import { userPreview } from "@/system/functions/userPreview";
+export default {
+  name: "Preview",
   components: {
     pdf
   },
-  props :{
- info:Object,
- type:String
- },
-  data(){
-    return{
-      createdPDF = null
-    }
+  props: {
+    info: Object,
+    type: String
   },
-  mounted(){
-  userPreview(type,this.info).then(res=>{
-  this.createdPDF = res.pdfPreview;
-  }).catch(err=>{
-  console.log(err)
-  })
+  data() {
+    return {
+      createdPDF: null
+    };
+  },
+  created() {
+     var info = {
+      firstname: this.info.name.firstName,
+      lastname: this.info.name.lastName,
+      business: this.info.business,
+      address: this.info.address
+    };
+    userPreview(this.type, info, null)
+      .then(res => {
+        this.createdPDF = res.pdfPreview;
+      })
+      .catch(err => {
+        console.log(err);
+        
+      });
   }
-}
+   
+};
 </script>
