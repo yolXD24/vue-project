@@ -1,6 +1,9 @@
 <template>
   <v-footer
     absolute
+    app
+    
+    width='50%'
     inset
     dense
     color="transparent"
@@ -23,7 +26,7 @@
           >
             <v-btn
               small
-              to="admin/settings"
+              to="/admin/settings"
               light
             >Go to settings</v-btn>
           </v-col>
