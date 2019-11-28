@@ -14,7 +14,7 @@ export default {
         return new Promise((resolve, reject) => {
             axios.get("http://localhost:4000/admin/files/code/" + code)
                 .then(res => {
-                    var info = res.data.body.info;
+                    var info = res.data.data.body.info;
                     var today = new Date();
                     var details = {
                         business: info.business,

@@ -23,7 +23,9 @@
     </v-snackbar>
     <br />
     <br />
-    <Footer v-if="is_default_password && $route.name != 'login' " />
+    <center>
+    <Footer v-if="is_default_password && $route.name != 'login' " class="withSidebar" />
+    </center>
   </v-app>
   <!-- </v-app> -->
 </template>
