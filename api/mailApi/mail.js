@@ -4,7 +4,7 @@ let successResponse = require("../helpers/setSuccessResponse");
 var template = fs.readFileSync('../api/mailApi/template.html');
 template = template.toString();
 
-    //IMPORTANT NOTE:
+    //IMPORTANT NOTE!!!
     // ALWAYS REMOVE THE API KEY BEFORE PUSHING TO THE REPOSITORY
 module.exports = (data, res) => {
     //data to pass
@@ -39,5 +39,5 @@ module.exports = (data, res) => {
     // sendMail('lalaine.garrido@student.passerellesnumeriques.org', template);
 }
 
-    //IMPORTANT NOTE:
+    //IMPORTANT NOTE!!!
     // ALWAYS REMOVE THE API KEY BEFORE PUSHING TO THE REPOSITORY
