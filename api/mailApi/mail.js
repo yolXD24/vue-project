@@ -12,7 +12,7 @@ module.exports = (data, res) => {
     //     email: email,
     //     code: accessCode
     // }
-    let apiKey = "";
+    let apiKey = "";    //ASK API KEY FROM BARGASO
     template = template.replace("_CLAIMCODE_", data.code)
 
     const sendMail = (to, content) => {
