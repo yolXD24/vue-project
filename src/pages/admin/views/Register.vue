@@ -16,7 +16,7 @@
             <v-btn dark text @click="dialog = false">Cancel</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <br><br>
+        <br>
         <AccountForm
           MyTitle="Add Staff"
           MyButton="Add Staff"
@@ -43,8 +43,11 @@ export default {
   },
   methods: {
     app_notify(msg) {
-      this.$emit("notify", msg);
+      this.dialog = false;
+      this.$emit("register_notif", msg);
+    
     }
+    
   }
 };
 </script>

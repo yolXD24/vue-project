@@ -1,9 +1,9 @@
 <template>
   <v-row justify="center">
     <v-dialog
+    full-width
       v-model="dialog"
       fullscreen
-      hide-overlay
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on }">
@@ -13,17 +13,11 @@
         >Edit</v-btn>
       </template>
       <v-card>
-        <v-toolbar
+        <!-- <v-toolbar
           dark
           color="primary"
         >
-          <v-btn
-            icon
-            dark
-            @click="dialog = false"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
+        
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn
@@ -32,7 +26,20 @@
               @click="dialog = false"
             >Save</v-btn>
           </v-toolbar-items>
-        </v-toolbar>
+        </v-toolbar> -->
+        <v-card-actions>
+          
+        <v-spacer>
+        </v-spacer>
+          <v-btn
+            icon
+            dark
+            color="primary"
+            @click="dialog = false"
+          >Close
+          </v-btn>
+        </v-card-actions>
+
         <RequestForm
           ref="editForm"
           :editMode="true"

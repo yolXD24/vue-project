@@ -1,9 +1,14 @@
 <template>
-  <v-container
-    fluid
-  >
-    <v-row justify="center" style="background:transparent;box-shadow:none!important" class="elevation-0">
-      <v-col cols="10" style="background:transparent;box-shadow:none!important">
+  <v-container fluid>
+    <v-row
+      justify="center"
+      style="background:transparent;box-shadow:none!important"
+      class="elevation-0"
+    >
+      <v-col
+        cols="10"
+        style="background:transparent;box-shadow:none!important"
+      >
         <v-card
           title="Edit Profile"
           text="Complete your profile"
@@ -209,7 +214,7 @@ export default {
       timeout: 2000,
       url: "http://localhost:4000/admin/",
       rules: {
-        matchPassword: (a ,b) => this.account.password === this.c_password || "Passwords don't match !"
+        matchPassword: (a, b) => this.account.password === this.c_password || "Passwords don't match !"
       },
       positions: ["Secretary", "Teasurer", "Brgy. Captain", "Office on Duty"]
     };
@@ -240,6 +245,8 @@ export default {
             register(this.account, this.url + "register").then(res => {
               this.registerHandler(res)
             }).catch(err => {
+              this.resetForm();
+
               this.$emit(
                 "accountFormResponse",
                 err.message
@@ -250,6 +257,8 @@ export default {
             update(this.account, this.url + "update").then(res => {
               this.updateHandler(res)
             }).catch(error => {
+              this.resetForm();
+
               this.$emit("accountFormResponse", error.message);
             });
           }
@@ -259,18 +268,25 @@ export default {
         }
       }
     },
-
     registerHandler(res) {
       if (!res.body.exist) {
         this.$emit("accountFormResponse", res.message);
-        setTimeout(() => {
-          this.$router.push("/admin/AccountManagement");
-        }, 1000);
+        this.$emit(
+          "accountFormResponse",
+          res
+        );
+
+        this.resetForm();
+        // setTimeout(() => {
+        //   location.reload(true);
+        // }, 1000);
       } else {
         this.$emit(
           "accountFormResponse",
           "Username / Email is already taken!"
         );
+
+        this.resetForm();
       }
     },
     updateHandler(res) {
@@ -282,10 +298,24 @@ export default {
         "accountFormResponse",
         res.message
       );
-      setTimeout(() => { this.$emit("updated_response") }, 1200);
+      setTimeout(() => { this.$emit("updated_response") }, 1000);
+      this.resetForm();
+    },
+    resetForm() {
+      this.account = {
+        username: "",
+        fname: "",
+        lname: "",
+        email: "",
+        admin: false,
+        password: this.Default_Password,
+        position: this.Info ? this.Info.position : null,
+      }
+      c_password= ""
+
     },
     checkUpdate() {
-      if (this.MyUpdate) {        
+      if (this.MyUpdate) {
         this.account = this.Info;
         this.account.fname = this.Info.firstname;
         this.account.lname = this.Info.lastname

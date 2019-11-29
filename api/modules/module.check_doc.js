@@ -8,11 +8,11 @@ let cb = (err, docs, res) => {
         response = errorResponse(503, err, "Service unavailable")
         return res.status(503).send(response);
     } else {
-        if (docs.length == 0) {
+        if (!docs) {
             response = errorResponse(404, null, "Document not found!")
             return res.status(404).send(response)
         }
-        response = successResponse(200, {info: docs}, "Document retrieved successfully!")
+        response = successResponse(200, { info: docs }, "Document retrieved successfully!")
         return res.send(response)
     }
 }

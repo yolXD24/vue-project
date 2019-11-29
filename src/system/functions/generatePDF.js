@@ -34,16 +34,22 @@ export default {
                     var incharge = `${emp.firstname} ${emp.lastname}`
                         // this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
                     pdfMake.createPdf(
-                        GenerateForm.createForm(code, fullname, incharge, details)
-                    )
-                    .getBase64((buffer) => {
-                        this.createdPDF = buffer;
-                    })
+                            GenerateForm.createForm(code, fullname, incharge, details)
+                        )
+                        .getBuffer((buffer) => {
+                            this.createdPDF = buffer;
+                        })
                     GenerateForm.clear();
                     resolve({ details: info, pdf: this.createdPDF })
                 })
                 .catch((err) => {
-                    reject(err.response.data.error.message)
+                    var error = "something went wrong";
+                    if (err.response) {
+                        error = err.response.data.error.message;
+                    }
+                    console.log(err);
+
+                    reject(error);
                 });
         })
 

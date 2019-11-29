@@ -20,7 +20,7 @@ module.exports = function(reqUsername, reqEmail, reqBody, res) {
                 let staff = new models.Staffs(reqBody);
                 staff
                     .save()
-                    .then(() => {
+                    .then(account => {
                         response = successResponse(200, account, "Registered Successfully!")
                         res.status(response.status).send(response);
                     })

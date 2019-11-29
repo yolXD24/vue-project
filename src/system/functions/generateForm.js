@@ -4,6 +4,7 @@ import PERMIT from "../forms/businessClearance.js";
 
 export default {
     responseForm: {},
+
     form_hub: {
         permissions: {
             printing: "highResolution",
@@ -16,7 +17,10 @@ export default {
         },
         pageSize: "LETTER",
         pageMargins: [70, 70],
-        background: require("./paper.png"),
+        // background: [{
+        //     image: require("@/system/functions/paper.png"),
+        //     width: 792
+        // }],
         content: [],
         styles: {
             text_center: {

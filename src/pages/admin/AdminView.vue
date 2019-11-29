@@ -24,7 +24,7 @@
     <br />
     <br />
     <center>
-    <Footer v-if="is_default_password && $route.name != 'login' " class="withSidebar" />
+    <Footer v-if="is_default_password && $route.name != 'login' && $route.name != 'account_management'" class="withSidebar" />
     </center>
   </v-app>
   <!-- </v-app> -->

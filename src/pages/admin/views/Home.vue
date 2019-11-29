@@ -49,8 +49,7 @@
               v-if="preview"
               ref="pdf_preview"
               :src="createdPDF"
-              @page-loaded="preview = true"
-              style="width: 45%; height :100%"
+              style="width: 50%; height :100%"
             ></pdf>
             <br />
             <br />
@@ -108,6 +107,8 @@ export default {
       generatePDF
         .generatePDF(this.code, this.$store.getters.user)
         .then(result => {
+          console.log(result);
+          
           this.details = result.details;
           this.loading = false;
           this.createdPDF = result.pdf;

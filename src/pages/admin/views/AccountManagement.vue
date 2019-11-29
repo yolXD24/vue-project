@@ -1,22 +1,41 @@
 <template>
-  <v-container fluid grid-list-xl>
+  <v-container
+    fluid
+    grid-list-xl
+  >
     <v-row justify="center">
       <v-col cols="10">
         <v-card class="elevation-4 v-card">
-          <v-data-table :headers="headers" :items="accounts" class="elevation-1 v-table">
+          <v-data-table
+            :headers="headers"
+            :items="accounts"
+            class="elevation-1 v-table"
+          >
             <template v-slot:top>
-              <v-toolbar flat color="white">
+              <v-toolbar
+                flat
+                color="white"
+              >
                 <v-toolbar-title>Staff Account Management</v-toolbar-title>
-                <v-divider class="mx-4" inset vertical></v-divider>
+                <v-divider
+                  class="mx-4"
+                  inset
+                  vertical
+                ></v-divider>
                 <v-spacer></v-spacer>
                 <v-spacer></v-spacer>
                 <v-spacer></v-spacer>
-                <Register />
+                <Register @register_notif="app_notify" />
               </v-toolbar>
               <hr>
             </template>
             <template v-slot:item.action="{ item }">
-              <v-btn :disabled="item.admin" @click="deleteItem(item)" text small>
+              <v-btn
+                :disabled="item.admin"
+                @click="deleteItem(item)"
+                text
+                small
+              >
                 <v-icon small>mdi-delete</v-icon>Delete
                 <span v-if="item.admin">(ADMIN)</span>
               </v-btn>
@@ -71,6 +90,13 @@ export default {
   },
 
   methods: {
+    app_notify(message) {
+      if (typeof message!== 'string') {
+        this.accounts.push(message.body)
+        return  this.$emit("notify", message.message)
+      }
+      this.$emit("notify", message)
+    },
     initialize() {
       this.$store
         .dispatch("loadAccountTable")

@@ -3,7 +3,7 @@ let response = null;
 let errorResponse = require("../helpers/setErrorResponse");
 let successResponse = require("../helpers/setSuccessResponse");
 
-module.exports = function (reqBody, res) {
+module.exports = function(reqBody, res) {
     // data to pass
     // {
     // name: String,

@@ -32,6 +32,7 @@ var routes = [{
     },
     {
         path: "/admin/AccountManagement",
+        name: 'account_management',
         component: () =>
             import ("@/pages/admin/views/AccountManagement.vue"),
         meta: {

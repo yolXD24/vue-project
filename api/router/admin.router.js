@@ -58,23 +58,21 @@ routes.route('/saveTransaction').post((req, res) => {
 
 // admin retrieve all transactions
 routes.route("/transactions").post((req, res) => {
-    console.log(req.body)
-
     transactions(req.body.token, res)
-    /*  NOTE!!
-         1.I send my id of the staff , if admin all transaction will be retrieve
-         2.if not admin retrieve transaction for that staff only
-         3.this is the transaction object
-                {
-                  name:name of user,
-                  request:type of document request by the user,
-                  officer:officer in charge,
-                  date:date of transaction
-                },
-        4.response should be array of transaction objects
-        thanks 
-        ^__^
-        */
+        /*  NOTE!!
+             1.I send my id of the staff , if admin all transaction will be retrieve
+             2.if not admin retrieve transaction for that staff only
+             3.this is the transaction object
+                    {
+                      name:name of user,
+                      request:type of document request by the user,
+                      officer:officer in charge,
+                      date:date of transaction
+                    },
+            4.response should be array of transaction objects
+            thanks 
+            ^__^
+            */
 
 });
 
