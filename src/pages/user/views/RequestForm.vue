@@ -125,13 +125,14 @@
       <v-card-actions>
         <div class="flex-grow-1"></div>
         <!-- <Modal :type="$route.params.type"  :info="info" v-on:preview="previewed = true" /> -->
-        <v-btn :disabled="!previewed" @click="send" fab large>Send</v-btn>
+        <v-btn :disabled="!previewed" @click="send" to="/user/get/claim-code" fab large>Send</v-btn>
         <v-btn @click="preview" fab large>Preview</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 <script>
+import axios from "axios";
 import generatePDF from "@/system/functions/generatePDF";
 import { userPreview } from "@/system/functions/userPreview";
 import printJS from "print-js";
@@ -195,8 +196,6 @@ export default {
         type: "application/pdf"
       });
       var pdfUrl = URL.createObjectURL(pdfFile);
-      console.log(pdfUrl);
-
       printJS({
         printable: pdfUrl,
         type: "pdf",
@@ -213,7 +212,7 @@ export default {
     },
     send() {
       this.$axios
-        .post("localhost:4000/user/" + $route.params.type, {
+        .post("http://localhost:4000/user/submit/" + $route.params.type, {
           name: {
             firstName: this.info.name.firstName,
             middleName: this.info.name.middleName,
@@ -231,9 +230,15 @@ export default {
             province: this.info.address.province
           },
           business: this.info.business,
-          dateStarted: this.info.dateStarted
+          dateStarted: this.info.dateStarted,
+          docType: $route.params.type
         })
-        .then(response => (this.code = response.data.accessCode));
+        .then(response => {
+          console.log(response);
+          this.code = response.data.accessCode})
+        .catch(error =>
+          console.log(error)
+        );
     },
     validate() {
       if (this.$refs.form.validate()) {
