@@ -43,14 +43,16 @@ export default {
     },
 
     createForm(type, fullname, incharge, details) {
-        if (type === "permit") {
+        console.log(details);
+
+        if (type === "business-clearance") {
             this.responseForm = PERMIT.generate(
                 fullname,
                 incharge,
                 this.form_hub,
                 details
             );
-        } else if (type === "clearance") {
+        } else if (type === "barangay-clearance") {
             this.responseForm = CLEARANCE.generate(
                 fullname,
                 incharge,

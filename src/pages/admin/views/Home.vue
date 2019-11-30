@@ -65,16 +65,16 @@
       <v-container class="justify-center">
         <center>
           <div v-if="preview">
-            <!-- <pdf
+            <pdf
               :src="dataUrl"
               @loading="loadPDF"
             >
-            </pdf> -->
-            <pdf
+            </pdf>
+            <!-- <pdf
               ref="pdf_preview"
               :src="createdPDF"
               style="width: 50%; height :100%"
-            ></pdf>
+            ></pdf> -->
             <!-- <div>
             <pdf
               v-if="preview"
@@ -115,8 +115,8 @@
   </v-container>
 </template>
 <script>
-import pdf from "vue-pdf";
-// import pdf from 'pdfvuer'
+// import pdf from "vue-pdf";
+import pdf from 'pdfvuer'
 import generatePDF from "@/system/functions/generatePDF";
 import printJS from "print-js";
 import EditForm from "./EditForm";
