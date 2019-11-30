@@ -7,6 +7,7 @@ import axios from "axios";
 export default {
     name: "generatePDF",
     createdPDF: "",
+    dataUrl: "",
     toCapital(name) {
         return name.charAt(0).toUpperCase() + name.slice(1);
     },
@@ -30,9 +31,8 @@ export default {
                             day: today.getDate() - 1
                         }
                     };
-                    var fullname = `${info.firstname} ${info.lastname}`
+                    var fullname = `${info.name.firstName} ${info.name.middleName} ${info.name.lastName} ${info.name.suffix? info.name.suffix:""}`
                     var incharge = `${emp.firstname} ${emp.lastname}`
-                        // this.toCapital(emp.firstname) + " " + this.toCapital(emp.lastname);
                     pdfMake.createPdf(
                             GenerateForm.createForm(code, fullname, incharge, details)
                         )
@@ -40,7 +40,14 @@ export default {
                             this.createdPDF = buffer;
                         })
                     GenerateForm.clear();
-                    resolve({ details: info, pdf: this.createdPDF })
+                    pdfMake.createPdf(
+                            GenerateForm.createForm(code, fullname, incharge, details)
+                        )
+                        .getDataUrl((dataUrl) => {
+                            this.dataUrl = dataUrl;
+                        })
+                    GenerateForm.clear();
+                    resolve({ details: info, pdf: this.createdPDF, dataUrl: this.dataUrl })
                 })
                 .catch((err) => {
                     var error = "something went wrong";
@@ -48,7 +55,6 @@ export default {
                         error = err.response.data.error.message;
                     }
                     console.log(err);
-
                     reject(error);
                 });
         })

@@ -1,7 +1,6 @@
 <template>
   <v-row justify="center">
     <v-dialog
-    full-width
       v-model="dialog"
       fullscreen
       transition="dialog-bottom-transition"
@@ -9,6 +8,10 @@
       <template v-slot:activator="{ on }">
         <v-btn
           class="ma-2"
+          color="primary"
+          rounded
+          large
+          width="300"
           v-on="on"
         >Edit</v-btn>
       </template>
@@ -28,9 +31,9 @@
           </v-toolbar-items>
         </v-toolbar> -->
         <v-card-actions>
-          
-        <v-spacer>
-        </v-spacer>
+
+          <v-spacer>
+          </v-spacer>
           <v-btn
             icon
             dark

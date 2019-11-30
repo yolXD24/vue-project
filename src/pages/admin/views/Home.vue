@@ -41,10 +41,41 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog
+      v-model="loadingPreview"
+      persistent
+      style="margin-left:250px!important;"
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          Loading Preview ...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     <v-row>
       <v-container class="justify-center">
         <center>
-          <div>
+          <div v-if="preview">
+            <!-- <pdf
+              :src="dataUrl"
+              @loading="loadPDF"
+            >
+            </pdf> -->
+            <pdf
+              ref="pdf_preview"
+              :src="createdPDF"
+              style="width: 50%; height :100%"
+            ></pdf>
+            <!-- <div>
             <pdf
               v-if="preview"
               ref="pdf_preview"
@@ -53,17 +84,30 @@
             ></pdf>
             <br />
             <br />
-          </div>
-          <div class="text-center">
-            <EditForm
-              v-if="preview"
-              :ClientInfo="details"
-            />
-            <v-btn
-              class="ma-2"
-              v-if="preview"
-              @click="printPDF()"
-            >print</v-btn>
+          </div> -->
+            <v-row
+              align="start"
+              justify="center"
+            >
+              <v-col cols="4">
+                <v-row
+                  align="end"
+                  justify="center"
+                  class="transparent"
+                >
+                  <EditForm :ClientInfo="details" />
+                  <v-btn
+                    class="ma-2"
+                    color="primary"
+                    rounded
+                    large
+                    width="300"
+                    @click="printPDF()"
+                  >print</v-btn>
+                </v-row>
+              </v-col>
+
+            </v-row>
           </div>
         </center>
       </v-container>
@@ -72,6 +116,7 @@
 </template>
 <script>
 import pdf from "vue-pdf";
+// import pdf from 'pdfvuer'
 import generatePDF from "@/system/functions/generatePDF";
 import printJS from "print-js";
 import EditForm from "./EditForm";
@@ -80,6 +125,8 @@ export default {
     return {
       details: null,
       code: "",
+      dataUrl: "",
+      loadingPreview: false,
       file: "",
       loading: false,
       createdPDF: ""
@@ -95,6 +142,9 @@ export default {
     }
   },
   methods: {
+    // loadPDF() {
+    //   this.loadingPreview = true
+    // },
     validate() {
       if (this.code.length) {
         this.checkCode();
@@ -104,23 +154,26 @@ export default {
     },
     checkCode() {
       this.loading = true;
+      this.loadingPreview = true
       generatePDF
         .generatePDF(this.code, this.$store.getters.user)
         .then(result => {
-          console.log(result);
-          
+          this.loadingPreview = false
           this.details = result.details;
           this.loading = false;
           this.createdPDF = result.pdf;
+          this.dataUrl = result.dataUrl;
           this.code = "";
         })
         .catch(message => {
+          this.loadingPreview = false
           this.$emit("notify", message)
           this.createdPDF = "";
           this.loading = false;
         });
     },
     printPDF() {
+      this.loadingPreview = true
       var pdfFile = new Blob([this.createdPDF], {
         type: "application/pdf"
       });
@@ -133,6 +186,8 @@ export default {
         onPdfOpen: () => { },
         onPrintDialogClose: () => {
           this.preview = false;
+          this.loadingPreview = false
+
         }
       });
     }
