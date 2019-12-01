@@ -3,17 +3,19 @@
     <br>
     <br>
     <v-card max-width="650" class="border mx-auto" color="white darken-3" light width="650">
-      <v-card-text>
-        <br>
-        <v-form ref="form" v-if="!preview_mode">
-          <br>
-          <p
+      <br>
+      <div v-if="!preview_mode">
+      <p
             class="text-center font-weight-bold headline"
           >{{$route.params.type=="business-clearance"?"Business Clearace": $route.params.type=="barangay-clearance"?"Barangay Clearance":"Barangay Indigency"}}</p>
           <p class="text-center subtitle-1 font-italic">Office of the Punong Barangay</p>
           <h4
             class="text-center subtitle-2"
           >{{$route.params.type=="business-clearance"?"Required under RA 7160 Sec. 125": $route.params.type=="barangay-clearance"?"Local Government Code of 1991": "Required under RA 7160 Sec. 152"}}</h4>
+      </div>
+      <v-card-text>
+        <v-form ref="form" v-if="!preview_mode">
+          <br>
           <v-row>
             <v-col class="px-10" sm="6" md="6">
               <v-text-field
