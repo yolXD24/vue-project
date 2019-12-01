@@ -16,19 +16,11 @@ mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true, u
         console.log("database is connected!");
     }
 });
-
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: '110mb' }));
 app.use(bodyParser.json());
-
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
-app.get("/", (req, res) => {
-    var fs = require('fs');
-
-    var imageAsBase64 = fs.readFileSync('./paper.png', 'base64');
-    res.end(imageAsBase64)
-})
 app.listen(PORT, () => {
     console.log(`Server is running on Port:${PORT}`);
 });
