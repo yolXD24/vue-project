@@ -4,7 +4,6 @@ import PERMIT from "../forms/businessClearance.js";
 
 export default {
     responseForm: {},
-
     form_hub: {
         permissions: {
             printing: "highResolution",
@@ -42,24 +41,23 @@ export default {
         footer: []
     },
 
-    createForm(type, fullname, incharge, details) {
-        console.log(details);
-
-        if (type === "business-clearance") {
+    createForm(code, fullname, incharge, details) {
+        let type = code.split("_")[0].toUpperCase();
+        if (type === "BUC") {
             this.responseForm = PERMIT.generate(
                 fullname,
                 incharge,
                 this.form_hub,
                 details
             );
-        } else if (type === "barangay-clearance") {
+        } else if (type === "BAC") {
             this.responseForm = CLEARANCE.generate(
                 fullname,
                 incharge,
                 this.form_hub,
                 details
             );
-        } else {
+        } else if (type === "BAI") {
             this.responseForm = INDIGENCY.generate(fullname, incharge, this.form_hub);
         }
         return this.responseForm;

@@ -19,5 +19,4 @@ module.exports = (reqBody, res) => {
         response = errorResponse(503, err, null)
         return res.status(response.status).send(response);
     });
-
 }

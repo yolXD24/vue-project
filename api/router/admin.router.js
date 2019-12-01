@@ -1,6 +1,5 @@
 const express = require("express");
 const routes = express.Router();
-const jwt = require("jsonwebtoken");
 //MODULES
 var login = require("../modules/module.login");
 var register = require("../modules/module.register");
@@ -8,11 +7,12 @@ var confirm_password = require("../modules/module.confirm_pass");
 var update = require("../modules/module.update");
 var accounts = require("../modules/module.accounts");
 var deleteAccount = require("../modules/module.delAccount");
-var verifytoken = require("../modules/module.verifytoken")
-var transactions = require("../modules/module.transactionLogs")
-var checkDocument = require("../modules/module.check_doc")
+var verifytoken = require("../modules/module.verifytoken");
+var transactions = require("../modules/module.transactionLogs");
+var checkDocument = require("../modules/module.check_doc");
 var saveTransaction = require("../modules/module.saveTransact");
-let models = require("../model/db.model");
+var accountReset = require("../modules/module.account_reset")
+
 //account login
 routes.route("/login").post((req, res) => {
     login(req.body.account.username, req.body.account.password, res);
@@ -76,8 +76,13 @@ routes.route("/transactions").post((req, res) => {
 
 });
 
+routes.route("/reset").post((req, res) => {
+    console.log(req.body);
+
+    accountReset(req.body.account_id, res);
+});
 routes.route("/files/code/:code").get((req, res) => {
-    checkDocument(req.params.code, res)
+    checkDocument(req.params.code, res);
 
     //SAMPLE DATA FOR BUSINESS CLEARANCE 
 

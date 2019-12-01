@@ -9,7 +9,7 @@ const adminRoutes = require("./router/admin.router");
 const userRoutes = require("./router/user.router");
 mongoose.Promise = global.Promise;
 console.log("connecting....");
-mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true }, (err, data) => {
+mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }, (err, data) => {
     if (err) {
         console.log("error : " + err);
     } else {

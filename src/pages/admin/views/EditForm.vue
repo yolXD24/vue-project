@@ -20,7 +20,6 @@
           dark
           color="primary"
         >
-        
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn
@@ -43,24 +42,18 @@
           </v-btn>
         </v-card-actions>
 
-        <RequestForm
-          ref="editForm"
-          :editMode="true"
-          :toBeEdit="ClientInfo"
-        />
+   
       </v-card>
     </v-dialog>
   </v-row>
 </template>
 <script>
-import RequestForm from "@/pages/user/views/RequestForm";
 export default {
   props: {
     ClientInfo: Object
   },
   components: {
-    RequestForm
-  },
+ },
   data() {
     return {
       dialog: false,

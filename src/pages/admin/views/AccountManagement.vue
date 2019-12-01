@@ -37,7 +37,14 @@
                 small
               >
                 <v-icon small>mdi-delete</v-icon>Delete
-                <span v-if="item.admin">(ADMIN)</span>
+                <!-- <span v-if="item.admin">(ADMIN)</span> -->
+              </v-btn>
+              <v-btn
+                @click="reset(item._id)"
+                text
+                small
+              >
+                <v-icon small>mdi-reload</v-icon> Reset
               </v-btn>
             </template>
           </v-data-table>
@@ -49,6 +56,7 @@
 </template>
 <script>
 import Register from "./Register";
+import { request_reset } from "@/system/functions/request";
 export default {
   components: {
     Register
@@ -91,9 +99,9 @@ export default {
 
   methods: {
     app_notify(message) {
-      if (typeof message!== 'string') {
+      if (typeof message !== 'string') {
         this.accounts.push(message.body)
-        return  this.$emit("notify", message.message)
+        return this.$emit("notify", message.message)
       }
       this.$emit("notify", message)
     },
@@ -122,6 +130,15 @@ export default {
         .catch(err => {
           this.$emit("notify", "Something went wrong!!");
         });
+    },
+    reset(account_id) {
+      request_reset({account_id:account_id})
+        .then(success => {
+          this.$emit("notify", success.message);
+        }).catch(err => {
+          this.$emit("notify", err.message);
+        })
+
     }
   }
 };

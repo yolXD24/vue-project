@@ -3,12 +3,14 @@ import App from "./App.vue";
 import router from "./system/router/index";
 import vuetify from "./plugins/vuetify";
 import store from "./system/functions/vuex/store";
-import { rules } from "./helpers/rules"
+import { rules } from "./helpers/rules";
+import axios from '@/plugins/axios';
 
 /*eslint-disable */
 
 Vue.config.productionTip = false;
 Vue.prototype.$rules = rules();
+Vue.prototype.$axios = axios;
 
 new Vue({
     router,

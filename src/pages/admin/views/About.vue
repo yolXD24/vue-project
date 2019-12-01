@@ -59,12 +59,7 @@
 </template>
 
 <script>
-import jwt_decode from "jwt-decode";
-// import AccountSettings from "./AccountSettings.vue";
-// import ConfirmPassword from "./ConfirmPassword.vue";
-import { isNullOrUndefined } from "util";
 export default {
-
   components: {
     AccountSettings: () => import("./AccountSettings.vue"),
     ConfirmPassword: () => import("./ConfirmPassword.vue")

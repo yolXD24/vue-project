@@ -18,13 +18,19 @@
             <div class="flex-grow-1"></div>
           </v-toolbar>
           <v-card-text>
-            <v-text-field
-              id="code"
-              v-model="code"
-              label="Claim Code"
-              prepend-icon="mdi-lock"
-              type="text"
-            ></v-text-field>
+            <v-form
+              lazy-validation
+              ref="form"
+            >
+              <v-text-field
+                id="code"
+                v-model="code"
+                label="Enter Transaction Code"
+                :rules="[v=>v.length === 10||'Invalid Transaction code!']"
+                prepend-icon="mdi-lock"
+                type="text"
+              ></v-text-field>
+            </v-form>
           </v-card-text>
 
           <center>
@@ -67,7 +73,6 @@
           <div v-if="preview">
             <pdf
               :src="dataUrl"
-              @loading="loadPDF"
             >
             </pdf>
             <!-- <pdf
@@ -142,14 +147,18 @@ export default {
     }
   },
   methods: {
-    // loadPDF() {
-    //   this.loadingPreview = true
-    // },
+    loadPDF() {
+      this.loadingPreview = true
+    },
     validate() {
       if (this.code.length) {
-        this.checkCode();
+        if (this.$refs.form.validate()) {
+          this.checkCode();
+        } else {
+          this.$emit("notify", "Invalid Transaction Code")
+        }
       } else {
-        this.$emit("notify", "Claim code is empty!")
+        this.$emit("notify", "Transaction code is empty!")
       }
     },
     checkCode() {

@@ -5,10 +5,11 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { months } from '@/helpers/months';
 
 
-var createdPDF = ""
-let userPreview = (type,userInfo, empInfo) => {
-    console.log(userInfo);
-    
+var createdPDF = "",
+    dataUrl = "";
+
+let userPreview = (type, userInfo, empInfo) => {
+    let code = type == 'barangay-clearace' ? 'BAC' : type == 'business-clearace' ? 'BUC' : 'BAI';
     return new Promise((resolve) => {
         var today = new Date();
         var details = {
@@ -28,13 +29,20 @@ let userPreview = (type,userInfo, empInfo) => {
         var fullname = `${userInfo.firstname} ${userInfo.lastname}`
         var incharge = `${empInfo ? empInfo.firstname : 'John'} ${empInfo ? empInfo.lastname : 'Doe'}`
         pdfMake.createPdf(
-            GenerateForm.createForm(type, fullname, incharge, details)
-        ).getBlob((buffer) => {
-            createdPDF = buffer;
-        })
+                GenerateForm.createForm(code, fullname, incharge, details)
+            )
+            .getBuffer((buffer) => {
+                this.createdPDF = buffer;
+            })
         GenerateForm.clear();
-        resolve({ pdfPreview: createdPDF })
+        pdfMake.createPdf(
+                GenerateForm.createForm(code, fullname, incharge, details)
+            )
+            .getDataUrl((url) => {
+                dataUrl = url;
+            })
+        GenerateForm.clear();
+        resolve({ details: userInfo, pdfPreview: createdPDF, dataUrl: dataUrl })
     })
 }
-
-export { userPreview }
+export { userPreview };

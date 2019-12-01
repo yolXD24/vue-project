@@ -33,9 +33,27 @@ var update = (account, _url) => {
                 } else {
                     errors = error.response.data.error
                 }
-
                 reject(errors)
             });
     })
 }
-export { register, update }
+
+var request_reset = (account_id) => {
+    return new Promise((resolve, reject) => {
+        store.state.axios
+            .post(store.state.url + 'reset', account_id)
+            .then(res => {
+                resolve(res.data.data)
+            })
+            .catch(error => {
+                let errors = {}
+                if (!error.response) {
+                    errors = { message: "Cannot connect to the server!" }
+                } else {
+                    errors = error.response.data.error
+                }
+                reject(errors)
+            });
+    })
+}
+export { register, update, request_reset }
