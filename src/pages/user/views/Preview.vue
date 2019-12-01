@@ -1,5 +1,5 @@
 <template>
-  <pdf :src="createdPDF" style="width: 100%; height :100%"></pdf>
+  <pdf :src="dataUrl" style="width: 100%; height :100%"></pdf>
 </template>
 <script>
 import generatePDF from "@/system/functions/generatePDF";
@@ -16,7 +16,8 @@ export default {
   },
   data() {
     return {
-      createdPDF: null
+      createdPDF: null,
+      dataUrl:""
     };
   },
   created() {
@@ -29,6 +30,7 @@ export default {
     userPreview(this.type, info, null)
       .then(res => {
         this.createdPDF = res.pdfPreview;
+        this.dataUrl =  res.dataUrl;
       })
       .catch(err => {
         console.log(err);
