@@ -1,6 +1,7 @@
 const fs = require('fs');
 let response = null;
 let successResponse = require("../helpers/setSuccessResponse");
+let errorResponse = require("../helpers/setErrorResponse");
 var template = fs.readFileSync('../api/mailApi/template.html');
 template = template.toString();
 
@@ -21,20 +22,22 @@ module.exports = (data, res) => {
         sgMail.setApiKey(apiKey);
         const msg = {
             to: to,
-            from: 'xpressdocx@gmail.com',
+            from: 'XpressDocX@gmail.com',
             subject: 'XpressDocX Claim Code!',
             text: 'test',
             html: content
         };
         if (sgMail.send(msg)) {
-            console.log('sent');
+            response = successResponse(201, { "success": true }, "Code has been sent to your email!")
+            res.send(response);
         } else {
+            response = errorResponse(500, { "success": false }, "Something went wrong!")
+            res.send(response);
             console.log('error')
         };
     };
     sendMail(data.email, template);
-    response = successResponse(201, { "success": true }, "Code has been sent to your email!")
-    res.send(response);
+  
     // sendMail('chervin.tanilon@student.passerellesnumeriques.org', template);
     // sendMail('lalaine.garrido@student.passerellesnumeriques.org', template);
 }

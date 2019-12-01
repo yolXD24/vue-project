@@ -9,7 +9,7 @@ var createdPDF = "",
     dataUrl = "";
 
 let userPreview = (type, userInfo, empInfo) => {
-    let code = type == 'barangay-clearace' ? 'BAC' : type == 'business-clearace' ? 'BUC' : 'BAI';
+    let code = type == 'barangay-clearance' ? 'BAC' : type == 'business-clearance' ? 'BUC' : 'BAI';
     return new Promise((resolve) => {
         var today = new Date();
         var details = {

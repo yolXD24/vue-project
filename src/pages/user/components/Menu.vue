@@ -5,7 +5,6 @@
       :key="item.title"
       :to="item.link"
     >{{item.title}}</v-tab>
-    <v-tab  to="/user/home">Home</v-tab>
   </v-tabs>
 </template>
 <style scoped>

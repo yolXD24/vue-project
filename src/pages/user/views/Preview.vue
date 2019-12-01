@@ -1,40 +1,16 @@
+
 <template>
-  <pdf :src="createdPDF" style="width: 100%; height :100%"></pdf>
+  <v-card>
+    <pdf :src="url" style="width: 100%; height :100%"></pdf>
+  </v-card>
 </template>
 <script>
-import generatePDF from "@/system/functions/generatePDF";
-import pdf from "pdfvuer";
-import { userPreview } from "@/system/functions/userPreview";
+import pdf from "vue-pdf";
 export default {
   name: "Preview",
   components: {
     pdf
   },
-  props: {
-    info: Object,
-    type: String
-  },
-  data() {
-    return {
-      createdPDF: null
-    };
-  },
-  created() {
-     var info = {
-      firstname: this.info.name.firstName,
-      lastname: this.info.name.lastName,
-      business: this.info.business,
-      address: this.info.address
-    };
-    userPreview(this.type, info, null)
-      .then(res => {
-        this.createdPDF = res.pdfPreview;
-      })
-      .catch(err => {
-        console.log(err);
-        
-      });
-  }
-   
+  props: ['url']
 };
 </script>

@@ -1,19 +1,19 @@
 <template>
   <div>
-    <br />
-    <br />
+    <br>
+    <br>
     <v-card max-width="650" class="border mx-auto" color="white darken-3" light width="650">
-      <br />
-      <p
-        class="text-center font-weight-bold headline"
-      >{{$route.params.type=="business-clearance"?"Business Clearace": $route.params.type=="barangay-clearance"?"Barangay Clearance":"Barangay Indigency"}}</p>
-      <p class="text-center subtitle-1 font-italic">Office of the Punong Barangay</p>
-      <h4
-        class="text-center subtitle-2"
-      >{{$route.params.type=="business-clearance"?"Required under RA 7160 Sec. 125": $route.params.type=="barangay-clearance"?"Local Government Code of 1991": "Required under RA 7160 Sec. 152"}}</h4>
       <v-card-text>
-        <br />
-        <v-form ref="form">
+        <br>
+        <v-form ref="form" v-if="!preview_mode">
+          <br>
+          <p
+            class="text-center font-weight-bold headline"
+          >{{$route.params.type=="business-clearance"?"Business Clearace": $route.params.type=="barangay-clearance"?"Barangay Clearance":"Barangay Indigency"}}</p>
+          <p class="text-center subtitle-1 font-italic">Office of the Punong Barangay</p>
+          <h4
+            class="text-center subtitle-2"
+          >{{$route.params.type=="business-clearance"?"Required under RA 7160 Sec. 125": $route.params.type=="barangay-clearance"?"Local Government Code of 1991": "Required under RA 7160 Sec. 152"}}</h4>
           <v-row>
             <v-col class="px-10" sm="6" md="6">
               <v-text-field
@@ -121,12 +121,13 @@
             </v-col>
           </v-row>
         </v-form>
+        <Preview :url="createdPDF" v-if="preview_mode"/>
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <!-- <Modal :type="$route.params.type"  :info="info" v-on:preview="previewed = true"  /> -->
-        <v-btn :disabled="!previewed" @click="send"  fab large>Send</v-btn>
-        <v-btn @click="preview" fab large>Preview</v-btn>
+        <v-btn :disabled="!previewed" @click="send">Send</v-btn>
+        <v-btn v-if="preview_mode" @click="preview_mode= false">Edit</v-btn>
+        <v-btn @click="preview" v-if="!preview_mode">Preview</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -141,10 +142,15 @@ export default {
     toBeEdit: Object,
     editMode: Boolean
   },
+  components: {
+    Preview: () => import("./Preview.vue")
+  },
   data() {
     return {
+      url: "",
       isLoading: false,
       previewed: false,
+      preview_mode: false,
       createdPDF: null,
       code: "1234",
       image: require("../assets/1.jpg"),
@@ -184,31 +190,15 @@ export default {
         location: this.info.address.sitio
       };
       this.previewed = true;
-      userPreview(this.type, info, null)
+      userPreview(this.$route.params.type, info, null)
         .then(res => {
+          this.preview_mode = true;
           this.createdPDF = res.pdfPreview;
+          this.url = res.dataUrl;
         })
         .catch(err => {
           console.log(err);
         });
-
-      var pdfFile = new Blob([this.createdPDF], {
-        type: "application/pdf"
-      });
-      var pdfUrl = URL.createObjectURL(pdfFile);
-      printJS({
-        printable: pdfUrl,
-        type: "pdf",
-        showModal: true,
-        setTimeout:(()=> {
-        alert("ExpressDocX is generating preview..."),
-        loadIframeImage(pdUrl, 10);
-      }, 2000),
-        onPdfOpen: () => {},
-        onPrintDialogClose: () => {
-          this.preview = false;
-        }
-      });
     },
     send() {
       axios
@@ -234,14 +224,12 @@ export default {
           docType: this.$route.params.type
         })
         .then(response => {
-          this.code = response.data.data.body.access_code
+          this.code = response.data.data.body.access_code;
           console.log(this.code);
-          
-          this.$router.push("/user/get/claim-code/"+this.code)
+
+          this.$router.push("/user/get/claim-code/" + this.code);
         })
-        .catch(error =>
-          console.log(error)
-        );
+        .catch(error => console.log(error));
     },
     validate() {
       if (this.$refs.form.validate()) {
@@ -249,11 +237,12 @@ export default {
       } else {
         alert("error");
       }
-  },
+    },
 
-  mounted() {
-    if (this.editMode) {
+    mounted() {
+      if (this.editMode) {
+      }
     }
-  }}
+  }
 };
 </script>
