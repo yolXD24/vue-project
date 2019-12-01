@@ -211,7 +211,7 @@ export default {
       });
     },
     send() {
-      this.$axios
+      axios
         .post("http://localhost:4000/user/submit/" + $route.params.type, {
           name: {
             firstName: this.info.name.firstName,
