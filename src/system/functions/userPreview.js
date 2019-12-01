@@ -32,7 +32,7 @@ let userPreview = (type, userInfo, empInfo) => {
                 GenerateForm.createForm(code, fullname, incharge, details)
             )
             .getBuffer((buffer) => {
-                this.createdPDF = buffer;
+                createdPDF = buffer;
             })
         GenerateForm.clear();
         pdfMake.createPdf(

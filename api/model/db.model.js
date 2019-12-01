@@ -97,7 +97,6 @@ let brgyClearanceSchema = new Schema({
     },
     age: Number,
     sex: String,
-    citizenship: String,
     civilStatus: String,
     address: {
         sitio: String,
@@ -120,6 +119,7 @@ let brgyIndigencySchema = new Schema({
     },
     age: Number,
     sex: String,
+    civilStatus: String,
     address: {
         sitio: String,
         barangay: String,

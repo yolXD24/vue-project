@@ -124,8 +124,8 @@
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <!-- <Modal :type="$route.params.type"  :info="info" v-on:preview="previewed = true" /> -->
-        <v-btn :disabled="!previewed" @click="send" to="/user/get/claim-code" fab large>Send</v-btn>
+        <!-- <Modal :type="$route.params.type"  :info="info" v-on:preview="previewed = true"  /> -->
+        <v-btn :disabled="!previewed" @click="send"  fab large>Send</v-btn>
         <v-btn @click="preview" fab large>Preview</v-btn>
       </v-card-actions>
     </v-card>
@@ -146,7 +146,7 @@ export default {
       isLoading: false,
       previewed: false,
       createdPDF: null,
-      code: "",
+      code: "1234",
       image: require("../assets/1.jpg"),
       info: {
         name: {
@@ -211,8 +211,8 @@ export default {
       });
     },
     send() {
-      this.$axios
-        .post("http://localhost:4000/user/submit/" + $route.params.type, {
+      axios
+        .post("http://localhost:4000/user/submit/" + this.$route.params.type, {
           name: {
             firstName: this.info.name.firstName,
             middleName: this.info.name.middleName,
@@ -231,11 +231,14 @@ export default {
           },
           business: this.info.business,
           dateStarted: this.info.dateStarted,
-          docType: $route.params.type
+          docType: this.$route.params.type
         })
         .then(response => {
-          console.log(response);
-          this.code = response.data.accessCode})
+          this.code = response.data.data.body.access_code
+          console.log(this.code);
+          
+          this.$router.push("/user/get/claim-code/"+this.code)
+        })
         .catch(error =>
           console.log(error)
         );
