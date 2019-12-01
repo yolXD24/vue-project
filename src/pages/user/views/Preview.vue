@@ -3,7 +3,7 @@
 </template>
 <script>
 import generatePDF from "@/system/functions/generatePDF";
-import pdf from "vue-pdf";
+import pdf from "pdfvuer";
 import { userPreview } from "@/system/functions/userPreview";
 export default {
   name: "Preview",
