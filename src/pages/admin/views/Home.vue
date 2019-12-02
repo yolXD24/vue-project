@@ -100,7 +100,7 @@
                   justify="center"
                   class="transparent"
                 >
-                  <EditForm :ClientInfo="details" />
+                
                   <v-btn
                     class="ma-2"
                     color="primary"
@@ -109,9 +109,16 @@
                     width="300"
                     @click="printPDF()"
                   >print</v-btn>
+                    <v-btn
+                    class="ma-2"
+                    color="primary"
+                    rounded
+                    large
+                    width="300"
+                    @click="preview = true"
+                  >Close Preview</v-btn>
                 </v-row>
               </v-col>
-
             </v-row>
           </div>
         </center>
@@ -124,7 +131,6 @@
 import pdf from 'pdfvuer'
 import generatePDF from "@/system/functions/generatePDF";
 import printJS from "print-js";
-import EditForm from "./EditForm";
 export default {
   data() {
     return {
@@ -139,7 +145,6 @@ export default {
   },
   components: {
     pdf,
-    EditForm
   },
   computed: {
     preview() {
@@ -194,9 +199,8 @@ export default {
         modalMessage: "ExpressDocX is generating preview...",
         onPdfOpen: () => { },
         onPrintDialogClose: () => {
-          this.preview = false;
-          this.loadingPreview = false
-
+        this.preview = false;
+        this.loadingPreview = false;
         }
       });
     }
