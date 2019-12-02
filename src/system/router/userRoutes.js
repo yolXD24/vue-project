@@ -34,6 +34,16 @@ var routes = [{
     meta: {
         user: true
     }
+},
+{
+    path: "/user/about",
+    name: "About",
+    props: { editMode: false },
+    component: () =>
+        import("@/pages/user/views/About.vue"),
+    meta: {
+        user: true
+    }
 }
 ]
 let userRoutes = () => {

@@ -127,9 +127,9 @@
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn :disabled="!previewed" @click="send">Send</v-btn>
-        <v-btn v-if="preview_mode" @click="preview_mode= false">Edit</v-btn>
-        <v-btn @click="preview" v-if="!preview_mode">Preview</v-btn>
+        <v-btn text :disabled="!previewed" @click="send">Send</v-btn>
+        <v-btn text v-if="preview_mode" @click="preview_mode= false">Edit</v-btn>
+        <v-btn text @click="preview" v-if="!preview_mode">Preview</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -228,7 +228,6 @@ export default {
         .then(response => {
           this.code = response.data.data.body.access_code;
           console.log(this.code);
-
           this.$router.push("/user/get/claim-code/" + this.code);
         })
         .catch(error => console.log(error));

@@ -25,7 +25,7 @@ export default {
                 },
                 { text: fullname + " ", bold: true },
                 { text: "a resident of  " },
-                { text: "Adress ", bold: true },
+                { text: "Address ", bold: true },
                 {
                     text: "has the intention to construct / demolish / excavate ",
                     style: "text_justify"
