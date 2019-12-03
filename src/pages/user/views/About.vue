@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-      <v-dialog v-model="dialog" width="1000px">
+      <v-dialog v-model="dialog" width="1100">
       <template v-slot:activator="{ on }">
         <v-btn text v-on="on">About</v-btn>
       </template>
@@ -10,8 +10,8 @@
             <v-col v-for="(item, i) in items" :key="i">
               <v-layout>
                 
-                  <v-card height="320" width="210" class="v-card-profile">
-                    <img height="210" width="210" :src="item.src"/>
+                  <v-card height="350" width="250" class="v-card-profile">
+                    <img height="250" width="250" :src="item.src"/>
                     <v-card-text class="text-xs-center">
                       <h2 class="card-title font-weight-light">{{item.name}}</h2><br/>
                       <h3 class="category mb-3">{{item.role}}</h3>
