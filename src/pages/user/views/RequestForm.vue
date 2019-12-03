@@ -44,7 +44,6 @@
               <v-text-field
                 v-model="info.name.middleName"
                 dense
-                :rules="[$rules.required, $rules.nameRules]"
                 height="20"
                 label="Middle Name"
               ></v-text-field>

@@ -17,7 +17,6 @@
                       <h3 class="category mb-3">{{item.role}}</h3>
                     </v-card-text>
                   </v-card>
-              
               </v-layout>
             </v-col>
           </v-row>
@@ -26,7 +25,6 @@
     </v-dialog>
   </v-row>
 </template>
-
 <script>
 export default {
   data() {
@@ -35,25 +33,25 @@ export default {
       items: [
         {
           src:
-            "https://i.pinimg.com/564x/c3/38/07/c33807fe6c949c40ee53816669f469e8.jpg",
+            require('../assets/leonilo.jpg'),
           name: "Leonilo Torres",
           role: "Front-end Developer"
         },
         {
           src:
-            "https://i.pinimg.com/originals/e5/55/83/e55583ef7c6259e3ec6e5da87fb45af2.jpg",
+             require('../assets/lalaine.jpg'),
           name: "Lalaine Garrido",
           role: "Front-end Developer"
         },
         {
           src:
-            "https://i.pinimg.com/originals/b1/65/93/b165936edaee5b8a6a9736853c39a5f7.jpg",
+             require('../assets/chervin.jpg'),
           name: "Chervin Tanilon",
           role: "Back-end Developer"
         },
         {
           src:
-            "https://lh3.googleusercontent.com/ZQXeN_HghHa3xDn8LZSbGvpkw6V4tzDzBHzB2rrknLLAIRhavVqwbgewimHUHPkfnB2JqGFRYqgaXL66pxZHHssd_J6CvIjikw=w1600-rj",
+             require('../assets/renan.jpg'),
           name: "Renan Bargaso",
           role: "Back-end Developer"
         }
