@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const config = require("./config/DB");
 const adminRoutes = require("./router/admin.router");
 const userRoutes = require("./router/user.router");
+var amdin = require("./helpers/admin")
 mongoose.Promise = global.Promise;
 console.log("connecting....");
 mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }, (err, data) => {
@@ -23,4 +24,5 @@ app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on Port:${PORT}`);
+    admin(res);
 });
