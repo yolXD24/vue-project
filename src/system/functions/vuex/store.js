@@ -11,7 +11,7 @@ export default new Vuex.Store({
         status: localStorage.getItem('status'),
         default_pass: localStorage.getItem('default'),
         user: { admin: false },
-        url: "http://localhost:4000/admin/",
+        url: "http://172.16.3.12:4000/admin/",
         logs,
         axios
     },

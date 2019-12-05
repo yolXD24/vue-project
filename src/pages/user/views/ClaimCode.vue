@@ -71,7 +71,7 @@ export default {
   methods: {
     send() {
       axios
-        .post(`${this.$urls.user_local_api}/success/email-notification`, {
+        .post(`${this.$urls.user_online_api}/success/email-notification`, {
           code: this.$route.params.code,
           email: this.email
         })

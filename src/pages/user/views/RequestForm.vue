@@ -327,7 +327,7 @@ export default {
       if (this.captcha == this.answer) {
         this.$store.state.axios
           .post(
-            `${this.$urls.user_local_api}/submit/${this.$route.params.type}`,
+            `${this.$urls.user_online_api}/submit/${this.$route.params.type}`,
             {
               name: {
                 firstName: this.info.name.firstName,

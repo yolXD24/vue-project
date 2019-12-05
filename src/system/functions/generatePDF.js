@@ -13,7 +13,7 @@ export default {
     },
     generatePDF(code, emp) {
         return new Promise((resolve, reject) => {
-            axios.get("http://localhost:4000/admin/files/code/" + code)
+            axios.get("http://172.16.3.12:4000/admin/files/code/" + code)
                 .then(res => {
                     var info = res.data.data.body.info;
                     console.log(info);
