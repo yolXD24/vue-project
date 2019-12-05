@@ -200,80 +200,24 @@
       <v-card-actions>
         <div class="flex-grow-1"></div>
         <div class="text-center">
-          <v-bottom-sheet v-model="sheet">
+          <v-bottom-sheet v-model="sheet" persistent>
             <template v-slot:activator="{ on }">
-              <v-btn
-                text
-                v-on="on"
-                :disabled="!previewed"
-                @click="generateCaptcha"
-              >Send</v-btn>
+              <v-btn text v-on="on" :disabled="!previewed" @click="generateCaptcha()">Send</v-btn>
             </template>
-            <v-sheet
-              class="text-center pb-12"
-              height="200px"
-            >
+            <v-sheet class="text-center pb-12" height="200px" inset>
               <v-row>
                 <v-col cols="12">
-                  <v-row
-                    :align="alignment"
-                    :justify="justify"
-                  >
-                    <v-col
-                      class="px-10"
-                      md="1"
-                    >
-                      <v-text-field
-                        disabled
-                        v-model="num1"
-                        single-line
-                        outlined
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      class="px-10"
-                      md="1"
-                    >
-                      <v-text-field
-                        disabled
-                        v-model="operation"
-                        single-line
-                        outlined
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      class="px-10"
-                      md="1"
-                    >
-                      <v-text-field
-                        disabled
-                        v-model="num2"
-                        single-line
-                        outlined
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      class="px-10"
-                      md="1"
-                    >=</v-col>
-                    <v-col
-                      class="px-10"
-                      md="1"
-                    >
-                      <v-text-field
-                        v-model="answer"
-                        single-line
-                        outlined
-                      ></v-text-field>
+                  <v-row :align="alignment" :justify="justify">
+                      <v-card-text class="text-center font-weight-bold display-2">{{captcha}}</v-card-text>
+                    <v-col class="px-10" md="5">
+                      <v-text-field v-model="answer" label="Input Captcha" single-line ></v-text-field>
+                      <v-btn text @click="send">Send</v-btn>
+                      <v-btn text @click="sheet = !sheet">Cancel</v-btn>
+                      <v-card-text>&nbsp;</v-card-text>
                     </v-col>
                   </v-row>
                 </v-col>
               </v-row>
-              <v-divider horizontal></v-divider>
-              <v-btn
-                text
-                @click="send"
-              >Send</v-btn>
             </v-sheet>
           </v-bottom-sheet>
         </div>
@@ -319,11 +263,8 @@ export default {
         "space-between"
       ],
       justify: "center",
-      num1: 0,
-      num2: 0,
-      operation: "",
-      ans: 0,
-      answer: 0,
+      answer: "",
+      captcha: "",
       dialog: false,
       url: "",
       isLoading: false,
@@ -383,7 +324,7 @@ export default {
       }
     },
     send() {
-      if (this.ans == this.answer) {
+      if (this.captcha == this.answer) {
         this.$store.state.axios
           .post(
             `${this.$urls.user_local_api}/submit/${this.$route.params.type}`,
@@ -410,7 +351,6 @@ export default {
           )
           .then(response => {
             this.code = response.data.data.body.access_code;
-            console.log(this.code);
             this.$router.push("/user/get/claim-code/" + this.code);
           })
           .catch(error => {
@@ -425,12 +365,8 @@ export default {
       this.$refs.snackbar.text = message;
     },
     generateCaptcha() {
-      this.num1 = Math.ceil(Math.random() * 10);
-      this.num2 = Math.ceil(Math.random() * 10);
-      this.operation = ["+", "-", "*"][Math.ceil(Math.random() * 3)];
-      var equation = eval(this.num1 + "" + this.operation + "" + this.num2);
-      this.ans = equation;
-    }
+      this.captcha = Math.random().toString(36).substring(7)
+    },
   }
 };
 </script>
