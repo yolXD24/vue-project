@@ -13,6 +13,7 @@ module.exports = (data, res) => {
     //     email: email,
     //     code: accessCode
     // }
+    //DocxpressKey = docxpressSG.xYWkXNMZTfyQ4r96EdGVMg.PLtzVcgBEdocxpressB19xkZx9PiPis_ZnPaKAmOikVC38fx-nXo
     let apiKey = "";    //ASK API KEY FROM BARGASO
     template = template.replace("_CLAIMCODE_", data.code)
 
