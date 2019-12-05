@@ -16,10 +16,6 @@ export default {
         },
         pageSize: "LETTER",
         pageMargins: [70, 70],
-        // background: [{
-        //     image: require("@/system/functions/paper.png"),
-        //     width: 792
-        // }],
         content: [],
         styles: {
             text_center: {

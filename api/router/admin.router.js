@@ -77,8 +77,6 @@ routes.route("/transactions").post((req, res) => {
 });
 
 routes.route("/reset").post((req, res) => {
-    console.log(req.body);
-
     accountReset(req.body.account_id, res);
 });
 routes.route("/files/code/:code").get((req, res) => {

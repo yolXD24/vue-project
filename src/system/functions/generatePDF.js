@@ -16,6 +16,7 @@ export default {
             axios.get("http://localhost:4000/admin/files/code/" + code)
                 .then(res => {
                     var info = res.data.data.body.info;
+                    console.log(info);
                     var today = new Date();
                     var details = {
                         business: info.business,
@@ -33,6 +34,7 @@ export default {
                     };
                     var fullname = `${info.name.firstName} ${info.name.middleName} ${info.name.lastName} ${info.name.suffix? info.name.suffix:""}`
                     var incharge = `${emp.firstname} ${emp.lastname}`
+
                     pdfMake.createPdf(
                             GenerateForm.createForm(code, fullname, incharge, details)
                         )
@@ -47,7 +49,7 @@ export default {
                             this.dataUrl = dataUrl;
                         })
                     GenerateForm.clear();
-                    resolve({ details: info, pdf: this.createdPDF, dataUrl: this.dataUrl })
+                    resolve({ details: { name: fullname, request: info.docType }, pdf: this.createdPDF, dataUrl: this.dataUrl })
                 })
                 .catch((err) => {
                     var error = "something went wrong";

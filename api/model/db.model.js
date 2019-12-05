@@ -79,8 +79,9 @@ let Code = new Schema({
 
 let TransactionSchema = new Schema({
     name: String,
-    docType: String,
+    request: String,
     officer: String,
+    action: String,
     date: String
 }, {
     collection: "logs"
@@ -153,7 +154,7 @@ let businessClearanceSchema = new Schema({
     collection: "business_clearance"
 });
 
-Staff.pre("save", function (next) {
+Staff.pre("save", function(next) {
     if (!this.isModified("password")) {
         return next();
     }
@@ -169,6 +170,11 @@ const Staffs = mongoose.model("Staff", Staff);
 const Codes = mongoose.model("Code", Code);
 const Transactions = mongoose.model("Transaction", TransactionSchema);
 module.exports = {
-    Admins, Staffs, Codes, Transactions,
-    brgyClearance, brgyIndigency, businessClearance
+    Admins,
+    Staffs,
+    Codes,
+    Transactions,
+    brgyClearance,
+    brgyIndigency,
+    businessClearance
 };

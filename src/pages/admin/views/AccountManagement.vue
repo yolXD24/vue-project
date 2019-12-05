@@ -55,11 +55,10 @@
   </v-container>
 </template>
 <script>
-import Register from "./Register";
 import { request_reset } from "@/system/functions/request";
 export default {
   components: {
-    Register
+    Register:() => import("./Register.vue")
   },
   data() {
     return {

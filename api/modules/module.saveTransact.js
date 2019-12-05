@@ -15,15 +15,14 @@ module.exports = function(reqBody, res) {
 
     transaction.save((err, log) => {
         if (err) {
+            console.log(err);
+
             response = errorResponse(400, err, "Failed to save transaction!")
             return res.status(response.status).send(response);
         } else {
+            console.log(log)
             response = successResponse(200, log, "Transaction saved successfully!")
             return res.status(response.status).send(response)
         }
-    }).catch(err => {
-        response = errorResponse(503, err, "Service Unavailable!")
-        res.status(response.status).send(response);
-
     });
 }

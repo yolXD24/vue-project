@@ -10,8 +10,7 @@
           <hr />
           <v-data-table
             :headers="headers"
-            :transactions="transactions"
-            hide-default-footer
+            :items="logs"
           />
         </v-card>
       </v-col>
@@ -22,52 +21,53 @@
 @import "/assets/style.css";
 </style>
 <script>
-import jwt_decode from "jwt-decode";
-
 export default {
   data() {
     return {
-      headers: [],
+      headers: [
+        {
+          sortable: true,
+          text: "Name",
+          value: "name"
+        },
+        {
+          sortable: true,
+          text: "Request",
+          value: "request"
+        },
+        {
+          sortable: true,
+          text: "Officer In charge",
+          value: "officer"
+        },
+         {
+          sortable: true,
+          text: "Action",
+          value: "action"
+        },
+         
+        {
+          sortable: true,
+          text: "Date",
+          value: "date"
+        }
+      ],
       transactions: []
     };
   },
+  computed:{
+    logs(){
+      return this.transactions
+    }
+  },
   mounted() {
-    this.headers = [
-      {
-        sortable: true,
-        text: "Name",
-        value: "name"
-      },
-      {
-        sortable: true,
-        text: "Request",
-        value: "request"
-      },
-      {
-        sortable: true,
-        text: "Officer In charge",
-        value: "officer"
-      },
-      {
-        sortable: true,
-        text: "Date",
-        value: "date"
-      }
-    ];
-
+  
     this.$store.dispatch("loadHistoryTable").then(data => {
       this.transactions = data;
+
     }).catch(error => {
       this.$emit("notify", "Something went wrong!!");
     })
-    // this.$store.state.axios
-    //   .post(url, { _id: id })
-    //   .then(res => {
-    //     this.transactions = res.data;
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
   }
 };
 </script>

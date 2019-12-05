@@ -71,25 +71,8 @@
       <v-container class="justify-center">
         <center>
           <div v-if="preview">
-            <pdf
-              :src="dataUrl"
-            >
+            <pdf :src="dataUrl">
             </pdf>
-            <!-- <pdf
-              ref="pdf_preview"
-              :src="createdPDF"
-              style="width: 50%; height :100%"
-            ></pdf> -->
-            <!-- <div>
-            <pdf
-              v-if="preview"
-              ref="pdf_preview"
-              :src="createdPDF"
-              style="width: 50%; height :100%"
-            ></pdf>
-            <br />
-            <br />
-          </div> -->
             <v-row
               align="start"
               justify="center"
@@ -100,7 +83,7 @@
                   justify="center"
                   class="transparent"
                 >
-                
+
                   <v-btn
                     class="ma-2"
                     color="primary"
@@ -109,13 +92,13 @@
                     width="300"
                     @click="printPDF()"
                   >print</v-btn>
-                    <v-btn
+                  <v-btn
                     class="ma-2"
                     color="primary"
                     rounded
                     large
                     width="300"
-                    @click="preview = true"
+                    @click="createdPDF =''"
                   >Close Preview</v-btn>
                 </v-row>
               </v-col>
@@ -127,7 +110,6 @@
   </v-container>
 </template>
 <script>
-// import pdf from "vue-pdf";
 import pdf from 'pdfvuer'
 import generatePDF from "@/system/functions/generatePDF";
 import printJS from "print-js";
@@ -140,7 +122,8 @@ export default {
       loadingPreview: false,
       file: "",
       loading: false,
-      createdPDF: ""
+      createdPDF: "",
+      user: null
     };
   },
   components: {
@@ -172,12 +155,12 @@ export default {
       generatePDF
         .generatePDF(this.code, this.$store.getters.user)
         .then(result => {
-          this.loadingPreview = false
+          this.loadingPreview = !this.loadingPreview
           this.details = result.details;
           this.loading = false;
           this.createdPDF = result.pdf;
           this.dataUrl = result.dataUrl;
-          this.code = "";
+          this.user = result.details;
         })
         .catch(message => {
           this.loadingPreview = false
@@ -199,11 +182,38 @@ export default {
         modalMessage: "ExpressDocX is generating preview...",
         onPdfOpen: () => { },
         onPrintDialogClose: () => {
-        this.preview = false;
-        this.loadingPreview = false;
+          this.loadingPreview = false;
+          this. afterPrint("view")
         }
       });
+    },
+    afterPrint(action) {
+     
+      this.$store.state.axios.post(this.$store.state.url + "saveTransaction", {
+        name: this.user.name,
+        action:action,
+        request: this.user.request,
+        officer: `${this.$store.getters.user.firstname} ${this.$store.getters.user.lastname}`,
+        date: new Date().toLocaleString()
+      })
     }
+  },
+  mounted() {
+    (function () {
+
+      if (window.matchMedia) {
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function (mql) {
+          if (mql.matches) {
+            console.log("before print");
+            
+          } else {
+            afterPrint("print");
+          }
+        });
+      }
+      window.onafterprint = afterPrint;
+    }());
   }
 };
 </script>
