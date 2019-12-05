@@ -33,7 +33,9 @@ export default {
                         }
                     };
                     var fullname = `${info.name.firstName} ${info.name.middleName} ${info.name.lastName} ${info.name.suffix? info.name.suffix:""}`
-                    var incharge = `${emp.firstname} ${emp.lastname}`
+                    var incharge = `${this.toCapital(emp.firstname)} ${emp.lastname}`
+                    console.log(emp);
+                    
 
                     pdfMake.createPdf(
                             GenerateForm.createForm(code, fullname, incharge, details)

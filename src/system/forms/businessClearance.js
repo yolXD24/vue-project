@@ -11,7 +11,7 @@ export default {
                     text: "\nB A R A N G A Y\tB U S I N E S S\n",
                     fontSize: 14
                 },
-                { text: "C L E A R A C E \n\n", style: "text_center", fontSize: 18 },
+                { text: "C L E A R A N C E \n\n", style: "text_center", fontSize: 18 },
                 {
                     text: "\nTO WHOM IT MAY CONCERN:\n\n\t",
                     style: ["text_justify"],
@@ -53,13 +53,11 @@ export default {
             style: ["text_center"]
         }, {
             columns: [
-                { text: "Yol Torres", style: "text_justify" },
                 { text: incharge, style: "text_right" }
             ],
             style: "text_center"
         }, {
             columns: [
-                { text: "\nIssued By", style: "text_justify" },
                 { text: "\nPunong Barangay", style: "text_right" }
             ],
             style: "text_center"

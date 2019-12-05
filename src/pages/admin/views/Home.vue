@@ -183,13 +183,12 @@ export default {
         onPdfOpen: () => { },
         onPrintDialogClose: () => {
           this.loadingPreview = false;
-          this. afterPrint("view")
+          this.afterPrint("view")
         }
       });
     },
     afterPrint(action) {
-     
-      this.$store.state.axios.post(this.$store.state.url + "saveTransaction", {
+      this.$store.state.axios.post(this.$urls.admin_online_api+ "/saveTransaction", {
         name: this.user.name,
         action:action,
         request: this.user.request,
@@ -198,22 +197,21 @@ export default {
       })
     }
   },
-  mounted() {
-    (function () {
-
-      if (window.matchMedia) {
-        var mediaQueryList = window.matchMedia('print');
-        mediaQueryList.addListener(function (mql) {
-          if (mql.matches) {
-            console.log("before print");
+  // updated() {
+  //   (function () {
+  //     if (window.matchMedia) {
+  //       var mediaQueryList = window.matchMedia('print');
+  //       mediaQueryList.addListener(function (mql) {
+  //         if (mql.matches) {
+  //           console.log("before print");
             
-          } else {
-            afterPrint("print");
-          }
-        });
-      }
-      window.onafterprint = afterPrint;
-    }());
-  }
+  //         } else {
+  //           this.afterPrint("print");
+  //         }
+  //       });
+  //     }
+  //     window.onafterprint = this.afterPrint();
+  //   }());
+  // }
 };
 </script>

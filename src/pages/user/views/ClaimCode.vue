@@ -4,7 +4,6 @@
     <br>
     <v-card
       max-width="600"
-      max-height="800"
     >
       <v-system-bar
         color="blue darken-2"
@@ -22,7 +21,6 @@
       <h2 class="text--primary display-1">Please keep this code: {{$route.params.code}}</h2>
       <v-card-text class="text--primary">Present this code and the needed requirements upon claiming your document.</v-card-text>
       <v-row
-        align="start"
         justify="center"
       >
         <v-col
@@ -37,15 +35,25 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <div class="my-2">
+      <div class="ma-5">
         <v-btn
           @click="send"
           color="primary"
-          rounded
+          width="300"
           outlined
-          elevation="12"
+          class="ma-2"
         >Send</v-btn>
+        <br>
+         <v-btn
+          @click="$router.push('/')"
+          color="primary"
+          class="ma-2"
+          width="300"
+          outlined
+        >Back</v-btn>
+        <br><br>
       </div>
+     
       <v-system-bar
         color="blue darken-2"
         dark

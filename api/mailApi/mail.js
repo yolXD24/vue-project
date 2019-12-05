@@ -14,7 +14,7 @@ module.exports = (data, res) => {
     //     code: accessCode
     // }
     //DocxpressKey = docxpressSG.xYWkXNMZTfyQ4r96EdGVMg.PLtzVcgBEdocxpressB19xkZx9PiPis_ZnPaKAmOikVC38fx-nXo
-    let apiKey = "";    //ASK API KEY FROM BARGASO
+    let apiKey = "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";    
     template = template.replace("_CLAIMCODE_", data.code)
 
     const sendMail = (to, content) => {
@@ -29,6 +29,7 @@ module.exports = (data, res) => {
             html: content
         };
         if (sgMail.send(msg)) {
+            console.log("succes");
             response = successResponse(201, { "success": true }, "Code has been sent to your email!")
             res.send(response);
         } else {
@@ -38,10 +39,5 @@ module.exports = (data, res) => {
         };
     };
     sendMail(data.email, template);
-  
-    // sendMail('chervin.tanilon@student.passerellesnumeriques.org', template);
-    // sendMail('lalaine.garrido@student.passerellesnumeriques.org', template);
 }
 
-    //IMPORTANT NOTE!!!
-    // ALWAYS REMOVE THE API KEY BEFORE PUSHING TO THE REPOSITORY

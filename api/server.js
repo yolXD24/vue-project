@@ -16,6 +16,9 @@ mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true, u
         console.log("database is connected!");
     }
 });
+app.get("/test",(req,res)=>{
+    res.send("we are live !!!")
+})
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: '110mb' }));
 app.use(bodyParser.json());

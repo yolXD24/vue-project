@@ -242,11 +242,11 @@ export default {
       if (this.$refs.form.validate()) {
         if (this.account.password === this.c_password) {
           if (!this.MyUpdate) {
-            register(this.account, this.url + "register").then(res => {
+            register(this.account, this.$urls.admin_online_api+ "/register").then(res => {
               this.registerHandler(res)
             }).catch(err => {
               this.resetForm();
-
+              console.log(err);
               this.$emit(
                 "accountFormResponse",
                 err.message
@@ -254,7 +254,7 @@ export default {
             });
           } else {
             this.account.id = this.Info._id;
-            update(this.account, this.url + "update").then(res => {
+            update(this.account, this.$urls.admin_online_api + "/update").then(res => {
               this.updateHandler(res)
             }).catch(error => {
               this.resetForm();
@@ -275,17 +275,12 @@ export default {
           "accountFormResponse",
           res
         );
-
         this.resetForm();
-        // setTimeout(() => {
-        //   location.reload(true);
-        // }, 1000);
       } else {
         this.$emit(
           "accountFormResponse",
           "Username / Email is already taken!"
         );
-
         this.resetForm();
       }
     },
@@ -296,7 +291,7 @@ export default {
       this.$store.commit('setUser');
       this.$emit(
         "accountFormResponse",
-        res.message
+        "something went wrong!"
       );
       setTimeout(() => { this.$emit("updated_response") }, 1000);
       this.resetForm();
@@ -311,8 +306,7 @@ export default {
         password: this.Default_Password,
         position: this.Info ? this.Info.position : null,
       }
-      c_password= ""
-
+      this.c_password= ""
     },
     checkUpdate() {
       if (this.MyUpdate) {

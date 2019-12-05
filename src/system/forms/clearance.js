@@ -9,7 +9,7 @@ export default {
                 { text: "\n\nOFFICE OF THE BARANGAY COUNCIL\n\n\n", fontSize: 12 },
 
                 {
-                    text: "B A R A N G A Y\tC L E A R A C E \n\n",
+                    text: "B A R A N G A Y\tC L E A R A N C E \n\n",
                     style: "text_center",
                     fontSize: 18
                 },
@@ -49,13 +49,11 @@ export default {
             style: ["text_center"]
         }, {
             columns: [
-                { text: "Yol Torres", style: "text_justify" },
                 { text: "Kapitan name", style: "text_right" }
             ],
             style: "text_center"
         }, {
             columns: [
-                { text: "\nIssued By", style: ["text_justify", "header"] },
                 { text: "\nPunong Barangay", style: ["text_right", "header"] }
             ],
             style: "text_center"

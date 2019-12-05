@@ -27,12 +27,7 @@ const privateTransactions = (user, res) => {
 }
 module.exports = (token, res) => {
     try {
-        var user = jwt.verify(token, 'docxpress').user
-        if (user.admin) {
-            allTransactions(res)
-        } else {
-            privateTransactions(user, res)
-        }
+        allTransactions(res)
     } catch (err) {
         response = errorResponse(503, { body: err, message: "invalid token" }, null)
         res.status(response.status).send(response);

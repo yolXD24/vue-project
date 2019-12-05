@@ -43,9 +43,8 @@ export default {
   },
   methods: {
     app_notify(msg) {
-      this.dialog = false;
       this.$emit("register_notif", msg);
-    
+      this.dialog = false;
     }
     
   }
